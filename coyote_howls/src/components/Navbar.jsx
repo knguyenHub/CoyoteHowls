@@ -12,7 +12,7 @@ export const Navbar = () => {
 /* the span is used to make the 3 lines for the pull down menu */
   return (
     <nav>
-      <Link to="/" className = "title">Home</Link>
+      <Link to="/home" className = "title">Home</Link>
       <div className="menu" onClick ={() => {           /* adds the pull down menu when screen is small on top right and the action click for */
         setMenuOpen(!menuOpen);
       }}>
