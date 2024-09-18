@@ -1,5 +1,12 @@
+
+/* displays the pull down menu at all times when scrolling down */ 
 .App {
-  background-color: #DDE9F1;
   height: 100%;
   width: 100%;
+}
+
+
+/* background color of the website */
+body {
+  background-color: #DDE9F1;
 }

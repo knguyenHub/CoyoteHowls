@@ -1,61 +1,61 @@
-.active {
-    background-color: #8FBFDA;
-    color: #394A56;
-    border-radius: 8px;
-    border: 2px solid #22303F;
+.active {                              /* .active will be applied to any link/button that is currently active on the website so it will be highligted  */
+    background-color: #8FBFDA;       /* the background color of the box/button */
+    color: #394A56;                  /* color of text */
+    border-radius: 8px;                /* soft corners */
+    border: 2px solid #22303F;       /* outline of the button */
 }
 
 
 
 nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #2C6485;
-    position: sticky;
-    top: 0;
+    display: flex;                    /* display flex is so it's horizontal */
+    justify-content: space-between;   /* seperates "Home" and the list: message, about, contact, and log in so they are in opposite corners */
+    align-items: center;              /* centers the items */
+    background-color: #2C6485;      /* background color of the nav bar */
+    position: sticky;                 /* so that the nav bar stays visible on the website when scrolling down */
+    top: 0;                           /* where it should stick to */
 }
 
-nav .title {
+nav .title {                        /* the title in this case would be "Home" which later on would be switched to the logo */
     font-size: 20px;
-    margin: 10px;
+    margin: 10px;                   /* spacing from each side */
     font-weight: bold;
-    text-decoration: none;
-    color: #E7EBE7;
+    text-decoration: none;          /* removes the underline that it has by default */
+    color: #E7EBE7;               /* color of text */
     
 }
 
 
 nav ul {
-    display:flex;
+    display:flex;                   /* moves all list items next to each other so horizontal instead of on top of each other */
 }
 
 nav ul li {
-    list-style: none;
+    list-style: none;               /* for each list item within nav it removes the black dots that it originally had*/
 }
 
-nav ul li a {
-    background-color: #22303F;
-    border-radius: 8px;
-    border: 1px solid #8FBFDA;
-    display: block;
-    text-decoration: none;
-    color: #E7EBE7;
-    padding: 5px;
-    margin: 10px;
-    margin-top: 25px;
-    margin-bottom: 25px;
-    margin-right: 20px;
-    font-size: 17px;
+nav ul li a {                       /* for each link inside nav */   
+    background-color: #22303F;    /* the background color of the buttons */
+    border-radius: 8px;             /* gives each butoon a more softer edge */
+    border: 1px solid #8FBFDA;    /* border/outline around the buttons */
+    display: block;                 /* gives it more height and width */
+    text-decoration: none;          /* removes the outline of each button that it has by default */
+    color: #E7EBE7;               /* color of text for buttons */
+    padding: 5px;                   /* space between each botton or word*/
+    margin: 10px;                   /* space from each direction */
+    margin-top: 25px;               /* space from the top */
+    margin-bottom: 25px;            /* space from the bottom */
+    margin-right: 20px;             /* space from the right side */
+    font-size: 17px;                /* font size */
 
 }
 
-nav ul li a:not(.active):hover {
-    background-color: #8FBFDA;
+nav ul li a:not(.active):hover {    /* highlights the button when hovering over it */
+    background-color: #8FBFDA;    /* color of the button when hovering ove it */
 }
 
-nav .menu {
-    display: none;
+nav .menu {                         /* the pull down menu when screen is too small */
+    display: none;                  /* display is none so it's not visible at all times */
     position: absolute;
     top: 12px;
     right: 8px;
@@ -65,14 +65,14 @@ nav .menu {
     height: 32px;
 }
 
-nav .menu span {
+nav .menu span {                    /* styles the 3 lines on the pull down menu */
     height: 6.4px;
     width: 100%;
     background-color: #DDE9F1;
     border-radius: 3.2px;
 }
 
-@media (max-width: 525px) {
+@media (max-width: 525px) {         /* max width of the website for it to display the pull down menu */
     nav .menu {
         display: flex;
     }
@@ -94,7 +94,7 @@ nav .menu span {
         text-align: center;
     }
 
-    nav ul.open {
+    nav ul.open {                   /* opens menu when clicked */
         display: flex;
     }
 
