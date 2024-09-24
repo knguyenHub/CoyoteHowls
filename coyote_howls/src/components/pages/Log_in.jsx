@@ -1,9 +1,23 @@
-import React from 'react'
+import React from 'react'; // Assuming Navbar is in the same directory
+import './Log_in.css'; // Assuming you have a CSS file for styles
 
 const Log_in = () => {
   return (
     <div>
-      
+
+      {/* Login Header */}
+      <div className="login-header">
+        <h1>Login</h1>
+      </div>
+
+      {/* Main Content */}
+      <div className="login-content">
+        <h2>who are you?</h2>
+        <div className="button-container">
+          <button className="role-button">Faculty</button>
+          <button className="role-button">Student</button>
+        </div>
+      </div>
     </div>
   )
 }
