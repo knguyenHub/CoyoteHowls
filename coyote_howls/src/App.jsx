@@ -2,7 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import "./App.css";
 /* importing each component from their appropriate locations */
 import {Navbar} from "./components/Navbar";
-import Message from "./components/pages/Message";
+ /*import Message from "./components/pages/Message";  */
 import About from "./components/pages/About";
 import Contact from "./components/pages/Contact";
 import Log_in from "./components/pages/Log_in";
@@ -16,7 +16,7 @@ function App() {
       <Navbar />
       <Routes>
         <Route path= "/Home" element={<Home/>} />
-        <Route path= "/message" element={<Message/>} />
+     {/*   <Route path= "/message" element={<Message/>} />  */}
         <Route path= "/about" element={<About/>} />
         <Route path= "/contact" element={<Contact/>} />
         <Route path= "/log_in" element={<Log_in/>} />

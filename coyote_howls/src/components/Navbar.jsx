@@ -21,9 +21,9 @@ export const Navbar = () => {
         <span></span>
       </div>
       <ul className = {menuOpen ? "open" : ""}>             
-        <li>                                                        
-          <NavLink to="/message">Message</NavLink>
-        </li>
+       {/* <li>                                                        
+          <NavLink to="/message">Message</NavLink>   //commmented out message button
+        </li>  */}
         <li>
           <NavLink to="/about">About</NavLink>
         </li>
