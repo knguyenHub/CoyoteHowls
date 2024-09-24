@@ -12,7 +12,7 @@ const Log_in = () => {
 
       {/* Main Content */}
       <div className="login-content">
-        <h2>who are you?</h2>
+        <h2>Who Are You?</h2>
         <div className="button-container">
           <button className="role-button">Faculty</button>
           <button className="role-button">Student</button>
