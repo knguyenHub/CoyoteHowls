@@ -3,7 +3,7 @@ import "./App.css";
 /* importing each component from their appropriate locations */
 import {Navbar} from "./components/Navbar";
 import Message from "./components/pages/Message";
-import { About } from "./components/pages/About";
+import About from "./components/pages/About";
 import Contact from "./components/pages/Contact";
 import Log_in from "./components/pages/Log_in";
 import Home from "./components/pages/Home";
