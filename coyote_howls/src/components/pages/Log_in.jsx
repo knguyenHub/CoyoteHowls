@@ -17,7 +17,7 @@ const Log_in = () => {
         <h2>Who Are You?</h2>
         <div className="button-container">
           <button><Link to= "/faculty" className="role-button">Faculty</Link></button>
-          <button className="role-button">Student</button>
+          <button><Link to= "/Student" className="role-button">Student</Link></button>
         </div>
       </div>
     </div>

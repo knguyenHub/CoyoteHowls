@@ -8,7 +8,7 @@ import Contact from "./components/pages/Contact";
 import Log_in from "./components/pages/Log_in";
 import Home from "./components/pages/Home";
 import Faculty_login from "./components/pages/Faculty_login";
-
+import Student_log_in from "./components/pages/Student_log_in";
 
 /*Routing each component from pages to the appropriate url on the website */
 function App() {
@@ -22,6 +22,7 @@ function App() {
         <Route path= "/contact" element={<Contact/>} />
         <Route path= "/log_in" element={<Log_in/>} />
         <Route path="/faculty" element={<Faculty_login />} />
+        <Route path="/Student" element={<Student_log_in />} />
       </Routes>
     </div>  
   );
