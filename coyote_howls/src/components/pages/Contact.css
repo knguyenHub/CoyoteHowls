@@ -1,9 +1,10 @@
+/* Background styling for the whole contact section */
 .contact_background {
     background-color: #2C6485;
     padding-bottom: 10px;
 }
 
-
+/* styling for the "Contact Us" header */
 .contact_header {
     margin:35px auto;
     margin-bottom: -125px; 
@@ -15,7 +16,7 @@
   
 } 
 
-
+/* styling main container for the contact section (inner box layout) */
 .contact_main {
     justify-content: space-between; 
     text-align: center;
@@ -26,7 +27,7 @@
 }
 
 
-
+/* main body for aligning the contact columns */
 .contact_body {
     display: flex;
     justify-content: center;
@@ -35,6 +36,7 @@
 
 }
 
+/* individual column styling */ 
 .contact_column {
     background-color: #E7EBE7;
     padding: 5px;
@@ -43,44 +45,39 @@
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
+/* heading styling inside each contact column */
 .contact_column h3 {
     margin-top: 15px;
     font-size: 1.2em;
     
 }
 
+/* paragraph styling inside each contact column */
 .contact_column p {
     font-size: 1em;
     margin-bottom: 100px;
     margin-top: 10px;
 }
 
-.phone_png {
-    font-size: 2em;
-    margin-bottom: 10px;
-}
-
-.location_png {
-    font-size: 2em;
-    margin-bottom: 10px;
-}
-
-
-.email_png {
+/* styling for all icons */
+.phone_png, .location_png, .email_png {
     font-size: 2em;
     margin-bottom: 10px;
 }
 
 
 
-
+/* implementation and styling for smaller screens (phones)  */
 @media (max-width: 800px) {
+
+    /* layour changed a bit for layout on smaller screens */
     .contact_body {
         flex-direction: column;
         align-items: center;
         gap: 20px;
     }
   
+    /* columns take up more space for smaller screens */
     .contact_column{
       width: 90%;
       margin-bottom: 20px;

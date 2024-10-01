@@ -1,26 +1,20 @@
 import React from 'react'
-import "./Contact.css";
-import email_png from "../../assets/email_icon.png"
-import phone_png from "../../assets/phone_icon.png"
-import location_png from "../../assets/location_icon.png"
+import "./Contact.css";                                             // importing css file 
+import email_png from "../../assets/email_icon.png"                 // importing icon image of email from assets
+import phone_png from "../../assets/phone_icon.png"                 // importing icon image of phone from assets
+import location_png from "../../assets/location_icon.png"           // importing icon image of location form assests
 
 const Contact = () => {
   return (
     <div className = "contact_background">
-
-    
-
-    <div className='contact_header'>
+    <div className='contact_header'>                {/* header */}
       <h1>Contact Us</h1>
     </div> 
       <div className = "contact_main">
-      
-
-        <div className='contact_body'>
-
-          <div className='contact_column'>
+        <div className='contact_body'>                                       {/* body text for each section: email, phone, location*/ }
+          <div className='contact_column'>                                   {/* column with location info */ }
             <div>
-              <img src={location_png} alt="" className='location_png' />  
+              <img src={location_png} alt="" className='location_png' />     {/* location icon */ }
             </div>
             <h3>Office Address</h3>
             <p>
@@ -28,9 +22,9 @@ const Contact = () => {
             </p>
           </div>
 
-          <div className='contact_column'>
+          <div className='contact_column'>                                    {/* column with phone info */ }
             <div>
-              <img src={phone_png} alt="" className='phone_png' />  
+              <img src={phone_png} alt="" className='phone_png' />            {/* phone icon */ }
             </div>
             <h3> Phone </h3>
             <p>
@@ -38,9 +32,9 @@ const Contact = () => {
             </p>
           </div>
 
-          <div className='contact_column'>
+          <div className='contact_column'>                                     {/* column with email info */ }
             <div>
-              <img src={email_png} alt="" className='email_png' /> 
+              <img src={email_png} alt="" className='email_png' />             {/* email icon */ }
             </div>
             <h3> Email </h3>
             <p>
