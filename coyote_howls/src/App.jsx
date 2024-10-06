@@ -1,5 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
+
 /* importing each component from their appropriate locations */
 import {Navbar} from "./components/Navbar";
  /*import Message from "./components/pages/Message";  */
@@ -11,6 +12,8 @@ import Faculty_login from "./components/pages/Faculty_login";
 import Student_log_in from "./components/pages/Student_log_in";
 import StudentDashboard from "./components/pages/StudentDashboard";
 import FacultyDashboard from "./components/pages/FacultyDashboard";
+import Student_Meeting from "./components/pages/Student_Meeting"; 
+
 
 /*Routing each component from pages to the appropriate url on the website */
 function App() {
@@ -18,7 +21,7 @@ function App() {
     <div className= "App">
       <Navbar />
       <Routes>
-        <Route path= "/Home" element={<Home/>} />
+        <Route path= "/" element={<Home/>} />
      {/*   <Route path= "/message" element={<Message/>} />  */}
         <Route path= "/about" element={<About/>} />
         <Route path= "/contact" element={<Contact/>} />
@@ -27,6 +30,7 @@ function App() {
         <Route path="/Student" element={<Student_log_in />} />
         <Route path="/StudentDashboard" element={<StudentDashboard />} />
         <Route path="/FacultyDashboard" element={<FacultyDashboard />} />
+        <Route path="/Student_Meeting" element={<Student_Meeting />} />
       </Routes>
     </div>  
   );
