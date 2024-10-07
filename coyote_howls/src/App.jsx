@@ -9,7 +9,7 @@ import Contact from "./components/pages/Contact";
 import Log_in from "./components/pages/Log_in";
 import Home from "./components/pages/Home";
 import Faculty_login from "./components/pages/Faculty_login";
-import Student_log_in from "./components/pages/Student_log_in";
+import Student_login from "./components/pages/Student_login";
 import StudentDashboard from "./components/pages/StudentDashboard";
 import FacultyDashboard from "./components/pages/FacultyDashboard";
 import Student_Meeting from "./components/pages/Student_Meeting"; 
@@ -27,7 +27,7 @@ function App() {
         <Route path= "/contact" element={<Contact/>} />
         <Route path= "/log_in" element={<Log_in/>} />
         <Route path="/faculty" element={<Faculty_login />} />
-        <Route path="/Student" element={<Student_log_in />} />
+        <Route path="/student" element={<Student_login />} />
         <Route path="/StudentDashboard" element={<StudentDashboard />} />
         <Route path="/FacultyDashboard" element={<FacultyDashboard />} />
         <Route path="/Student_Meeting" element={<Student_Meeting />} />

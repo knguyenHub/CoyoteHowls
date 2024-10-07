@@ -1,18 +1,18 @@
 import React from 'react'
-import './Faculty_login.css';
+import './Student_login.css';
 
 
-const Faculty_login = () => {
+const Student_login = () => {
   return (
     <div className="login-body">
-    <h1 className="login-title">Faculty Login</h1>
+    <h1 className="login-title">Student Login</h1>
 
     <div className="login-form">
       <input type="text" placeholder="Email" className="input-field" />
       <input type="password" placeholder="Password" className="input-field" />
 
       <div className="login-options">
-        <a href="/" className="link">New Account?</a>
+        <a href="/" className="link">New Student?</a>
         <a href="/" className="link">Forgot Password?</a>
       </div>
 
@@ -22,4 +22,4 @@ const Faculty_login = () => {
   )
 }
 
-export default Faculty_login
+export default Student_login
