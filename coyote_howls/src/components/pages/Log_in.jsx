@@ -16,7 +16,7 @@ const Log_in = () => {
       <div className="login-content">
         <h2>Who Are You?</h2>
         <div className="button-container">
-          <button><Link to= "/faculty" className="role-button">Faculty</Link></button>
+          <Link to= "/faculty"><button className="role-button">Faculty</button></Link>
           <button className="role-button">Student</button>
         </div>
       </div>
