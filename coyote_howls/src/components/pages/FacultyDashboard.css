@@ -1,0 +1,434 @@
+.fd_background_color {
+  /* background of the page */
+  background-color: #dde9f1;
+  padding-bottom: 100px;
+}
+
+.fd_header {
+  /* Student Dashboard Header */
+
+  margin: 35px auto;
+  margin-bottom: -70px;
+  text-align: center;
+  font-size: 30px;
+  color: #2c6485;
+  background-color: #8fbfda;
+  padding: 20px;
+  padding-block: 40px;
+  padding-bottom: 60px;
+  width: 87%; /* Let the width adjust based on content */
+}
+
+.fd_notification_header {
+  /* Notification Header */
+
+  margin: 35px auto;
+  margin-top: 150px;
+  margin-bottom: -70px;
+  text-align: left;
+  font-size: 30px;
+  color: #2c6485;
+  background-color: white;
+  padding: 20px;
+  padding-block: 40px;
+  padding-bottom: 60px;
+  width: 87%; /* Let the width adjust based on content */
+  opacity: .85;
+}
+
+/* individual list element attributes */
+#from{
+  font-size: 75px;
+  list-style-type: none;
+  margin-left: 50px;
+  color: white;
+  float:left;
+  
+}
+
+#until{
+  font-size: 75px;
+  list-style-type: none ;
+  margin-left: 300px;
+  color: white;
+}
+
+.grid_container{
+  display: none;  /* grid */
+  grid-template-rows: 95px 95px 95px 95px 95px 95px 95px;
+  grid-template-columns: 100px 100px 100px 100px 100px 100px 100px 100px 100px;
+}
+
+/* Edit Availabitlity */
+.item-1{
+  grid-row: span 1;
+  grid-column: span 7;
+  font-size: 70px;
+  color: white;
+  margin-left: 20px;
+  margin-top: 20px;
+
+}
+
+/* From */
+.item-2{
+  grid-row: 2/2;
+  grid-column: span 1;
+  font-size: 50px;
+  color: white;
+  margin-left:  40px;
+  margin-top: 20px;
+  
+}
+
+/* Until */
+.item-3{
+  grid-row: 2 / 2;
+  grid-column: 6 / 6 ;
+  margin-top: 20px;
+  margin-left: 50px;
+  font-size: 50px;
+  color: white;
+}
+
+/* Toggle 1 */
+.item-4{
+  grid-row: 3/3;
+  grid-column: 2/2;
+
+
+}
+/* Toggle 2 */
+.item-5{
+  grid-row: 3/3;
+  grid-column: 7/7;
+  
+}
+
+/* Apply To */
+.item-6{
+  grid-row: 4/4;
+  grid-column: 4 / 7;
+  font-size: 50px;
+  margin-top: 20px;
+  margin-left: 80px;
+  color: white;
+}
+/* Radio */
+
+.item-7{
+  grid-row: span 1;
+  grid-column:span 1;
+  margin-top: 400px;
+  margin-right: 30px;
+
+}
+.item-8{
+  grid-row: 6/6;
+  grid-column: 2/2;
+  margin-top: 20px;
+  
+}
+.item-9{
+  grid-row: 6/6;
+  grid-column: 2/2;
+  margin-top: 20px;
+}
+
+/* Add Button */
+.item-10{
+  grid-row: 7/7;
+  grid-column: 8/9;
+  
+}
+
+.add_availability{
+  width: 300px;
+  height: 70px;
+  border-radius: 15px;
+  background-color: #22303F; 
+  height: 70px;
+  text-align: center;
+  line-height: 70px;        /* align text to center of box */
+  vertical-align: center;
+  font-size: 30px;
+  color: #FFFFFF;
+}
+
+.add_availability:hover {
+  background-color: #8fbfda;
+  color: white;
+}
+
+.container{
+  display: grid;
+  grid-row: 7/7;
+  grid-column: span 3;
+  position:relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
+  border-radius: 50%;
+}
+
+.container:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+.container input:checked ~ .checkmark {
+  background-color: #2196F3;
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.container .checkmark:after {
+  top: 9px;
+  left: 9px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: white;
+}
+
+.time_slot.dropdown {
+  position: relative;
+  display: inline-block;
+  font-size: 50px;
+  margin-left: 80px;
+  text-align: center;
+  vertical-align: baseline;
+  line-height: 90px;
+  background-color: #dde9f1;
+  height: 90px;
+  width: 300px;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #dde9f1;
+  box-shadow: 0px 8px 16px 0px #22303F;
+  padding: 12px 16px;
+  z-index: 1;
+  width: 300px;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+  
+}
+
+
+.fd_left_column {
+  /* Left Column Attributes & Margin Spacing */
+  margin-left: 50px;
+  margin-top: 200px; /* Adjust spacing from the top */
+  width: 400px; /* Fixed width for the left column */
+  float: left;
+  height: 700px;
+}
+
+.fd_right_column {
+  /* Right Column (Body) Attributes & Margin Spacing */
+  margin-top: 150px; /* Align with the left column */
+  margin-left: 500px; /* Create space between the left column */
+  width: 67%;
+  border-radius: 15px;
+}
+
+.line{
+    border-top: 3px solid #000000;
+    padding-bottom: 15px;
+}
+
+
+  /* Body Navbar Attributes */
+  ul.body_navbar {
+    font-size: 29px;
+    list-style-type: none;
+    padding: 0;
+    overflow: hidden;
+    
+  }
+  
+  li.body_navbar {
+    float: left;      /* orientation of list */
+  }
+
+.fd_modify_appt {
+
+  border-radius: 15px;
+  background-color: #22303F; 
+  height: 70px;
+  width: 100%;
+  text-align: center;
+  line-height: 70px;        /* align text to center of box */
+  vertical-align: center;
+  font-size: 35px;
+  color: #FFFFFF;
+}
+
+.fd_modify_appt:hover {
+  background-color: #2c6485;
+  color: white;
+}
+
+.fd_upcoming_appt {
+  /* Upcoming Appt Rect Attributes */
+  border-radius: 25px;
+  background-color: #8fbfda;
+  margin-top: 50px;
+
+  height: 500px;
+  text-align: center;
+  font-size: 13.75px;
+  vertical-align: top;
+  line-height: 50px;
+  color: #000000;
+  padding-top: 10px;
+  text-decoration: underline;
+}
+
+.fd_body {
+  /* Main Body Rect Attributes (Foreground) */
+
+  align-items: start;
+  height: 670px;
+  display: flex;
+  background-color: #2c6485;
+}
+
+.fd_box {
+  /* Main Body Rect Attributes (Minor Background) */
+
+  align-items: center;
+  height: 70px;
+  display: flex;
+  background-color: #22303f;
+}
+
+/* Course & History Buttons */
+
+/* Mini Navbar 
+.body_navbar ul{
+  list-style-type: none;
+  padding: 0;
+  overflow: hidden;
+  float: right;
+}
+
+*/
+
+
+/* Button Holds CS & Functionality */
+.button {
+  background-color: #2c6485;
+  border: none;
+  color: white;
+  padding: 16px 32px;
+  width:250px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 30px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #394a56;
+  color: white;
+}
+
+/* Up Coming Appt Unordered List Attributes */
+
+.up_comming_appt_list {
+  border-collapse: collapse;
+
+}
+
+
+.up_comming_appt_list ul {
+    list-style-type: none;
+    
+}
+
+/* individual list element attributes */
+.up_comming_appt_list li {
+    float: left;
+    text-align: left;
+    margin-left: 40px;
+    padding-left: 0%;
+    font-size: 20px;
+    width: 100%;
+    
+}
+
+/* Edit Button Attributes */
+.edit_button {
+  background-color: #22303F;
+  float: right;
+  border-radius: 15px;
+  margin-right: 50px;            /* positioning */
+  margin-top: 10px;
+  color: white;
+  width: 20%;
+  font-size: 20px;
+  text-align: center;
+  line-height: 25px;        /* align text to center of box */
+  vertical-align: top;
+}
+.edit_button:hover {
+  background-color: #2c6485;
+  color: white;
+}
+.edit_button:click {
+  background-color: #dde9f1;
+  color: white;
+}
+
+  
+
+/* Edit Availability Attributes */
+.edit_availability{
+  font-size: 70px;
+  margin-left: 50px;
+  margin-top: 20px;
+  color: #FFFFFF;
+}
+
+h1 .edit_availability{
+  
+  font-size: 200px;
+}
+
