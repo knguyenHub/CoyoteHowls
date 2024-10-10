@@ -33,6 +33,12 @@ export const Navbar = () => {
         <li>
           <NavLink to="/Log_in">Log in</NavLink>
         </li> 
+        <li hidden>
+          <NavLink to="/StudentDashboard">Dashboard</NavLink>
+          </li>
+          <li hidden>
+          <NavLink to="/FalcultyDashboard">Dashboard</NavLink>
+          </li>
       </ul>
     </nav>
   );
