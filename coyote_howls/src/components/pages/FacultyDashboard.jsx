@@ -54,7 +54,7 @@ const FacultyDashboard = () => {
         <hr className="line" /> 
 
         <div className="fd_body">
-          <table className=".history_table" >
+          <table hidden className=".history_table" >
             <tr>
               <th>Date</th>
               <th>Student</th>
@@ -119,7 +119,7 @@ const FacultyDashboard = () => {
             </div>
           <div className="item item-6">Apply To</div>
           <div className="item item-7">
-          <label class="container"> Only This Day
+            <label class="container"> Only This Day
               <input type="checkbox" checked="checked"></input>
               <span class="checkmark"></span>
             </label>
