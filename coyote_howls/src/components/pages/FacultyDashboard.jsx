@@ -118,20 +118,18 @@ const FacultyDashboard = () => {
               </div>
             </div>
           <div className="item item-6">Apply To</div>
-          <div className="item item-7">
-            <label class="container"> Only This Day
+            <label class="container item item-7"> Only This Day
               <input type="checkbox" checked="checked"></input>
               <span class="checkmark"></span>
             </label>
-            <label class="container"> Every Monday
+            <label class="container item item-8"> Every Monday
               <input type="checkbox" checked="checked"></input>
               <span class="checkmark"></span>
             </label>
-            <label class="container"> Everyday
+            <label class="container item item-9"> Everyday
               <input type="checkbox" checked="checked"></input>
               <span class="checkmark"></span>
             </label> 
-          </div>
           <div className="item item-10 "><button className="add_availability">Add Availiability</button></div>
           </div>
         </div>

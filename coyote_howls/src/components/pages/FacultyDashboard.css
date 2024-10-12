@@ -115,24 +115,29 @@
   color: white;
 }
 /* Radio */
-
+/* Only this day */
 .item-7{
-  grid-row: span 1;
-  grid-column:span 1;
-  margin-top: 400px;
-  margin-right: 30px;
+  grid-row: 5/5;
+  grid-column:2/7;
+  margin-top: 20px;
+  margin-left: 170px;
 
 }
+
+/* Every xDay */
 .item-8{
-  grid-row: 6/6;
-  grid-column: 2/2;
+  grid-row: 5/5;
+  grid-column: 7/10;
   margin-top: 20px;
   
 }
+
+/* Every Day */
 .item-9{
   grid-row: 6/6;
-  grid-column: 2/2;
-  margin-top: 20px;
+  grid-column: 2/7;
+  margin-top: 20 px;
+  margin-left: 170px;
 }
 
 /* Add Button */
@@ -162,13 +167,14 @@
 
 .container{
   display: grid;
-  grid-row: 7/7;
-  grid-column: span 3;
   position:relative;
   padding-left: 35px;
   margin-bottom: 12px;
   cursor: pointer;
-  font-size: 22px;
+  font-size: 25px;
+  color: white;
+  vertical-align: center;
+  line-height: 20px;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
