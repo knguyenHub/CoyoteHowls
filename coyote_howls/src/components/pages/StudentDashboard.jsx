@@ -8,12 +8,23 @@ const StudentDashboard = () => {
       <div className="sd_header">
         <h1>Student Home</h1>
       </div>
+      <div className="fd_notification_header">
+        <ul className="notifications">
+          <b>Important Messages About Your Upcoming Meetings:</b>
+          <li>Meeting Created: Oct 27 2024 with Professor Jin</li>
+          <li>Meeting Modified: Oct 29 2024 with Professor Jin</li>
+          <li>Meeting Cancelled: October 23 2024 by Professor Khan</li>
+        </ul>
+      </div>
       <div className="left_column">
           <button className="sd_schedule_appt">Schedule Appointment</button>
         <div className="sd_upcoming_appt">
         <ul className="up_comming_appt_list">
             <b>Upcoming Appointments</b>
             <li className="upcoming_appt_list li"> 10/27 12:00 pm - Jin 
+              <button className="edit_button">Edit</button>
+            </li>
+            <li className="upcoming_appt_list li"> 10/29 12:30 pm - Jin 
               <button className="edit_button">Edit</button>
             </li>
           </ul>

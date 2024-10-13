@@ -1,0 +1,17 @@
+.successful_logout {
+    /* Notification Header */
+  
+    margin: 35px auto;
+    margin-top: 0px;
+    margin-bottom: -70px;
+    text-align: center;
+    font-size: 40px;
+    color: #2c6485;
+    background-color: white;
+    padding: 10px;
+    padding-block: 40px;
+    padding-bottom: 60px;
+    width: 87%; /* Let the width adjust based on content */
+    opacity: 0.85;
+  }
+  

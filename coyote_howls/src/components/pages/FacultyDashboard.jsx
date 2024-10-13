@@ -1,5 +1,6 @@
 import React from "react";
 import "./FacultyDashboard.css";
+import "./Student_Meeting.css";
 /* importing each component from their appropriate locations */
 
 const FacultyDashboard = () => {
@@ -14,7 +15,6 @@ const FacultyDashboard = () => {
           <li>Meeting Created: Oct 27 2024 with Jane Doe</li>
           <li>Meeting Modified: Oct 29 2024 with Peter Parker</li>
           <li>Meeting Cancelled: October 23 2024 Tony Stark</li>
-
         </ul>
       </div>
       <div className="left_column">
@@ -24,13 +24,16 @@ const FacultyDashboard = () => {
         <div className="fd_upcoming_appt">
           <ul className="up_comming_appt_list">
             <b>Upcoming Appointments</b>
-            <li className="upcoming_appt_list"> 10/27 12:00 pm - Doe 
+            <li className="upcoming_appt_list">
+              {" "}
+              10/27 12:00 pm - Doe
               <button className="edit_button">Edit</button>
             </li>
-            <li className="up_comming_appt_list"> 10/29 1:00pm - Parker
+            <li className="up_comming_appt_list">
+              {" "}
+              10/29 1:00pm - Parker
               <button className="edit_button"> Edit </button>
             </li>
-
           </ul>
         </div>
       </div>
@@ -39,22 +42,30 @@ const FacultyDashboard = () => {
         <div>
           <ul className="body_navbar">
             <li className="body_navbar">
-              <button href="#Courses" className="button" onClick="course_view()">
+              <button
+                href="#Courses"
+                className="button"
+                onClick="course_view()"
+              >
                 History
               </button>
             </li>
             <li className="body_navbar">
-              <button href="#History" className="button" onClick="history_view()">
+              <button
+                href="#History"
+                className="button"
+                onClick="history_view()"
+              >
                 Availability
               </button>
             </li>
           </ul>
         </div>
-        
-        <hr className="line" /> 
+
+        <hr className="line" />
 
         <div className="fd_body">
-          <table hidden className=".history_table" >
+          <table hidden className=".history_table">
             <tr>
               <th>Date</th>
               <th>Student</th>
@@ -86,12 +97,13 @@ const FacultyDashboard = () => {
               <td>Completed</td>
             </tr>
           </table>
-          
-          <div class= "grid_container">
+
+          <div class="grid_container">
             <div className="item item-1">Edit Availability</div>
             <div className="item item-2">From</div>
             <div className="item item-3">Until</div>
-            <div className="item item-4 time_slot dropdown">9:00a
+            <div className="item item-4 time_slot dropdown">
+              9:00a
               <div className="dropdown-content">
                 <p>9:30</p>
                 <p>10:00</p>
@@ -104,7 +116,8 @@ const FacultyDashboard = () => {
                 <p>1:30</p>
               </div>
             </div>
-            <div className="item item-5 time_slot dropdown">9:00a
+            <div className="item item-5 time_slot dropdown">
+              9:00a
               <div className="dropdown-content">
                 <p>9:30</p>
                 <p>10:00</p>
@@ -117,24 +130,100 @@ const FacultyDashboard = () => {
                 <p>1:30</p>
               </div>
             </div>
-          <div className="item item-6">Apply To</div>
-            <label class="container item item-7"> Only This Day
+            <div className="item item-6">Apply To</div>
+            <label class="container item item-7">
+              {" "}
+              Only This Day
               <input type="checkbox" checked="checked"></input>
               <span class="checkmark"></span>
             </label>
-            <label class="container item item-8"> Every Monday
+            <label class="container item item-8">
+              {" "}
+              Every Monday
               <input type="checkbox" checked="checked"></input>
               <span class="checkmark"></span>
             </label>
-            <label class="container item item-9"> Everyday
+            <label class="container item item-9">
+              {" "}
+              Everyday
               <input type="checkbox" checked="checked"></input>
               <span class="checkmark"></span>
-            </label> 
-          <div className="item item-10 "><button className="add_availability">Add Availiability</button></div>
+            </label>
+            <div className="item item-10 ">
+              <button className="add_availability">Add Availiability</button>
+            </div>
+            </div>
+
+            {/* Calendar Section */}
+            <div>
+              <div className="calendarr">
+                <div className="f-calendar-header">
+                  {" "}
+                  {/* Header for the month navigation */}
+                  <button className="prev">
+                    {"<"}
+                    -&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Prev&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  </button>{" "}
+                  {/* Button to navigate to previous month with &nbsp; for non-breaking spaces */}
+                  <span className="f-month">September</span>{" "}
+                  {/* display current month */}
+                  <button className="next">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Next&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-
+                    {">"}
+                  </button>{" "}
+                  {/* Button to navigate to next month with &nbsp; for non-breaking spaces  */}
+                </div>
+                {/* Header for week navigation */}
+                <div className="f_week-header">
+                  <button className="prev-week">
+                    {"<"}
+                    -&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Prev&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  </button>{" "}
+                  {/* Button to navigate to previous week with &nbsp; for non-breaking spaces */}
+                  <span> Sep 23 - Sep 27 </span>{" "}
+                  {/* Display current week range */}
+                  <button className="next-week">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Next&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-
+                    {">"}
+                  </button>{" "}
+                  {/* Button to navigate to next week with &nbsp; for non-breaking spaces */}
+                </div>
+                {/* Days of the week */}
+                <div className="f_week-days">
+                  {/* displays Monday header with "time" for the container that follows under */}
+                  <div className="day_header">
+                    <div className="f_day">Monday</div>
+                    <div className="f_time"></div>
+                  </div>
+                  {/* displays Tuesday header with "time" for the container that follows under */}
+                  <div className="day_header">
+                    <div className="f_day">Tuesday</div>
+                    <div className="f_time"></div>
+                  </div>
+                  {/* displays Wednesday header with "time" for the container that follows under */}
+                  <div className="day_header">
+                    <div className="f_day"> Wednesday</div>
+                    <div className="f_time"></div>
+                  </div>
+                  {/* displays Thursday header with "time" for the container that follows under */}
+                  <div className="day_header">
+                    <div className="f_day"> Thursday</div>
+                    <div className="f_time"></div>
+                  </div>
+                  {/* displays Friday header with "time" for the container that follows under */}
+                  <div className="day_header">
+                    <div className="f_day">Friday</div>
+                    <div className="f_time"></div>
+                  </div>
+                  
+                </div>
+              </div>
+            </div>
+            <button className="add_availability2">Edit Availability</button>
           </div>
         </div>
       </div>
-    </div>
+    
   );
 };
 export default FacultyDashboard;
