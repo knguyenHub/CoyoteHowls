@@ -14,6 +14,10 @@ import StudentDashboard from "./components/pages/StudentDashboard";
 import FacultyDashboard from "./components/pages/FacultyDashboard";
 import Student_Meeting from "./components/pages/Student_Meeting"; 
 import Faculty_Modify from "./components/pages/Faculty_Modify";
+import New_faculty from "./components/pages/new_faculty";
+import New_student from "./components/pages/new_student";
+import Forgot_faculty from "./components/pages/forgot_faculty";
+import Forgot_student from "./components/pages/forgot_student";
 
 /*Routing each component from pages to the appropriate url on the website */
 function App() {
@@ -32,6 +36,10 @@ function App() {
         <Route path="/FacultyDashboard" element={<FacultyDashboard />} />
         <Route path="/Student_Meeting" element={<Student_Meeting />} />
         <Route path="/Faculty_Modify" element={<Faculty_Modify />} />
+        <Route path="/new_faculty" element={<New_faculty />} />
+        <Route path="/new_student" element={<New_student />} />
+        <Route path="/forgot_faculty" element={<Forgot_faculty />} />
+        <Route path="/forgot_student" element={<Forgot_student />} />
       </Routes>
     </div>  
   );
