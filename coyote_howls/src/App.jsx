@@ -13,7 +13,7 @@ import Student_login from "./components/pages/Student_login";
 import StudentDashboard from "./components/pages/StudentDashboard";
 import FacultyDashboard from "./components/pages/FacultyDashboard";
 import Student_Meeting from "./components/pages/Student_Meeting"; 
-
+import Faculty_Modify from "./components/pages/Faculty_Modify";
 
 /*Routing each component from pages to the appropriate url on the website */
 function App() {
@@ -31,6 +31,7 @@ function App() {
         <Route path="/StudentDashboard" element={<StudentDashboard />} />
         <Route path="/FacultyDashboard" element={<FacultyDashboard />} />
         <Route path="/Student_Meeting" element={<Student_Meeting />} />
+        <Route path="/Faculty_Modify" element={<Faculty_Modify />} />
       </Routes>
     </div>  
   );

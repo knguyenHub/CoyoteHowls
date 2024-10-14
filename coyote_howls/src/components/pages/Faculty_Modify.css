@@ -1,0 +1,414 @@
+/* General page styling for main container */
+.Fsd_container {
+    padding: 20px; /* Padding around the main container */
+    margin: 50px auto; /* Center the container on the page */
+    background-color: #2C6485; /* Dark blue background color for the page */
+    width:87%; 
+    margin-top: -50px;
+  }
+
+  /* time slots hover animation */
+  .Ftime-slot:hover {
+    background-color: #394A56;
+  }
+  
+
+  /* main header of website */
+  .Fsh_header h1{
+    margin: 35px auto;
+    margin-bottom: 70px;
+    text-align: center;
+    font-size: 50px;
+    color: #2C6485;
+    background-color: #8FBFDA;
+    padding: 20px;
+    padding-block: 40px;
+    padding-bottom: 40px;
+    width: 87%; 
+
+  }
+
+  /* header for main container */
+  .Fsm h2{
+    border-radius: 5px;
+    text-align: center;
+    margin: 10px auto;
+    margin-top: -10px;
+    color: #DDE9F1;
+    background-color: #22303F;
+    width:35% ;
+    padding: 10px;
+    
+    
+   
+  }
+
+  
+  /* Main container for the schedule form and calendar */
+  .Fschedule-container {
+    display: flex; /* Use flex for layout */
+    justify-content: space-between; /* Space out the form and calendar */
+    max-width: 100%; /* Ensure it doesn't exceed 100% width */
+    margin: 0 auto; /* Center the container */
+    gap: 20px; /* add space between form and calendar */
+    
+  }
+  
+  /* Schedule Meeting Form container */
+  .Fschedule-meeting {
+    background-color: #8FBFDA; /* background for the meeting form */
+    padding: 20px; /* padding inside the form container */
+    border-radius: 8px; /* round corners */
+    color: white; /* text color */
+    width: 25%; /* width of the meeting form */
+  }
+  
+ 
+  
+  /* Meeting form fields */
+  .Fform-group {
+    margin-bottom: 12px; /* Margin below each form group */
+  }
+  
+/* input fields and textarea sytling */
+  .Fform-group select,
+  .Fform-group textarea {
+    padding: 10px; /* Padding inside the input fields */
+    border-radius: 5px; /* rounded corners for input fields */
+    border: none; /* remove border */
+    font-size: 14px; /* font size for the input fields */
+    width: 100%; /* full width for input fields */
+    background-color: #f3f6f9; /* background color for input area */
+  }
+  
+  /* textarea styling */
+  textarea {
+    resize: none; /* Disable resizing for textarea */
+    height: 80px; /* Fixed height for textarea */
+  }
+  
+  /* time slot after its canceled */
+  .Ftime-slot.canceled {
+    background-color: rgb(255, 11, 11);
+    color: white;
+    
+  }
+  /* time slot when its selected */
+  .Ftime-slot.selected {
+    background-color: #DDE9F1;
+    border: 2px solid black;
+    color: black;
+    font-weight: bold;
+    
+  }
+  
+
+  /* For location input */
+  .Fform-group select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  /* time slots */
+  .Ftime-slot {
+    background-color: #22303F;
+    padding: 5px;
+    margin: 10px auto;
+    text-align: center;
+    border-radius: 20px;
+    cursor: pointer;
+    color: white;
+    width: 180px;
+  }
+
+  /* input boxes read only  */
+  .Fform-group input[readonly] {
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    pointer-events: none;
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border-radius: 5px;
+
+    
+  }
+
+  
+  /* Confirm button styling */
+  .Fsubmit {
+    width: 65%; /* full width for button */
+    padding: 10px; /* Padding inside the button */
+    background-color: #22303F; /* background for button */
+    color: white; /* text color for button */
+    border: none; /* remove border */
+    border-radius: 5px; /* rounded corners for button */
+    cursor: pointer; /* change cursor to pointer on hover */
+    margin-top: 10px; /* margin above the button */
+  }
+  
+  /* hovering animation for Confirm button */
+  button:hover {
+    background-color: #394A56; 
+  }
+
+  /* cancel and confirm buttons */
+  .Fbutton-group {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px; 
+    gap: 10px;
+    flex-wrap: wrap;
+   
+  }
+  
+  /* cancel button */
+  .Fcancel {
+    background-color: #f44336;
+    width: 80px;
+    border-radius: 5px;
+    border: none;
+    margin-top: 10px ;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+  }
+/*
+  .Fsubmit:hover {
+    background-color: #45a049;
+  }
+*/
+  /* hovering animation for cancel button */
+  .Fcancel:hover {
+    background-color: #d32f2f;
+  }
+
+
+
+  /* Calendar container */
+  .Fcalendar {
+    background-color: #2C6485; /* background for the calendar */
+    padding: 20px; /* padding inside the calendar container */
+    border-radius: 8px; /* rounded corners for calendar */
+    color: white; /* text color for calendar */
+    width: 75%; /* Width of the calendar section */
+  }
+  
+  /* calendar header for month nav */
+  .Fcalendar-header {
+    display: flex; /* layout */
+    justify-content: center; /* space between buttons and month label */
+    margin-bottom: 15px; /* Margin below the header */
+    align-items: center;
+    width:450px;
+    height: 30px;
+    margin: auto;
+    margin-bottom: 10px; 
+    gap: 20px;
+  }
+
+  /* month in calendar nav*/
+  .Fmonth {
+    background-color: lightblue;
+    margin: 0;
+    margin-top: 2px;
+    padding: 4px 6px;
+    border-radius: 5px;
+    
+    
+  }
+  
+  /* calendar buttons */
+  .Fcalendar-header button {
+    border: none; /* remove border */
+    padding: 4px 2px; /* padding inside header buttons */
+    width: 120px;
+    height: 30px;
+    background-color: #2C6485; /* color of buttons */
+    color: white; /* text color for header buttons */
+    border-radius: 5px; /* rounded corners for header buttons */
+    cursor: pointer; /* change cursor to pointer on hover */
+  }
+
+  /* animation for calendar buttons on hover */
+  .Fcalendar-header button:hover {
+    background-color: #22303F;
+  }
+  
+  /* Week header navigation */
+  .Fweek-header {
+    border-radius: 50px;
+    background-color: #DDE9F1;
+    width:450px;
+    height: 30px;
+    margin: auto;
+    display: flex; 
+    justify-content: center; 
+    margin-bottom: 10px; 
+    gap: 40px;
+  }
+  
+  /* animation for week buttons on hover */
+  .Fweek-header button:hover {
+    background-color: #22303F;
+    color: #DDE9F1;
+    
+  }
+
+
+  /* buttons for week nav */
+  .Fweek-header button {
+    border: none; /* remove border */
+    padding: 3px; /* padding inside week nav buttons */
+    color: gray; /* text color for week nav buttons */
+    border-radius: 50px; /* rounded corners for week nav buttons */
+    width: 120px;
+    height: 30px;
+    background-color: #DDE9F1; /* background color for buttons */
+    cursor: pointer;  /* change curson on hover */ 
+    
+  }
+
+ 
+  /* dates on the week in week nav */
+  .Fweek-header span {
+    color:black;
+    font-weight: 520;
+    display: flex;
+    margin: 0;
+    align-items: center;
+    width: 130px;
+  }
+  
+  /* weekdays grid */
+  .Fweek-days {
+    display: flex; /* flex layout */
+    justify-content: space-between; /* space between weekdays */
+    flex-wrap: wrap;
+  }
+  
+  /* container that contains day and time styling */
+  .Fday_header {
+    flex:1;
+    padding: 2px;
+    margin:5px;
+  }
+
+  /* days of the week */
+  .Fday {
+    background-color: #22303F; /* background for day labels */
+    padding: 3px; /* padding inside day labels */
+    text-align: center; /* center text in day labels */
+    border-radius: 5px; /* rounded corners for day labels */
+    line-height: 1.5; /* line height for better spacing */
+    color: #DDE9F1; /* text color for day labels */
+  }
+  
+  /* time of the week (currently empty on website) */
+  .Ftime {
+    margin-top: 20px;
+    background-color: #8FBFDA; /* Dark blue background for day labels */
+    border-radius: 5px; /* Rounded corners for day labels */
+    height: 350px;
+    padding-top: 1px;
+  }
+  
+
+    
+
+/* Responsive Adjustments for Smaller Screens/Mobile devices */
+@media screen and (max-width: 800px) {  /* width this applies to */
+  .Fsh_header h1 {       /* main header of the website */
+      font-size: 30px;      
+      padding-block: 20px;
+  }
+  
+  .Fsm h2 {
+      font-size: 24px;       /* header of the main container */
+      width: 75%;
+  }
+
+  .Fschedule-container {          /* main container for the schedule form and calendar form */
+      flex-direction: column;
+      gap: 10px;
+      display: flex;
+      justify-content: space-between;
+  }
+
+  .Fschedule-meeting,       /* max width so it adjusts to screen */
+  .Fcalendar {
+      width: 100%;
+      padding: 10px;
+      
+  }
+
+  /* Calendar header/nav for calendar */
+  .Fcalendar-header {
+      display: flex;                  /* one line display */
+      justify-content: space-between; /* Buttons remain side by side */
+      gap: 5px;            /* gap between buttons and Month */
+      width: 100%; /* Full width */
+  }
+
+  /* calendar buttons */
+  .Fcalendar-header button {
+      font-size: 1%;     /* font size  */
+      max-width: 45%; /* Set a max width to prevent them from becoming too wide */
+      text-align: center; /* Center button text */
+      
+  }
+
+  /* current month display */
+  .Fmonth {  
+      font-size:10px; /* font size */
+      text-align: center;
+      background-color: #22303F;
+      border-radius: 5px;
+      width: 150px; /* Ensure the month text spans across the width */
+  }
+
+  /* Week header */
+  .Fweek-header {
+      display: flex;
+      justify-content: space-between; /* Buttons and span stay in a row */
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+  }
+
+  /* buttons for week header styling */
+  .Fweek-header button {
+      font-size: 1%;
+      flex-grow: 1;
+      max-width: 45%;
+      text-align: center;
+  }
+
+  /* current week display */
+  .Fweek-header span {
+      text-align: center;
+      width: auto;
+      font-size: 10px;
+      flex-grow: 1;
+      margin: 0;
+
+  }
+
+  /* Weekdays layout for smaller screens */
+  .Fweek-days {
+      flex-direction: column; /* Stack weekdays vertically */
+  }
+  
+  /*
+  .Ftime-slot {
+    margin-top: 5px;
+    font-size: 14px;
+  }
+*/
+
+
+}
