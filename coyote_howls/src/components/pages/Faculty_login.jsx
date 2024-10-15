@@ -1,6 +1,6 @@
 import React from 'react'
 import './Faculty_login.css';
-
+import { Link } from 'react-router-dom';
 
 const Faculty_login = () => {
   return (

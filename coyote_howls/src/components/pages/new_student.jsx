@@ -1,6 +1,6 @@
 import React from 'react'
 import './new_account.css';
-
+import { Link } from 'react-router-dom';
 
 const New_student = () => {
   return (
@@ -14,6 +14,8 @@ const New_student = () => {
 
 
       <button className="login-button">Create</button>
+   
+    
     </div>
   </div>
   )

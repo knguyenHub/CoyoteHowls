@@ -1,6 +1,6 @@
 import React from 'react'
 import './new_account.css';
-
+import { Link } from 'react-router-dom';
 
 const New_faculty = () => {
   return (
@@ -13,7 +13,8 @@ const New_faculty = () => {
       <input type="password" placeholder="Password" className="input-field" />
 
 
-      <button className="login-button">Create</button>  
+      <button className="login-button">Create</button>
+   
     
     </div>
   </div>

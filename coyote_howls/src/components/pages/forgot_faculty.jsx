@@ -13,7 +13,6 @@ const Forgot_faculty = () => {
 
 
       <button className="login-button">Confirm</button>
-      <Link to="/faculty"><button className="login-button">back</button></Link>
     </div>
   </div>
   )

@@ -1,8 +1,9 @@
 import React from 'react'
 import './new_account.css';
+import { Link } from 'react-router-dom';
 
 
-const Forgot_student = () => {
+const Forgot_faculty = () => {
   return (
     <div className="login-body">
     <h1 className="login-title">New Student Login</h1>
@@ -17,4 +18,4 @@ const Forgot_student = () => {
   )
 }
 
-export default Forgot_student
+export default Forgot_faculty
