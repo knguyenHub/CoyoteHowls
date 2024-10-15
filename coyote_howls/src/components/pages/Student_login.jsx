@@ -12,8 +12,8 @@ const Student_login = () => {
       <input type="password" placeholder="Password" className="input-field" />
 
       <div className="login-options">
-        <a href="/" className="link">New Student?</a>
-        <a href="/" className="link">Forgot Password?</a>
+        <a href="/new_student" className="link">New Student?</a>
+        <a href="/forgot_student" className="link">Forgot Password?</a>
       </div>
 
       <button className="login-button">Login</button>

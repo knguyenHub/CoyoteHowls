@@ -1,6 +1,6 @@
 import React from 'react'
 import './Faculty_login.css';
-
+import { Link } from 'react-router-dom';
 
 const Faculty_login = () => {
   return (
@@ -12,8 +12,8 @@ const Faculty_login = () => {
       <input type="password" placeholder="Password" className="input-field" />
 
       <div className="login-options">
-        <a href="/" className="link">New Account?</a>
-        <a href="/" className="link">Forgot Password?</a>
+        <a href="/new_faculty" className="link">New Faculty?</a>
+        <a href="/forgot_faculty" className="link"> Forgot Password?</a>
       </div>
 
       <button className="login-button">Login</button>
