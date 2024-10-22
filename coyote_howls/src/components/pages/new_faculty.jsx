@@ -1,6 +1,6 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 //import './new_account.css';
-import { Form, Button, Card} from 'react-bootstrap'
+import { Form, Button, Card, Alert} from 'react-bootstrap'
 import { useAuth } from '../AuthContenxt'
 
 const New_faculty = () => {
@@ -8,11 +8,24 @@ const New_faculty = () => {
   const passwordRef = useRef()
   const passwordConfirmRef = useRef()
   const { new_faculty } = useAuth()
+  const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault()
 
-    new_faculty(emailRef.current.value, passwordRef.current.value)
+    if(passwordRef.current.value !== passwordConfirmRef.current.value){
+      return setError('Passwords does not match')
+    }
+
+    try{
+      setError('')
+      setLoading(true)
+      await new_faculty(emailRef.current.value, passwordRef.current.value)
+    } catch {
+      setError('Failed to create an Account')
+    }
+    setLoading(false)
   }
 
   return (
@@ -20,7 +33,8 @@ const New_faculty = () => {
       <Card>
         <Card.Body>
           <h2 className="text-center mb-4"> New Account</h2>
-          <Form>
+          {error && <Alert variant='danger'>{error}</Alert>}
+          <Form onSubmit={handleSubmit}>
             <Form.Group id = "email">
               <Form.Label>Email</Form.Label>
               <Form.Control type="email" ref={emailRef} required />
@@ -33,7 +47,7 @@ const New_faculty = () => {
               <Form.Label>Password Confirmation</Form.Label>
               <Form.Control type="password" ref={passwordConfirmRef} required />
             </Form.Group>
-            <Button className="w-100" type="submit">Sign Up</Button>
+            <Button disabled={loading} className="w-100" type="submit">Sign Up</Button>
           </Form>
         </Card.Body>
       </Card>
