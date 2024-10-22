@@ -1,23 +1,46 @@
-import React from 'react'
-import './new_account.css';
-import { Link } from 'react-router-dom';
+import React, { useRef } from 'react'
+//import './new_account.css';
+import { Form, Button, Card} from 'react-bootstrap'
+import { useAuth } from '../AuthContenxt'
 
 const New_faculty = () => {
+  const emailRef = useRef()
+  const passwordRef = useRef()
+  const passwordConfirmRef = useRef()
+  const { new_faculty } = useAuth()
+
+  function handleSubmit(e) {
+    e.preventDefault()
+
+    new_faculty(emailRef.current.value, passwordRef.current.value)
+  }
+
   return (
-    <div className="login-body">
-    <h1 className="login-title">Create Faculty Account</h1>
-
-    <div className="login-form">
-      <input type="text" placeholder="Name" className="input-field" />
-      <input type="text" placeholder="Email" className="input-field" />
-      <input type="password" placeholder="Password" className="input-field" />
-
-
-      <button className="login-button">Create</button>
-   
-    
-    </div>
-  </div>
+    <>
+      <Card>
+        <Card.Body>
+          <h2 className="text-center mb-4"> New Account</h2>
+          <Form>
+            <Form.Group id = "email">
+              <Form.Label>Email</Form.Label>
+              <Form.Control type="email" ref={emailRef} required />
+            </Form.Group>
+            <Form.Group id = "password">
+              <Form.Label>Password</Form.Label>
+              <Form.Control type="password" ref={passwordRef} required />
+            </Form.Group>
+            <Form.Group id = "password confirm">
+              <Form.Label>Password Confirmation</Form.Label>
+              <Form.Control type="password" ref={passwordConfirmRef} required />
+            </Form.Group>
+            <Button className="w-100" type="submit">Sign Up</Button>
+          </Form>
+        </Card.Body>
+      </Card>
+      <div className="w-100 text-center mt-2">
+        Already have an account? Log in
+      </div>
+    </>
   )
 }
 

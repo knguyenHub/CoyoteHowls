@@ -18,29 +18,40 @@ import New_faculty from "./components/pages/new_faculty";
 import New_student from "./components/pages/new_student";
 import Forgot_faculty from "./components/pages/forgot_faculty";
 import Forgot_student from "./components/pages/forgot_student";
+import { Container } from "react-bootstrap"
+import { AuthProvider } from "./components/AuthContenxt";
 
 /*Routing each component from pages to the appropriate url on the website */
 function App() {
   return (
     <div className= "App">
-      <Navbar />
-      <Routes>
-        <Route path= "/" element={<Home/>} />
-     {/*   <Route path= "/message" element={<Message/>} />  */}
-        <Route path= "/about" element={<About/>} />
-        <Route path= "/contact" element={<Contact/>} />
-        <Route path= "/log_in" element={<Log_in/>} />
-        <Route path="/faculty" element={<Faculty_login />} />
-        <Route path="/student" element={<Student_login />} />
-        <Route path="/StudentDashboard" element={<StudentDashboard />} />
-        <Route path="/FacultyDashboard" element={<FacultyDashboard />} />
-        <Route path="/Student_Meeting" element={<Student_Meeting />} />
-        <Route path="/Faculty_Modify" element={<Faculty_Modify />} />
-        <Route path="/new_faculty" element={<New_faculty />} />
-        <Route path="/new_student" element={<New_student />} />
-        <Route path="/forgot_faculty" element={<Forgot_faculty />} />
-        <Route path="/forgot_student" element={<Forgot_student />} />
-      </Routes>
+      <AuthProvider>
+        
+        <Navbar />
+        <Routes>
+          <Route path= "/" element={<Home/>} />
+      {/*   <Route path= "/message" element={<Message/>} />  */}
+          <Route path= "/about" element={<About/>} />
+          <Route path= "/contact" element={<Contact/>} />
+          <Route path= "/log_in" element={<Log_in/>} />
+          <Route path="/faculty" element={<Faculty_login />} />
+          <Route path="/student" element={<Student_login />} />
+          <Route path="/StudentDashboard" element={<StudentDashboard />} />
+          <Route path="/FacultyDashboard" element={<FacultyDashboard />} />
+          <Route path="/Student_Meeting" element={<Student_Meeting />} />
+          <Route path="/Faculty_Modify" element={<Faculty_Modify />} />
+          <Route path="/new_faculty" element={<New_faculty />} />
+          <Route path="/new_student" element={<New_student />} />
+          <Route path="/forgot_faculty" element={<Forgot_faculty />} />
+          <Route path="/forgot_student" element={<Forgot_student />} />
+        </Routes>
+      
+         
+ 
+        
+      </AuthProvider>
+
+
     </div>  
   );
 }
