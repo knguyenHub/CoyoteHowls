@@ -19,6 +19,7 @@ import New_student from "./components/pages/new_student";
 import Forgot_faculty from "./components/pages/forgot_faculty";
 import Forgot_student from "./components/pages/forgot_student";
 
+
 /*Routing each component from pages to the appropriate url on the website */
 function App() {
   return (
