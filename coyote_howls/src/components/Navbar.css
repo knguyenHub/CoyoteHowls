@@ -14,11 +14,12 @@ nav {
     background-color: #2C6485;      /* background color of the nav bar */
     position: sticky;                 /* so that the nav bar stays visible on the website when scrolling down */
     top: 0;                           /* where it should stick to */
+    z-index: 1000;                     /* Ensures Navbar is above everything else */
 }
 
 nav .title {                        /* the title in this case would be "Home" which later on would be switched to the logo */
     font-size: 20px;
-    margin: 10px;                   /* spacing from each side */
+                       
     font-weight: bold;
     text-decoration: none;          /* removes the underline that it has by default */
     color: #E7EBE7;               /* color of text */

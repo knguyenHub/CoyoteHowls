@@ -1,9 +1,8 @@
 import React, {useState} from 'react';
 
 import {Link, NavLink} from "react-router-dom"    /* special component from the react router library to change the url when you click the buttons in nav */
-
 import "./Navbar.css"  /* importing the Navbar.css file so its viewable on the live website */
-
+import homeImage from "/src/assets/logo-final-draft.png";
 export const Navbar = () => {
     const [menuOpen, setMenuOpen] = useState(false)       /* useState to determine if the menu pull down should be opened or closed */
 
@@ -12,7 +11,7 @@ export const Navbar = () => {
 /* the span is used to make the 3 lines for the pull down menu */
   return (
     <nav>
-      <Link to="/" className = "title">Home</Link>
+      <Link to="/" className = "title"><img src={homeImage} alt="Home" style={{ width: '70px', height: '70px', marginLeft: '5px', borderRadius: '3px'}}/></Link>
       <div className="menu" onClick ={() => {           /* adds the pull down menu when screen is small on top right and the action click for */
         setMenuOpen(!menuOpen);
       }}>

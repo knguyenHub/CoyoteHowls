@@ -1,9 +1,35 @@
-import React from "react";
 import "./FacultyDashboard.css";
-import "./Student_Meeting.css";
+
+import { useNavigate } from "react-router-dom";
+import React, { useState } from "react"; 
 /* importing each component from their appropriate locations */
 
 const FacultyDashboard = () => {
+  const navigate = useNavigate();
+
+  const handleModifyClick = () => {
+    navigate("/Faculty_Modify"); 
+  };
+  const handleEditClick = () => {
+    navigate("/Faculty_Modify"); 
+  };
+  
+  const [visibleSection, setVisibleSection] = useState("history");  // default visible is "courses" when page is loaded
+  
+  // Handle the click to show the "Courses" section
+  const showHistory = () => {
+    setVisibleSection("history"); 
+  };
+
+  // Handle the click to show the "History" section
+  const showAvailability = () => {
+    setVisibleSection("availability");
+  }; 
+
+  const showEditAvailability = () => {
+    setVisibleSection("editAvailability");
+  }; 
+
   return (
     <div className="fd_background_color">
       <div className="fd_header">
@@ -12,27 +38,27 @@ const FacultyDashboard = () => {
       <div className="fd_notification_header">
         <ul className="notifications">
           <b>Important Messages About Your Upcoming Meetings:</b>
-          <li>Meeting Created: Oct 27 2024 with Jane Doe</li>
-          <li>Meeting Modified: Oct 29 2024 with Peter Parker</li>
-          <li>Meeting Cancelled: October 23 2024 Tony Stark</li>
+          <li>Meeting Created: Oct 27 2024 with Carolinne Marquez</li>
+          <li>Meeting Modified: Oct 29 2024 with Karen Nguyen</li>
+          <li>Meeting Cancelled: October 23 2024 Daniel Gaeta</li>
         </ul>
       </div>
       <div className="left_column">
         <div className="fd_modify_appt">
-          <button className="fd_modify_appt">Modify Appointment</button>
+          <button className="fd_modify_appt"onClick={handleModifyClick}>Modify Appointment</button>
         </div>
         <div className="fd_upcoming_appt">
           <ul className="up_comming_appt_list">
             <b>Upcoming Appointments</b>
             <li className="upcoming_appt_list">
               {" "}
-              10/27 12:00 pm - Doe
-              <button className="edit_button">Edit</button>
+              10/27 12:00 pm - Marquez
+              <button className="edit_button" onClick={handleEditClick}>Edit</button>
             </li>
             <li className="up_comming_appt_list">
               {" "}
-              10/29 1:00pm - Parker
-              <button className="edit_button"> Edit </button>
+              10/29 1:00pm - Nguyen
+              <button className="edit_button" onClick={handleEditClick}> Edit </button>
             </li>
           </ul>
         </div>
@@ -43,18 +69,18 @@ const FacultyDashboard = () => {
           <ul className="body_navbar">
             <li className="body_navbar">
               <button
-                href="#Courses"
-                className="button"
-                onClick="course_view()"
+                href="#History"
+                className= {`button history-btn ${visibleSection === "history" ? "active" : ""}`}
+                onClick={showHistory}
               >
                 History
               </button>
             </li>
             <li className="body_navbar">
               <button
-                href="#History"
-                className="button"
-                onClick="history_view()"
+                href="#Availability"
+                className={`button availability-btn ${visibleSection === "availability" ? "active" : ""}`}
+                onClick={showAvailability}
               >
                 Availability
               </button>
@@ -65,7 +91,8 @@ const FacultyDashboard = () => {
         <hr className="line" />
 
         <div className="fd_body">
-          <table hidden className=".history_table">
+          {visibleSection === "history" && (
+            <table className=".history_table">
             <tr>
               <th>Date</th>
               <th>Student</th>
@@ -73,32 +100,36 @@ const FacultyDashboard = () => {
               <th>Action</th>
             </tr>
             <tr>
-              <td>01/02/24</td>
-              <td>Student 1</td>
+              <td>10/23/24</td>
+              <td>Daniel Gaeta</td>
               <td>Help with Homework</td>
               <td>Canceled</td>
             </tr>
             <tr>
-              <td>01/02/24</td>
-              <td>Student 2</td>
+              <td>09/12/24</td>
+              <td>Joaquin Ramos</td>
               <td>Discuss Current Grade</td>
               <td>Completed</td>
             </tr>
             <tr>
-              <td>01/01/24</td>
-              <td>Student 3</td>
+              <td>09/03/24</td>
+              <td>Aaliyah McCollum</td>
               <td>Missing Lecture</td>
               <td>Rescheduled</td>
             </tr>
             <tr>
-              <td>12/18/23</td>
-              <td>Student 4</td>
+              <td>08/29/24</td>
+              <td>Anthony Craddock</td>
               <td>Discuss Exam Score</td>
               <td>Completed</td>
             </tr>
           </table>
 
-          <div class="grid_container">
+          )}
+
+
+          {visibleSection === "editAvailability" && (
+            <div class="grid_container">
             <div className="item item-1">Edit Availability</div>
             <div className="item item-2">From</div>
             <div className="item item-3">Until</div>
@@ -154,8 +185,14 @@ const FacultyDashboard = () => {
             </div>
             </div>
 
+          )}
+          
+
             {/* Calendar Section */}
-            <div>
+
+            {visibleSection === "availability" && (
+              <div>
+              <div>
               <div className="calendarr">
                 <div className="f-calendar-header">
                   {" "}
@@ -219,7 +256,21 @@ const FacultyDashboard = () => {
                 </div>
               </div>
             </div>
-            <button className="add_availability2">Edit Availability</button>
+            
+            </div>
+            )}
+            {visibleSection === "availability" && (
+              <button
+              href='#EditAvailability' 
+              className={`button editAvailability-btn ${visibleSection === "editAvailability" ? "active" : ""}`}
+              onClick={showEditAvailability}>Edit Availability</button>
+            )}
+         
+      
+            
+            
+            
+            
           </div>
         </div>
       </div>

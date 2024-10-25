@@ -158,7 +158,28 @@ li a {
   cursor: pointer;
 }
 
+
+.courses-btn.active {
+  background-color: #394A56;
+  color: white;
+  border: none;
+  border-radius: 0;
+}
+
+.history-btn.active {
+  background-color: #394A56;
+  color: white;
+  border-radius: 0;
+  border: none;
+}
+
 .button:hover {
+  background-color: #394A56;
+  color: white;
+}
+
+
+.button:focus {
   background-color: #394A56;
   color: white;
 }

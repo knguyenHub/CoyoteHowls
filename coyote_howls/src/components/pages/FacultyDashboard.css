@@ -333,6 +333,14 @@ li.body_navbar {
 
 
 /* Button Holds CS & Functionality */
+
+.availability-btn.active {
+  background-color: #394A56;
+  color: white;
+  border: none;
+  border-radius: 0;
+}
+
 .button {
   background-color: #2c6485;
   border: none;
@@ -351,7 +359,15 @@ li.body_navbar {
   background-color: #394a56;
   color: white;
 }
+.button:active {
+  background-color: #394A56;
+  color: white;
+}
 
+.button:focus {
+  background-color: #394A56;
+  color: white;
+}
 /* Up Coming Appt Unordered List Attributes */
 
 .up_comming_appt_list {
@@ -407,13 +423,14 @@ h1 .edit_availability {
   font-size: 200px;
 }
 
-.add_availability2 {
+.editAvailability-btn {
+  
   width: 250px;
   border-radius: 15px;
   background-color: #22303f;
   height: 60px;
   text-align: center;
-  line-height: 60px; /* align text to center of box */
+  line-height: 30px; /* align text to center of box */
   vertical-align: center;
   font-size: x-large;
   color: #ffffff;
@@ -421,7 +438,7 @@ h1 .edit_availability {
   margin-left: 600px;
 }
 
-.add_availability2:hover {
+.editAvailability-btn:hover {
   background-color: #8fbfda;
   color: white;
 }
