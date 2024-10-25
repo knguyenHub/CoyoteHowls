@@ -1,25 +1,53 @@
-import React from 'react'
+import React, { useState } from 'react';
 import './Faculty_login.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { login } from '../../auth';
 
 const Faculty_login = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const navigate = useNavigate();
+
+  const handleLogin = async () => {
+    try {
+      const user = await login(email, password);
+      console.log('User logged in:', user);
+      navigate('/FacultyDashboard');
+    } catch (error) {
+      console.error('Error logging in user:', error);
+      alert(`Failed to log in user: ${error.message}`);
+    }
+  };
+
   return (
     <div className="login-body">
-    <h1 className="login-title">Faculty Login</h1>
+      <h1 className="login-title">Faculty Login</h1>
 
-    <div className="login-form">
-      <input type="text" placeholder="Email" className="input-field" />
-      <input type="password" placeholder="Password" className="input-field" />
+      <div className="login-form">
+        <input
+          type="text"
+          placeholder="Email"
+          className="input-field"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          className="input-field"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
 
-      <div className="login-options">
-        <a href="/new_faculty" className="link">New Faculty?</a>
-        <a href="/forgot_faculty" className="link"> Forgot Password?</a>
+        <div className="login-options">
+          <Link to="/new_faculty" className="link">New Faculty?</Link>
+          <Link to="/forgot_faculty" className="link">Forgot Password?</Link>
+        </div>
+
+        <button className="login-button" onClick={handleLogin}>Login</button>
       </div>
-
-      <button className="login-button">Login</button>
     </div>
-  </div>
-  )
-}
+  );
+};
 
-export default Faculty_login
+export default Faculty_login;
