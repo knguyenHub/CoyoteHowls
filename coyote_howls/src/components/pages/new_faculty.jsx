@@ -31,7 +31,7 @@ const New_faculty = () => {
 
   return (
     <div className="login-body">
-      <h1 className="login-title">Create Faculty Account</h1>
+      <h1 className="login-title">Create Account</h1>
 
       <div className="login-form">
         <input
