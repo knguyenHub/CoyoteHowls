@@ -40,7 +40,7 @@ const Student_login = () => {
         />
 
         <div className="login-options">
-          <Link to="/new_faculty" className="link">New Faculty?</Link>
+          <Link to="/new_faculty" className="link">New Student?</Link>
           <Link to="/forgot_faculty" className="link">Forgot Password?</Link>
         </div>
 
