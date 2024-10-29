@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 const Forgot_faculty = () => {
   return (
     <div className="login-body">
-    <h1 className="login-title">New Faculty Login</h1>
+    <h1 className="login-title">Recover Password</h1>
 
     <div className="login-form">
       <input type="text" placeholder="Email" className="input-field" />
