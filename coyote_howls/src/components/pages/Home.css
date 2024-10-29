@@ -14,4 +14,53 @@
     width: 87%; /* Let the width adjust based on content */
     opacity: 0.85;
   }
+
+
+/* Remove padding and margin from the slider container */
+.slider_container {
+  padding: 0 !important;
+  margin: 0 auto !important; /* Center the slider horizontally */
+  width: 60vw; /* Full viewport width */
+  max-width: 100% !important; /* No overflow beyond viewport */
+  box-sizing: border-box;
   
+}
+
+
+
+.each-slide img {
+  width: 100% !important; /* Full width of the container */
+  height: 300px; /* Fixed height */
+  object-fit: fill; /* Ensures image covers the space without distortion */
+  display: block; /* Removes extra space around images */
+  margin: 0 !important; /* Ensures no extra margin is applied */
+ 
+}
+
+
+.homeheader h1{
+  margin: 25px auto;
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 50px;
+  color: #2C6485;
+  background-color: #8FBFDA;
+  padding: 10px;
+  padding-block: 20px;
+  padding-bottom: 20px;
+  width: 80%; 
+
+}
+
+.homebottom h1{
+  margin: 25px auto;
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 50px;
+  color: #2C6485;
+  background-color: #8FBFDA;
+  padding: 20px;
+  padding-block: 20px;
+  padding-bottom: 20px;
+  width: 80%; 
+}
