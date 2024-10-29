@@ -10,7 +10,7 @@ const StudentDashboard = () => {
     navigate("/student_meeting"); 
   };
   const handleEditClick = () => {     // redirects to faculty modify
-    navigate("/Faculty_Modify");      
+    navigate("/student_meeting");      
   };
   
 
