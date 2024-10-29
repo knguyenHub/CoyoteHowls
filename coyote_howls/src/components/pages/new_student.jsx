@@ -22,7 +22,7 @@ const New_student = () => {
       // Optionally, you can log in the user immediately after registration
       const loggedInUser = await login(email, password);
       console.log('User logged in:', loggedInUser);
-      navigate('/FacultyDashboard');
+      navigate('/StudentDashboard');
     } catch (error) {
       console.error('Error registering or logging in user:', error);
       alert(`Failed to register or log in user: ${error.message}`);
