@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Link, NavLink} from "react-router-dom"    /* special component from the react router library to change the url when you click the buttons in nav */
+import {Link, NavLink, useNavigate} from "react-router-dom";   /* special component from the react router library to change the url when you click the buttons in nav */
 import "./Navbar.css"  /* importing the Navbar.css file so its viewable on the live website */
 import homeImage from "/src/assets/logo-final-draft.png";
 import { useUser } from './pages/UserContext';
@@ -8,10 +8,12 @@ import { logout } from '../auth';
 export const Navbar = () => {
     const { user, setUser } = useUser();
     const [menuOpen, setMenuOpen] = useState(false)       /* useState to determine if the menu pull down should be opened or closed */
+    const navigate = useNavigate(); // use useNavigate hook 
     
     const handleLogout = async () => {
       await logout();
       setUser({ isLoggedIn: false, role: null});
+      navigate("/CoyoteHowls/");
     };
 
   
@@ -44,7 +46,7 @@ export const Navbar = () => {
         {user.isLoggedIn ? (
           <>
           <li>
-            <button onClick={handleLogout}>Log Out</button>
+            <button className="logOut_btn" onClick={handleLogout}>Log Out</button>
           </li>
           {user.role === 'student' ? (
             <li>
