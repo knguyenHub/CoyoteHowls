@@ -1,10 +1,10 @@
 import React, { createContext, useState, useContext, useEffect } from "react";
-import {getAuth, onAuthStateChanged} from "../../auth";
+
 
 const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-    const [user, setUser] = useState(null ); // role is either student or faculty
+    const [user, setUser] = useState( {isLoggedIn: false, role: null }); // role is either student or faculty
 
     return (
         <UserContext.Provider value={{user, setUser}}>
