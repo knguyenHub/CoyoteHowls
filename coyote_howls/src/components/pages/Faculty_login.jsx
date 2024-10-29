@@ -2,8 +2,12 @@ import React, { useState } from 'react';
 import './Faculty_login.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { login } from '../../auth';
+import { useUser } from './UserContext';
+
 
 const Faculty_login = () => {
+
+  const { setUser } = useUser();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
@@ -12,6 +16,7 @@ const Faculty_login = () => {
     try {
       const user = await login(email, password);
       console.log('User logged in:', user);
+      setUser({ isLoggedIn: true, role: "faculty"});
       navigate('/FacultyDashboard');
     } catch (error) {
       console.error('Error logging in user:', error);
