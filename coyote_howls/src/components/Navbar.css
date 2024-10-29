@@ -20,6 +20,34 @@
     font-size: 17px;    
 }
 
+.logOut_btn:hover {
+    background-color: #8FBFDA;
+
+}
+
+
+.left_nav {
+    display:flex;
+    align-items: center;
+}
+
+
+.dashboard_link {
+    margin-left: 50px;
+    background-color: #22303F;
+    border-radius: 8px;
+    border: 1px solid #8FBFDA;
+    color: #E7EBE7;
+    text-decoration: none;
+    padding: 5px;
+    font-size: 17px;
+
+}
+
+.dashboard_link:hover {
+    background-color: #8FBFDA;
+}
+
 nav {
     display: flex;                    /* display flex is so it's horizontal */
     justify-content: space-between;   /* seperates "Home" and the list: message, about, contact, and log in so they are in opposite corners */

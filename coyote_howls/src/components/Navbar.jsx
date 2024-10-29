@@ -22,9 +22,18 @@ export const Navbar = () => {
 /* the span is used to make the 3 lines for the pull down menu */
   return (
     <nav>
+      <div className='left_nav'>
       <Link to="/CoyoteHowls/" className = "title">
         <img src={homeImage} alt="Home" style={{ width: '70px', height: '70px', marginLeft: '5px', borderRadius: '3px'}}/>
       </Link>
+      {user.isLoggedIn && (
+        user.role === "student" ? (
+          <NavLink to="/StudentDashboard" className="dashboard_link">Dashboard</NavLink>
+        ) : (
+          <NavLink to="/FacultyDashboard" className="dashboard_link">Dashboard</NavLink>
+        )
+      )}
+      </div>
       <div className="menu" onClick ={() => {           /* adds the pull down menu when screen is small on top right and the action click for */
         setMenuOpen(!menuOpen);
       }}>
@@ -48,25 +57,12 @@ export const Navbar = () => {
           <li>
             <button className="logOut_btn" onClick={handleLogout}>Log Out</button>
           </li>
-          {user.role === 'student' ? (
-            <li>
-              <NavLink to="/StudentDashboard">Dashboard</NavLink>
-            </li>
-          ) : (
-            <li>
-              <NavLink to="/FacultyDashboard">Dashboard</NavLink>
-            </li>
-          )}
         </>
       ) : (
         <li>
           <NavLink to="/Log_in">Log in</NavLink>
         </li>
-     
-
-
-        )}
-      
+        )} 
       </ul>
     </nav>
   );
