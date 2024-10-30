@@ -5,7 +5,48 @@
     border: 2px solid #22303F;       /* outline of the button */
 }
 
+.logOut_btn {
+    background-color: #22303F;    /* the background color of the buttons */
+    border-radius: 8px;             /* gives each butoon a more softer edge */
+    border: 1px solid #8FBFDA;    /* border/outline around the buttons */
+    display: block;                 /* gives it more height and width */
+    text-decoration: none;          /* removes the outline of each button that it has by default */
+    color: #E7EBE7;               /* color of text for buttons */
+    padding: 5px;                   /* space between each botton or word*/
+    margin: 10px;                   /* space from each direction */
+    margin-top: 25px;               /* space from the top */
+    margin-bottom: 25px;            /* space from the bottom */
+    margin-right: 20px;             /* space from the right side */
+    font-size: 17px;    
+}
 
+.logOut_btn:hover {
+    background-color: #8FBFDA;
+
+}
+
+
+.left_nav {
+    display:flex;
+    align-items: center;
+}
+
+
+.dashboard_link {
+    margin-left: 50px;
+    background-color: #22303F;
+    border-radius: 8px;
+    border: 1px solid #8FBFDA;
+    color: #E7EBE7;
+    text-decoration: none;
+    padding: 5px;
+    font-size: 17px;
+
+}
+
+.dashboard_link:hover {
+    background-color: #8FBFDA;
+}
 
 nav {
     display: flex;                    /* display flex is so it's horizontal */

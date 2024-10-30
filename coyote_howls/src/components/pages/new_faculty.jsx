@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './new_account.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { register, login } from '../../auth';
+import {useUser} from "../pages/UserContext";
 
 const New_faculty = () => {
   const [name, setName] = useState('');
@@ -9,6 +10,7 @@ const New_faculty = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const navigate = useNavigate();
+  const {setUser} = useUser(); 
 
   const handleRegister = async () => {
     if (password !== confirmPassword) {
@@ -22,6 +24,7 @@ const New_faculty = () => {
       // Optionally, you can log in the user immediately after registration
       const loggedInUser = await login(email, password);
       console.log('User logged in:', loggedInUser);
+      setUser({isLoggedIn: true, role: user.role || "faculty"});
       navigate('/FacultyDashboard');
     } catch (error) {
       console.error('Error registering or logging in user:', error);
