@@ -14,7 +14,7 @@ const FacultyDashboard = () => {
     navigate("/Faculty_Modify"); 
   };
   
-  const [visibleSection, setVisibleSection] = useState("history");  // default visible is "courses" when page is loaded
+  const [visibleSection, setVisibleSection] = useState("history");  // default visible is "history" when page is loaded
   
   // Handle the click to show the "Courses" section
   const showHistory = () => {
@@ -92,7 +92,7 @@ const FacultyDashboard = () => {
 
         <div className="fd_body">
           {visibleSection === "history" && (
-            <table className=".history_table">
+            <table className="history_table">
             <tr>
               <th>Date</th>
               <th>Student</th>
@@ -129,7 +129,7 @@ const FacultyDashboard = () => {
 
 
           {visibleSection === "editAvailability" && (
-            <div class="grid_container">
+            <div className="grid_container">
             <div className="item item-1">Edit Availability</div>
             <div className="item item-2">From</div>
             <div className="item item-3">Until</div>
@@ -265,13 +265,8 @@ const FacultyDashboard = () => {
               className={`button editAvailability-btn ${visibleSection === "editAvailability" ? "active" : ""}`}
               onClick={showEditAvailability}>Edit Availability</button>
             )}
-         
-      
-            
-            
-            
-            
           </div>
+          
         </div>
       </div>
     

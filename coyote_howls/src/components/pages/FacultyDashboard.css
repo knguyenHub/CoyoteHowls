@@ -53,7 +53,7 @@
 }
 
 .grid_container {
-  display: none; /* grid */
+  display: grid; /* grid */
   grid-template-rows: 95px 95px 95px 95px 95px 95px 95px;
   grid-template-columns: 100px 100px 100px 100px 100px 100px 100px 100px 100px; 
 }
