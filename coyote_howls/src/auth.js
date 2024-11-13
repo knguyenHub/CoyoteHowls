@@ -4,12 +4,12 @@ import dotenv from 'dotenv';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyBBbKIUxj0fQAmXttN-ITZwewFix7jGnAs",
-    authDomain: "chfaculty-a0d95.firebaseapp.com",
-    projectId: "chfaculty-a0d95",
-    storageBucket: "chfaculty-a0d95.appspot.com",
-    messagingSenderId: "265488789575",
-    appId: "1:265488789575:web:aaabfd814afb14a5408162"
+    apiKey: "AIzaSyCJzC5r1rrzRpjySIwWz9R0Lta1wSrfb7E",
+    authDomain: "coyotehowls-e5ee5.firebaseapp.com",
+    projectId: "coyotehowls-e5ee5",
+    storageBucket: "coyotehowls-e5ee5.firebasestorage.app",
+    messagingSenderId: "130151017664",
+    appId: "1:130151017664:web:685e9676b0f4a4d1eb9125"
 };
 
 // Initialize Firebase
