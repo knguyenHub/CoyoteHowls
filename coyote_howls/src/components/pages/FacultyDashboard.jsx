@@ -2,9 +2,12 @@ import "./FacultyDashboard.css";
 
 import { useNavigate } from "react-router-dom";
 import React, { useState } from "react"; 
+//import firebase attributes
+import { collection, query, where, getDocs, orderBy, limit, doc, getDoc } from "firebase/firestore";
+import {db} from "../../auth.js"
 /* importing each component from their appropriate locations */
 
-const FacultyDashboard = () => {
+const FacultyDashboard = ({userID}) => {
   const navigate = useNavigate();
 
   const handleModifyClick = () => {
@@ -30,6 +33,83 @@ const FacultyDashboard = () => {
     setVisibleSection("editAvailability");
   }; 
 
+  /* Notification Header Functions */
+  const[notifications, setNotifications] = useState([]);
+
+  useEffect(() => { 
+    const fetchNotifications = async () => {
+      try {
+        const meetingsRef = collection(db, "meetings");
+        const meetingsQuery = query(
+          meetingsRef,
+          where("participants", "array-contains", userId),
+          orderBy("date", "desc"),
+          limit(4)
+        );
+        const meetingsSnapshot = await getDocs(meetingsQuery);
+        const meetings = meetingsSnapshot.docs.map((doc) => ({id: doc.id, ...doc.data() }));
+        
+        const formattedNotifications = await Promise.all(
+          meetings.map(async (meeting) => {
+            const studentId = meeting.participants.find((id) => id !== userId);
+            const studentDoc = await getDoc(doc (db, "users", studentId));
+            const studentName = studentDoc.exists() ? studentDoc.data().name : "Unknown";
+            const dateFormat = new Date(meeting.date).toLocaleDataString("en-US", {
+              year: "numeric",
+              month: "short",
+              day: "numeric",
+            });
+            return 'Meeting ${meeting.action}: ${dateFormat} with Student ${studentName}';
+          })
+        );
+      setNotifications(formattedNotifications);
+      } catch (error) {
+        console.error("Error fetching notifications: ", error);
+      }
+    }; fetchNotifications();
+  }, [userID]);
+
+  /* Faculty History Fxns */
+    /* Fxn for history of appointments (4 most recent)*/ 
+    const [history, setHistory] = useState([]);
+  
+    useEffect(() => {
+      const fetchHistory = async () => {
+        try {
+          const meetingsRef = collection(db, "meetings");
+          const meetingQuery = query(
+            meetingsRef,
+            where("participants" , "array-contains", userId),
+            orderBy("date", "desc"),
+            limit(4)
+          );
+  
+          const meetingSnapshot = await getDocs(meetingQuery);
+          const meetings = meetingSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+  
+          const enrichedMeetings = await Promise.all(
+            meetings.map(async (meeting) => {
+              const professorID = meeting.participants.find((id) => id !== userId);
+              const professorDoc = await getDoc(doc(db, "users", professorID));
+              return {
+                date: meeting.date,
+                professorName: professorDoc.exists() ? professorDoc.data().name: "Unknown",
+                notes: meeting.notes,
+                action: meeting.action,
+              };
+            })
+          );
+          
+          setHistory(enrichedMeetings);
+        } catch (error) {
+          console.error("Error fetching meeting history: ", error);
+        }
+      };
+  
+      fetchHistory();
+    }, [userID]);
+
+  /* !!!!!!! HTML !!!!!! */
   return (
     <div className="fd_background_color">
       <div className="fd_header">
@@ -38,6 +118,11 @@ const FacultyDashboard = () => {
       <div className="fd_notification_header">
         <ul className="notifications">
           <b>Important Messages About Your Upcoming Meetings:</b>
+          {/* new notif bar
+           {notifications.map((message, index) => (
+            <li key={index}>{message}</li>
+           ))}
+           */}
           <li>Meeting Created: Oct 27 2024 with Carolinne Marquez</li>
           <li>Meeting Modified: Oct 29 2024 with Karen Nguyen</li>
           <li>Meeting Cancelled: October 23 2024 Daniel Gaeta</li>
@@ -99,6 +184,14 @@ const FacultyDashboard = () => {
               <th>Notes</th>
               <th>Action</th>
             </tr>
+            {history.map((entry, index) => {
+                  <tr key={index}>
+                    <td>{entry.date}</td>
+                    <td>{entry.professorName}</td>
+                    <td>{entry.notes}</td>
+                    <td>{entry.action}</td>
+                  </tr>
+                })}
             <tr>
               <td>10/23/24</td>
               <td>Daniel Gaeta</td>

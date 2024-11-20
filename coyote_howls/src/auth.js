@@ -1,4 +1,5 @@
 import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";  //database
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import dotenv from 'dotenv';
 
@@ -58,3 +59,7 @@ export const resetPassword = async (email) => {
         throw error;
     }
 };
+
+//Initialize data base
+const db = getFirestore(app);
+export { db };
