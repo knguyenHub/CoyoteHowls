@@ -46,7 +46,7 @@ const Student_login = () => {
 
         <div className="login-options">
           <Link to="/new_student" className="link">New Student?</Link>
-          <Link to="/forgot_student" className="link">Forgot Password?</Link>
+          <Link to="/forgot_faculty" className="link">Forgot Password?</Link>
         </div>
 
         <button className="login-button" onClick={handleLogin}>Login</button>
