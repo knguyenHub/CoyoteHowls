@@ -17,7 +17,7 @@ import Faculty_Modify from "./components/pages/Faculty_Modify";
 import New_faculty from "./components/pages/new_faculty";
 import New_student from "./components/pages/new_student";
 import Forgot_faculty from "./components/pages/forgot_faculty";
-import Forgot_student from "./components/pages/forgot_student";
+
 
 
 /*Routing each component from pages to the appropriate url on the website */
@@ -40,7 +40,6 @@ function App() {
         <Route path="/new_faculty" element={<New_faculty />} />
         <Route path="/new_student" element={<New_student />} />
         <Route path="/forgot_faculty" element={<Forgot_faculty />} />
-        <Route path="/forgot_student" element={<Forgot_student />} />
       </Routes>
     </div>  
   );
