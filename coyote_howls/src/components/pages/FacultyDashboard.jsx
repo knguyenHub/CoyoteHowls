@@ -1,7 +1,7 @@
 import "./FacultyDashboard.css";
 
 import { useNavigate } from "react-router-dom";
-import React, { useState } from "react"; 
+import React, { useEffect, useState } from "react"; 
 //import firebase attributes
 import { collection, query, where, getDocs, orderBy, limit, doc, getDoc } from "firebase/firestore";
 import {db} from "../../auth.js"
@@ -108,6 +108,32 @@ const FacultyDashboard = ({userID}) => {
   
       fetchHistory();
     }, [userID]);
+
+    /* Faculty Availabity Fxns */
+    const [availability, setAvailability] = useState([]);
+    
+    useEffect(() => {
+      const fetchAvailability = async () => {
+        try {
+          const userDocRef = doc(db, "users", user.userID);
+          const userDoc = await getDoc(userDocRef);
+
+          if (userDoc.exists() && userDoc.data().role === "Faculty") {
+            setAvailability(userDoc.data().availability || {}); 
+          }
+          else {
+            console.error("ERROR: User is not a faculty or has no availability data.")
+          }
+          
+        } catch(error) {
+          console.error("Error fetching availability: ", error);
+        }
+        
+        };  
+        fetchAvailability;
+      }, []);
+    
+
 
   /* !!!!!!! HTML !!!!!! */
   return (
@@ -321,14 +347,37 @@ const FacultyDashboard = ({userID}) => {
                 {/* Days of the week */}
                 <div className="f_week-days">
                   {/* displays Monday header with "time" for the container that follows under */}
+                  {/* {loading ? ( <p> Loading availability...</p>) : (
+                    ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"].map((day) => (
+                      <div className = "day_header" key={day}>
+                        <div className="f_day">{day}</div>
+                        <div className="f_time">
+                          <ul> 
+                            {availability[day] && availabilit[day].length > 0 ? (
+                              availability[day].map((timeSlot, index) => <li key={index}>{timeSlot}</li>)
+                            ) : ( 
+                              <li> Unavailable </li>
+                            )}
+                          </ul>
+                        </div>
+                      </div>
+                    ))
+                  )}
+                  </div> */}
                   <div className="day_header">
                     <div className="f_day">Monday</div>
-                    <div className="f_time"></div>
+                    <div className="f_time">
+                      <ul>
+
+                      </ul>
+                    </div>
                   </div>
                   {/* displays Tuesday header with "time" for the container that follows under */}
                   <div className="day_header">
                     <div className="f_day">Tuesday</div>
-                    <div className="f_time"></div>
+                    <div className="f_time">
+                      
+                    </div>
                   </div>
                   {/* displays Wednesday header with "time" for the container that follows under */}
                   <div className="day_header">
