@@ -53,6 +53,9 @@ const Student_login = () => {
                 Forgot Password?
               </Link>
             </div>
+            <button className="login-button" onClick={handleLogin}>
+              Login
+            </button>
           </div>
         </div>
       </div>
