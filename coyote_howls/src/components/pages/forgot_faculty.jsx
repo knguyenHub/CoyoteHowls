@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import './new_account.css';
-import { sendPasswordResetEmail } from 'firebase/auth'; // Use sendPasswordResetEmail directly
-import { auth } from '../../auth'; // Ensure auth is imported correctly from your Firebase config
+import React, { useState } from "react";
+import "./new_account.css";
+import { sendPasswordResetEmail } from "firebase/auth"; // Use sendPasswordResetEmail directly
+import { auth } from "../../auth"; // Ensure auth is imported correctly from your Firebase config
 
 const ForgotFaculty = () => {
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState("");
   const [message, setMessage] = useState(null);
 
   const handlePasswordReset = async () => {
@@ -22,24 +22,29 @@ const ForgotFaculty = () => {
   };
 
   return (
-    <div className="login-body">
-      <h1 className="login-title">Recover Password</h1>
+    <div className="back">
+      <div className="left-half"></div>
+      <div className="right-half">
+        <div className="login-body">
+          <h1 className="login-title">Recover Password</h1>
 
-      <div className="login-form">
-        <input
-          type="text"
-          placeholder="Email"
-          className="input-field"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
+          <div className="login-form">
+            <input
+              type="text"
+              placeholder="Email"
+              className="input-field"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
 
-        <button className="login-button" onClick={handlePasswordReset}>
-          Confirm
-        </button>
+            <button className="login-button" onClick={handlePasswordReset}>
+              Confirm
+            </button>
+          </div>
+
+          {message && <p className="message">{message}</p>}
+        </div>
       </div>
-
-      {message && <p className="message">{message}</p>}
     </div>
   );
 };
