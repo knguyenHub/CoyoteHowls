@@ -10,11 +10,21 @@
     background-color: #AEDFF7;
     text-align: center;
     padding: 40px;
-    margin-top: 20px;
+    margin-top: -40px;
     margin-bottom: 20px;
     font-size: 36pt;
     width: 100%;
   }
+  .login-titleRecover{
+    background-color: #AEDFF7;
+    text-align: center;
+    padding: 35px;
+    margin-top: -150px;
+    margin-bottom: 20px;
+    font-size: 36pt;
+    width: 100%;
+  }
+  
   
   .login-form {
     background-color: #1F4D63;
