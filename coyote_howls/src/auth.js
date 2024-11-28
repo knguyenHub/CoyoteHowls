@@ -58,3 +58,6 @@ export const resetPassword = async (email) => {
         throw error;
     }
 };
+//Initialize data base
+const db = getFirestore(app);
+export { db, auth };
