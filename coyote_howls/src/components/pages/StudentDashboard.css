@@ -33,22 +33,23 @@
 
 }
 
+.sd_layout {
+  display: flex;
+  gap: 30px; /* Adjust spacing between columns */
+  padding: 20px; /* Optional padding for the entire layout */
+}
+
+
 /* Notification Header */
 .sd_notification_header {
-  
-  margin: 35px auto;
-  margin-top: 150px;
-  margin-bottom: -70px;
+  margin: 20px auto;
   text-align: left;
-  font-size: 30px;
+  font-size: 20px;
   color: #2c6485;
   background-color: white;
   padding: 20px;
-  padding-block: 40px;
-  padding-bottom: 60px;
   width: 87%; /* Let the width adjust based on content */
   opacity: .85;
-  
 }
 
 /* individual list element attributes */
@@ -57,25 +58,29 @@
   text-align: left;
   margin-left: 0px;
   padding-left: 2%;
-  font-size: 90%;
+  font-size: 70%;
   width: 100%;
 }
 
 .left_column {
   /* Left Column Attributes & Margin Spacing (Schedule Appt & Upcoming Appts) */
-  margin-left: 50px;
-  margin-top: 250px; /* Adjust spacing from the top */
-  width: 400px; /* Fixed width for the left column */
-  float: left;
-  height: 700px;
+  flex:1;
+  max-width: 400px;
+  /*margin-left: 50px; */
+  /*margin-top: 250px; /* Adjust spacing from the top */
+   /*width: 400px; /* Fixed width for the left column */
+  /*float: left;
+  height: 700px; */
 }
 
 .right_column {
   /* Right Column (Body) Attributes & Margin Spacing */
-  margin-top: 150px; /* Align with the left column */
-  margin-left: 500px; /* Create space between the left column */
-  width: 67%;
-  border-radius: 15px;
+  flex: 3;
+ /* margin-top: 250px; /* Align with the left column */
+ /* margin-left: 500px; /* Create space between the left column */
+  width: auto;
+ /* border-radius: 15px; */
+  overflow: hidden;
 }
 
 .line{
@@ -93,7 +98,7 @@
   text-align: center;
   line-height: 70px;        /* align text to center of box */
   vertical-align: center;
-  font-size: 32px;
+  font-size: 25px;
   color: #FFFFFF;
 }
 
@@ -110,7 +115,7 @@
 
   height: 500px;
   text-align: center;
-  font-size: 13.75px;
+  font-size: 13.5px;
   font-family: "Open Sans", "Comic Sans", sans-serif;
   vertical-align: top;
   line-height: 50px;
@@ -121,9 +126,9 @@
 
 .sd_body {
   /* Main Body Rect Attributes (Foreground) */
-
+  
   align-items: start;
-  height: 670px;
+  height: 530px;
   display: flex;
   background-color: #2C6485;
   
@@ -134,7 +139,7 @@
 
 
 ul {
-  font-size: 29px;
+  font-size: 25px;
   padding: 0;
   overflow: hidden;
 }
@@ -162,6 +167,32 @@ li a {
   font-size: 30px;
   transition-duration: 0.4s;
   cursor: pointer;
+}
+
+.courses-btn {
+  background-color: #2C6485; 
+  border: none;
+  color: white;
+  padding: 16px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 25px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+.history-btn {
+  background-color: #2C6485; 
+  border: none;
+  color: white;
+  padding: 16px 40px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 25px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+
 }
 
 
@@ -197,20 +228,20 @@ table, td, th {
 table{
   border-collapse: collapse;
   width: 100%;
-  height: 100%;
+  height:100%;
 }
 th{
   text-align: center;
-  height: 70px;
+  height: 35px;
   color: #FFFFFF;
-  font-size: 25px;
+  font-size: 20px;
   background-color: #22303f;
 }
 td{
   text-align: center;
-  height: 70px;
+  height: 35px;
   color: #FFFFFF;
-  font-size: 30px;
+  font-size: 20px;
   background-color: #2C6485;
   padding-left: 20px;
 }

@@ -53,10 +53,6 @@
     display: flex;  
     padding: 20px;
     padding-block: 40px;
-    
-
-    
-    
 }
 
 
@@ -64,6 +60,7 @@
     flex-basis: 40%; 
     margin-top: -50px; 
     display: flex;
+    justify-content: center;
 }
 
 .about_left {                          /* right side of body with text */

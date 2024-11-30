@@ -32,7 +32,7 @@ const StudentDashboard = () => {
       <div className="sd_header">
         <h1>Student Home</h1>
       </div>
-      <div className="fd_notification_header">
+      <div className="sd_notification_header">
         <ul className="notifications">
           <b>Important Messages About Your Upcoming Meetings:</b>
           <li>Meeting Created: Oct 27 2024 with Professor Jin</li>
@@ -40,6 +40,7 @@ const StudentDashboard = () => {
           <li>Meeting Cancelled: October 23 2024 by Professor Khan</li>
         </ul>
       </div>
+      <div className="sd_layout">
       <div className="left_column">
           <button className="sd_schedule_appt" onClick={handleScheduleClick}>Schedule Appointment</button>
         <div className="sd_upcoming_appt">
@@ -59,12 +60,12 @@ const StudentDashboard = () => {
         <div>
           <ul className="body_navbar">
             <li>
-              <button href="#Courses" className={`button courses-btn ${visibleSection === "courses" ? "active" : ""}`} onClick={showCourses}>
+              <button href="#Coursesss" className={`buttonn courses-btn ${visibleSection === "courses" ? "active" : ""}`} onClick={showCourses}>
                 Courses
               </button>
             </li>
             <li>
-              <button href="#History" className={`button history-btn ${visibleSection === "history" ? "active" : ""}`} onClick={showHistory}>
+              <button href="#History" className={`buttonn history-btn ${visibleSection === "history" ? "active" : ""}`} onClick={showHistory}>
                 History
               </button>
             </li>
@@ -155,6 +156,7 @@ const StudentDashboard = () => {
           )}
 
         </div>
+      </div>
       </div>
     </div>
   );

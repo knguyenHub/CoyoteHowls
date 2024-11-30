@@ -22,7 +22,7 @@ const About = () => {
           </div>
           {/* right side with text */ }
           <div className='about_right'>
-            <img src={logoFinal} alt="image of two guys looking at a laptop" className='logo_final' />  
+            <img src={logoFinal} alt="logo of website" className='logo_final' />  
           </div>
         </div>
 
