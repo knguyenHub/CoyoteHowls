@@ -794,3 +794,38 @@ h1 .edit_availability {
     flex-direction: column; /* Stack weekdays vertically */
   }
 }
+/* Approve and Reject Buttons */
+.approve-all-btn,
+.reject-all-btn {
+  background-color: #2c6485; /* Dashboard button background color */
+  border: none; /* No border */
+  color: white; /* Text color */
+  padding: 16px 32px; /* Same padding as the dashboard button */
+  width: 150px; /* Width matching the dashboard button */
+  text-align: center; /* Center-align text */
+  text-decoration: none; /* No underline */
+  display: inline-block; /* Inline-block for alignment */
+  font-size: 15px; /* Font size matching dashboard button */
+  transition-duration: 0.4s; /* Smooth hover transition */
+  cursor: pointer; /* Pointer cursor */
+  margin: 10px; /* Add spacing between buttons */
+}
+
+.approve-all-btn:hover,
+.reject-all-btn:hover {
+  background-color: #394a56; /* Hover color */
+  color: white;
+}
+
+.approve-all-btn:active,
+.reject-all-btn:active {
+  background-color: #394A56; /* Active state color */
+  color: white;
+}
+
+.approve-all-btn:focus,
+.reject-all-btn:focus {
+  background-color: #394A56; /* Focus state color */
+  color: white;
+}
+

@@ -100,14 +100,14 @@ const FacultyDashboard = ({ userID }) => {
               );
               setAppointments(updatedAppointments);
               alert('All pending appointments have been approved.');
-            }}>Approve All Pending</button>
+            }} class="approve-all-btn">Approve All Pending</button>
             <button onClick={() => {
               const updatedAppointments = appointments.map((appointment) =>
                 appointment.status === 'pending' ? { ...appointment, status: 'rejected' } : appointment
               );
               setAppointments(updatedAppointments);
               alert('All pending appointments have been rejected.');
-            }}>Reject All Pending</button>
+            }} class="reject-all-btn">Reject All Pending</button>
             
             <b>Upcoming Appointments</b>
             {appointments.length > 0 ? (
