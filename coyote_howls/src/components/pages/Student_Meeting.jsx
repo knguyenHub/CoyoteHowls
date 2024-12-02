@@ -73,7 +73,7 @@ const Student_Meeting = () => {
               </div>
 
               <div className="form-group">
-                <label>Slot ID:</label>
+                <label>Appointment Time:</label>
                 <input
                   type="text"
                   value={slotId}

@@ -17,6 +17,33 @@ const FacultyDashboard = () => {
     { slotId: "3", startTime: "2024-12-05T09:00:00", endTime: "2024-12-05T11:00:00", status: "unavailable" },
   ]);
 
+  const [notifications, setNotifications] = useState([
+    {
+      id: "1",
+      action: "Meeting Created",
+      time: "Dec 01 2024",
+      studentId: "12345",
+      facultyId: "99999",
+      requestTime: "10:00 AM",
+    },
+    {
+      id: "2",
+      action: "Meeting Modified",
+      time: "Dec 02 2024",
+      studentId: "67890",
+      facultyId: "88888",
+      requestTime: "11:30 AM",
+    },
+    {
+      id: "3",
+      action: "Meeting Cancelled",
+      time: "Dec 03 2024",
+      studentId: "11223",
+      facultyId: "77777",
+      requestTime: "12:00 PM",
+    },
+  ]);
+
   const [visibleSection, setVisibleSection] = useState("history");
 
   const formatTime = (dateTimeString) => {
@@ -60,9 +87,12 @@ const FacultyDashboard = () => {
       <div className="fd_notification_header">
         <ul className="notifications">
           <b>Important Messages About Your Upcoming Meetings:</b>
-          <li>Meeting Created: Dec 01 2024 with John Doe</li>
-          <li>Meeting Modified: Dec 02 2024 with Jane Smith</li>
-          <li>Meeting Cancelled: Dec 03 2024 with Alice Johnson</li>
+          {notifications.map((notification) => (
+            <li key={notification.id}>
+              {notification.action}: {notification.time} <br />
+              Request Time: {notification.requestTime}, Student ID: {notification.studentId}, Faculty ID: {notification.facultyId}
+            </li>
+          ))}
         </ul>
       </div>
 

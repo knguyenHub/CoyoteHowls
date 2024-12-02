@@ -16,7 +16,6 @@ const StudentDashboard = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ appointmentId }),
       });
 
       if (response.ok) {
@@ -31,7 +30,33 @@ const StudentDashboard = () => {
   };
 
   const [visibleSection, setVisibleSection] = useState("courses");
-  const [historyData, setHistoryData] = useState([]); // State to store fetched data
+  const [historyData, setHistoryData] = useState([]);
+  const [notifications, setNotifications] = useState([
+    {
+      id: "1",
+      action: "Meeting Created",
+      time: "Oct 27 2024",
+      facultyId: "Jin",
+      studentId: "12345",
+      requestTime: "10:00 AM",
+    },
+    {
+      id: "2",
+      action: "Meeting Modified",
+      time: "Oct 29 2024",
+      facultyId: "Khan",
+      studentId: "67890",
+      requestTime: "11:00 AM",
+    },
+    {
+      id: "3",
+      action: "Meeting Cancelled",
+      time: "Oct 23 2024",
+      facultyId: "Schulz",
+      studentId: "11223",
+      requestTime: "12:00 PM",
+    },
+  ]);
 
   const fetchHistoryData = async () => {
     try {
@@ -63,14 +88,20 @@ const StudentDashboard = () => {
       <div className="sd_header">
         <h1>Student Home</h1>
       </div>
+
       <div className="fd_notification_header">
         <ul className="notifications">
           <b>Important Messages About Your Upcoming Meetings:</b>
-          <li>Meeting Created: Oct 27 2024 with Professor Jin</li>
-          <li>Meeting Modified: Oct 29 2024 with Professor Jin</li>
-          <li>Meeting Cancelled: October 23 2024 by Professor Khan</li>
+          {notifications.map((notification) => (
+            <li key={notification.id}>
+              {notification.action}: {notification.time} <br />
+              Request Time: {notification.requestTime}, Faculty ID: {notification.facultyId}, Student ID:{" "}
+              {notification.studentId}
+            </li>
+          ))}
         </ul>
       </div>
+
       <div className="left_column">
         <button className="sd_schedule_appt" onClick={handleScheduleClick}>
           Schedule Appointment
@@ -95,9 +126,7 @@ const StudentDashboard = () => {
             <li>
               <button
                 href="#Courses"
-                className={`button courses-btn ${
-                  visibleSection === "courses" ? "active" : ""
-                }`}
+                className={`button courses-btn ${visibleSection === "courses" ? "active" : ""}`}
                 onClick={showCourses}
               >
                 Courses
@@ -106,9 +135,7 @@ const StudentDashboard = () => {
             <li>
               <button
                 href="#History"
-                className={`button history-btn ${
-                  visibleSection === "history" ? "active" : ""
-                }`}
+                className={`button history-btn ${visibleSection === "history" ? "active" : ""}`}
                 onClick={showHistory}
               >
                 History
@@ -183,9 +210,7 @@ const StudentDashboard = () => {
                       <td>{appointment.facultyId}</td>
                       <td>{appointment.status}</td>
                       <td>
-                        <button onClick={() => handleDeleteClick(appointment.appointmentId)}>
-                          Delete
-                        </button>
+                        <button onClick={() => handleDeleteClick(appointment.appointmentId)}>Delete</button>
                       </td>
                     </tr>
                   ))
