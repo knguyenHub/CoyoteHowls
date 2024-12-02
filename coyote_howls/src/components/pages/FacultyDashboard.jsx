@@ -3,18 +3,29 @@ import "./FacultyDashboard.css";
 import { useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from "react"; 
 //import firebase attributes
-import { collection, query, where, getDocs, orderBy, limit, doc, getDoc } from "firebase/firestore";
-import {db} from "../../auth.js"
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  orderBy,
+  limit,
+  doc,
+  getDoc,
+  updateDoc,
+  arrayUnion,
+} from "firebase/firestore";
+import { db, auth } from "../../auth.js";
 /* importing each component from their appropriate locations */
 
-const FacultyDashboard = ({userID}) => {
+const FacultyDashboard = (userID) => {
   const navigate = useNavigate();
 
   const handleModifyClick = () => {
-    navigate("/Faculty_Modify"); 
+    navigate("/Faculty_Modify");
   };
   const handleEditClick = () => {
-    navigate("/Faculty_Modify"); 
+    navigate("/Faculty_Modify");
   };
   
   const [visibleSection, setVisibleSection] = useState("history");  // default visible is "history" when page is loaded
@@ -33,6 +44,51 @@ const FacultyDashboard = ({userID}) => {
     setVisibleSection("editAvailability");
   }; 
 
+
+  //Edit Availability 
+  const confirm_availability = () => {
+
+    /* select drop down */
+    var s_hrs = document.getElementById("s_hr");
+    var s_mins = document.getElementById("s_min");
+    var e_hrs = document.getElementById("e_hr");
+    var e_mins = document.getElementById("e_min");
+    
+    
+    /*Apply to */
+    var rad1 = document.getElementById("rad1");
+    var rad2 = document.getElementById("rad2");
+    var rad3 = document.getElementById("rad3");
+
+    /*am & pm*/
+    var start_am = document.getElementById("s_am");
+    var start_pm = document.getElementById("s_pm");
+    var end_am = document.getElementById("e_am");
+    var end_pm = document.getElementById("e_pm");
+
+    /* test am/pm buttons */
+    /* From */
+    if (start_am.checked == true)
+      alert("The selected element is " + start_am.value);
+    else if (start_pm.checked == true)
+      alert("The selected element is " + start_pm.value);
+    /*Toggle*/
+
+    /* Until */
+    if (end_am.checked == true)
+      alert("The selected element is " + end_am.value);
+    else if (end_pm.checked == true)
+      alert("The selected element is " + end_pm.value);
+
+    /* testing apply to button(s): replace with submit to form */
+    if (rad1.checked == true) alert("The selected element is " + rad1.value);
+    else if (rad2.checked == true)
+      alert("The selected element is " + rad2.value);
+    else if (rad3.checked == true)
+      alert("The selected element is " + rad3.value);
+  };
+
+
   /* Notification Header Functions */
   const[notifications, setNotifications] = useState([]);
 
@@ -42,7 +98,7 @@ const FacultyDashboard = ({userID}) => {
         const meetingsRef = collection(db, "meetings");
         const meetingsQuery = query(
           meetingsRef,
-          where("participants", "array-contains", userId),
+          where("participants", "array-contains", userID),
           orderBy("date", "desc"),
           limit(4)
         );
@@ -51,7 +107,7 @@ const FacultyDashboard = ({userID}) => {
         
         const formattedNotifications = await Promise.all(
           meetings.map(async (meeting) => {
-            const studentId = meeting.participants.find((id) => id !== userId);
+            const studentId = meeting.participants.find((id) => id !== userID);
             const studentDoc = await getDoc(doc (db, "users", studentId));
             const studentName = studentDoc.exists() ? studentDoc.data().name : "Unknown";
             const dateFormat = new Date(meeting.date).toLocaleDataString("en-US", {
@@ -79,7 +135,7 @@ const FacultyDashboard = ({userID}) => {
           const meetingsRef = collection(db, "meetings");
           const meetingQuery = query(
             meetingsRef,
-            where("participants" , "array-contains", userId),
+            where("participants" , "array-contains", userID),
             orderBy("date", "desc"),
             limit(4)
           );
@@ -89,7 +145,7 @@ const FacultyDashboard = ({userID}) => {
   
           const enrichedMeetings = await Promise.all(
             meetings.map(async (meeting) => {
-              const professorID = meeting.participants.find((id) => id !== userId);
+              const professorID = meeting.participants.find((id) => id !== userID);
               const professorDoc = await getDoc(doc(db, "users", professorID));
               return {
                 date: meeting.date,
@@ -131,7 +187,7 @@ const FacultyDashboard = ({userID}) => {
         
         };  
         fetchAvailability;
-      }, []);
+      }, [userID]);
     
 
 
@@ -249,61 +305,174 @@ const FacultyDashboard = ({userID}) => {
 
           {visibleSection === "editAvailability" && (
             <div className="grid_container">
-            <div className="item item-1">Edit Availability</div>
-            <div className="item item-2">From</div>
-            <div className="item item-3">Until</div>
-            <div className="item item-4 time_slot dropdown">
-              9:00a
-              <div className="dropdown-content">
-                <p>9:30</p>
-                <p>10:00</p>
-                <p>10:30</p>
-                <p>11:00</p>
-                <p>11:30</p>
-                <p>12:00</p>
-                <p>12:30</p>
-                <p>1:00</p>
-                <p>1:30</p>
+              <div className="item item-1">Edit Availability</div>
+              <div className="item item-2">
+                <u>From</u>
               </div>
-            </div>
-            <div className="item item-5 time_slot dropdown">
-              9:00a
-              <div className="dropdown-content">
-                <p>9:30</p>
-                <p>10:00</p>
-                <p>10:30</p>
-                <p>11:00</p>
-                <p>11:30</p>
-                <p>12:00</p>
-                <p>12:30</p>
-                <p>1:00</p>
-                <p>1:30</p>
+              <div className="item item-3">
+                <u>Until</u>
               </div>
-            </div>
-            <div className="item item-6">Apply To</div>
-            <label class="container item item-7">
-              {" "}
-              Only This Day
-              <input type="checkbox" checked="checked"></input>
-              <span class="checkmark"></span>
-            </label>
-            <label class="container item item-8">
-              {" "}
-              Every Monday
-              <input type="checkbox" checked="checked"></input>
-              <span class="checkmark"></span>
-            </label>
-            <label class="container item item-9">
-              {" "}
-              Everyday
-              <input type="checkbox" checked="checked"></input>
-              <span class="checkmark"></span>
-            </label>
-            <div className="item item-10 ">
-              <button className="add_availability">Add Availiability</button>
-            </div>
-            </div>
+              <div className="item start_hours time_slot dropdown">
+                <select name="s_hr" id="s_hr">
+                  {Array.from({ length: 12 }, (_, i) => (
+                    <option key={i + 1} value={i + 1}>
+                      {i + 1}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="colon1"> : </div>
+              <div className="dropdown start_mins">
+                <select name="s_min" id="s_min">
+                  {[
+                    "00",
+                    "05",
+                    "10",
+                    "15",
+                    "20",
+                    "25",
+                    "30",
+                    "35",
+                    "40",
+                    "45",
+                    "50",
+                    "55",
+                  ].map((min) => (
+                    <option key={min} value={min}>
+                      {min}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="times stime">
+                <label class="container item">
+                  {" "}
+                  am
+                  <input
+                    type="radio"
+                    name="start_time"
+                    id="s_am"
+                    value="am"
+                  ></input>
+                  <span class="checkmark"></span>
+                </label>
+                <label class="container item">
+                  {" "}
+                  pm
+                  <input
+                    type="radio"
+                    name="start_time"
+                    id="s_pm"
+                    value="pm"
+                  ></input>
+                  <span class="checkmark"></span>
+                </label>
+              </div>
 
+              <div className="item end_hours time_slot dropdown">
+                <select name="e_hr" id="e_hr">
+                  {Array.from({ length: 12 }, (_, i) => (
+                    <option key={i + 1} value={i + 1}>
+                      {i + 1}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="colon2"> : </div>
+              <div className="dropdown end_mins">
+                <select name="s_min" id="e_min">
+                  {[
+                    "00",
+                    "05",
+                    "10",
+                    "15",
+                    "20",
+                    "25",
+                    "30",
+                    "35",
+                    "40",
+                    "45",
+                    "50",
+                    "55",
+                  ].map((min) => (
+                    <option key={min} value={min}>
+                      {min}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="times etime">
+                <label class="container item">
+                  {" "}
+                  am
+                  <input
+                    type="radio"
+                    name="end_time"
+                    id="e_am"
+                    value="am"
+                  ></input>
+                  <span class="checkmark"></span>
+                </label>
+                <label class="container item">
+                  {" "}
+                  pm
+                  <input
+                    type="radio"
+                    name="end_time"
+                    id="e_pm"
+                    value="pm"
+                  ></input>
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+
+              <div className="item item-6">
+                <u>Apply To</u>
+              </div>
+              <label class="container item item-7">
+                {" "}
+                Only This Day
+                <input
+                  type="radio"
+                  name="apply_to"
+                  id="rad1"
+                  value="Only This Day"
+                ></input>
+                <span class="checkmark"></span>
+              </label>
+              <label class="container item item-8">
+                {" "}
+                Every Monday
+                <input
+                  type="radio"
+                  name="apply_to"
+                  id="rad2"
+                  value="Every Day"
+                ></input>
+                <span class="checkmark"></span>
+              </label>
+              <label class="container item item-9">
+                {" "}
+                Everyday
+                <input
+                  type="radio"
+                  name="apply_to"
+                  id="rad3"
+                  value="Everyday"
+                ></input>
+                <span class="checkmark"></span>
+              </label>
+              <div className="item item-10 ">
+                <button
+                  onClick={confirm_availability}
+                  className="add_availability"
+                  id="add_availability"
+                  type = "submit"
+                >
+                  Add Availiability
+                </button>
+              </div>
+            </div>
           )}
           
 
@@ -347,13 +516,13 @@ const FacultyDashboard = ({userID}) => {
                 {/* Days of the week */}
                 <div className="f_week-days">
                   {/* displays Monday header with "time" for the container that follows under */}
-                  {/* {loading ? ( <p> Loading availability...</p>) : (
+                  {(
                     ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"].map((day) => (
                       <div className = "day_header" key={day}>
                         <div className="f_day">{day}</div>
                         <div className="f_time">
-                          <ul> 
-                            {availability[day] && availabilit[day].length > 0 ? (
+                          <ul className="calendar_times"> 
+                            {availability[day] && availability[day].length > 0 ? (
                               availability[day].map((timeSlot, index) => <li key={index}>{timeSlot}</li>)
                             ) : ( 
                               <li> Unavailable </li>
@@ -363,37 +532,7 @@ const FacultyDashboard = ({userID}) => {
                       </div>
                     ))
                   )}
-                  </div> */}
-                  <div className="day_header">
-                    <div className="f_day">Monday</div>
-                    <div className="f_time">
-                      <ul>
-
-                      </ul>
-                    </div>
-                  </div>
-                  {/* displays Tuesday header with "time" for the container that follows under */}
-                  <div className="day_header">
-                    <div className="f_day">Tuesday</div>
-                    <div className="f_time">
-                      
-                    </div>
-                  </div>
-                  {/* displays Wednesday header with "time" for the container that follows under */}
-                  <div className="day_header">
-                    <div className="f_day"> Wednesday</div>
-                    <div className="f_time"></div>
-                  </div>
-                  {/* displays Thursday header with "time" for the container that follows under */}
-                  <div className="day_header">
-                    <div className="f_day"> Thursday</div>
-                    <div className="f_time"></div>
-                  </div>
-                  {/* displays Friday header with "time" for the container that follows under */}
-                  <div className="day_header">
-                    <div className="f_day">Friday</div>
-                    <div className="f_time"></div>
-                  </div>
+                
                   
                 </div>
               </div>

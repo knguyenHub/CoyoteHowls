@@ -5,18 +5,30 @@
 }
 
 .fd_header {
-  /* Student Dashboard Header */
-
-  margin: 35px auto;
-  margin-bottom: -70px;
+  background-image: url("../../assets/campus2.png"); /* image */
+  background-size: cover; /* Ensures the image covers the header fully */
+  background-position: 80% 20%; /* Centers the image in the header */
+  background-repeat: no-repeat; /* Prevents the image from repeating */
+  height: 210px; /* Adjust height as needed */
+  margin: auto;
+  margin-top: 0;
   text-align: center;
-  font-size: 30px;
+  font-size: 35px;
   color: #2c6485;
-  background-color: #8fbfda;
-  padding: 20px;
-  padding-block: 40px;
-  padding-bottom: 60px;
-  width: 87%; /* Let the width adjust based on content */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); /* Shadow effect */
+  position: relative;
+  border: 1px solid black; /* Black outline */
+}
+
+.fd_header h1 {
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+  position: relative; /* Ensures the text is above the background */
+  z-index: 1; /* Keeps the text above the ::before element */
+
 }
 
 .fd_notification_header {
@@ -54,18 +66,23 @@
 
 .grid_container {
   display: grid; /* grid */
-  grid-template-rows: 95px 95px 95px 95px 95px 95px 95px;
-  grid-template-columns: 100px 100px 100px 100px 100px 100px 100px 100px 100px; 
+  width: 100%;
+  height: 100%;
+
+  grid-template-rows: minmax(50px, auto);
+  grid-template-columns: repeat(2, 250px 50px 20px 75px 200px);
 }
 
 /* Edit Availabitlity */
 .item-1 {
-  grid-row: span 1;
-  grid-column: span 7;
+  grid-row: 1;
+  grid-column: span 11;
   font-size: 70px;
   color: white;
   margin-left: 20px;
   margin-top: 20px;
+  text-align: center;
+  
 }
 
 /* From */
@@ -74,7 +91,7 @@
   grid-column: span 1;
   font-size: 50px;
   color: white;
-  margin-left: 40px;
+  margin-left: 120px;
   margin-top: 20px;
 }
 
@@ -83,16 +100,59 @@
   grid-row: 2 / 2;
   grid-column: 6 / 6;
   margin-top: 20px;
-  margin-left: 50px;
+  margin-left:140px;
   font-size: 50px;
   color: white;
 }
 
-/* Toggle 1 */
-.item-4 {
-  grid-row: 3/3;
-  grid-column: 2/2;
+.start_hours{
+  grid-row: 3;
+  grid-column: 2;
+
 }
+
+.start_mins{
+  grid-row: 3/3;
+  grid-column: 4;
+}
+.stime{
+  grid-row: 3;
+  grid-column: 5;
+  margin-top: 10px;
+}
+
+.etime{
+  grid-row: 3;
+  grid-column: 10;
+  margin-top: 10px;
+}
+
+.colon1{
+  font-size: 50px;
+  color: white;
+  grid-row: 3;
+  grid-column: 3;
+  text-align: center;
+  
+}
+
+.colon2{
+  font-size: 50px;
+  color: white;
+  grid-row: 3;
+  grid-column: 8;
+  text-align: center;
+}
+.end_hours{
+  grid-row: 3;
+  grid-column: 7;
+}
+
+.end_mins{
+  grid-row: 3;
+  grid-column: 9;
+}
+
 /* Toggle 2 */
 .item-5 {
   grid-row: 3/3;
@@ -102,40 +162,51 @@
 /* Apply To */
 .item-6 {
   grid-row: 4/4;
-  grid-column: 4 / 7;
+  grid-column: span 11;
   font-size: 50px;
   margin-top: 20px;
-  margin-left: 80px;
+  text-align: center;
   color: white;
 }
+
+
 /* Radio */
+input[type=radio], input[type = checkbox] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
+  border-radius: 50%;
+}
 /* Only this day */
 .item-7 {
-  grid-row: 5/5;
-  grid-column: 2/7;
-  margin-top: 20px;
-  margin-left: 170px;
+  grid-row: 5;
+  grid-column: 3/6;
+  
 }
 
 /* Every xDay */
 .item-8 {
-  grid-row: 5/5;
-  grid-column: 7/10;
-  margin-top: 20px;
+  grid-row: 5;
+  grid-column: 6/10;
+  margin-left: 150px;
+  
 }
 
 /* Every Day */
 .item-9 {
   grid-row: 6/6;
-  grid-column: 2/7;
-  margin-top: 20 px;
-  margin-left: 170px;
+  grid-column: 3/6;
+  margin-top: 20px;
+  
 }
 
 /* Add Button */
 .item-10 {
   grid-row: 7/7;
-  grid-column: 8/9;
+  grid-column-start: 7;
 }
 
 .add_availability {
@@ -195,7 +266,7 @@
 }
 
 .container input:checked ~ .checkmark {
-  background-color: #2196f3;
+  background-color: #8fbfda;
 }
 
 .checkmark:after {
@@ -217,32 +288,89 @@
   background: white;
 }
 
-.time_slot.dropdown {
-  position: relative;
+/*drop down menu*/
+.dropdown{
   display: inline-block;
-  font-size: 50px;
-  margin-left: 80px;
-  text-align: center;
-  vertical-align: baseline;
-  line-height: 90px;
+  position: relative;
+  z-index: 2000px;
+  
+}
+.dropdown label{
   background-color: #dde9f1;
-  height: 90px;
-  width: 300px;
+  color: #22303f;
+  padding: .75 em;
+  font-size: 35pt;
+  border: none;
+  cursor:pointer;
+  border-radius: 15px;
+  width: 50px;
+  transition: opacity 150ms ease-in-out;
+  
 }
 
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #dde9f1;
-  box-shadow: 0px 8px 16px 0px #22303f;
-  padding: 12px 16px;
-  z-index: 1;
-  width: 300px;
-}
-
-.dropdown:hover .dropdown-content {
+.dropdown li{
   display: block;
+  text-align: center;
+  align-items: center;
+  color: #22303f;
+  padding: .5rem;
+  font-size: 25pt;
+  border-radius: 15px;
+  
+  
 }
+
+select .content{
+  display: none;
+  text-align: center;
+  background-color: #dde9f1;
+  position: absolute;
+  max-width: 1 rem;
+  border-radius: 15px;
+  top: calc(100% + -20px);
+  align-items: center;
+  vertical-align: center;
+  box-sizing: border-box;
+  box-shadow: 0 2px 5px;
+  transform: translateY(0px);
+}
+ 
+.dropdown .content input{
+  display: none;
+}
+.dropdown:hover .content{
+  display: block;
+  z-index: 2000px;
+  
+}
+
+.dropdown:hover button{
+  background-color: #dde9f1c2;
+  
+}
+
+.dropdown select:hover{
+  background-color: #cdd9e1;
+  opacity: 1;
+  
+}
+
+select{
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  text-indent: 1px;
+  text-overflow: '';
+  display: block;
+  text-align: center;
+  align-items: center;
+  color: #22303f;
+  padding: .5rem;
+  font-size: 25pt;
+  border-radius: 15px;
+  background-color: #dde9f1c2;
+  
+}
+
 
 .fd_left_column {
   /* Left Column Attributes & Margin Spacing */
@@ -314,10 +442,12 @@ li.body_navbar {
 .fd_body {
   /* Main Body Rect Attributes (Foreground) */
 
-  align-items: start;
+  align-items: center;
   height: 670px;
   display: flex;
+  flex-direction: column;
   background-color: #2c6485;
+  width: 1090px;
 }
 
 .fd_box {
@@ -339,6 +469,7 @@ li.body_navbar {
   color: white;
   border: none;
   border-radius: 0;
+  display: inline-flex;
 }
 
 .button {
@@ -434,9 +565,10 @@ h1 .edit_availability {
   vertical-align: center;
   font-size: x-large;
   color: #ffffff;
-  margin-top: 600px;
-  margin-left: 600px;
+  margin-left: 700px;
+  display: flex;
 }
+
 
 .editAvailability-btn:hover {
   background-color: #8fbfda;
@@ -450,9 +582,9 @@ h1 .edit_availability {
   padding: 20px; /* padding inside the calendar container */
   border-radius: 8px; /* rounded corners for calendar */
   color: white; /* text color for calendar */
-  width: 250%; /* Width of the calendar section */
+  width: 100%; /* Width of the calendar section */
   margin-top: 20px;
-  margin-left: 10px;
+  
 }
 
 /* calendar header for month nav */
@@ -557,13 +689,14 @@ h1 .edit_availability {
 .f_week-days {
   display: flex; /* flex layout */
   justify-content: space-between; /* space between weekdays */
+  
 }
 
 /* container that contains day and time styling */
 .day_header {
   flex: 1;
   padding: 2px;
-  margin: 5px;
+  margin: 10px;
 }
 
 /* days of the week */
@@ -577,12 +710,25 @@ h1 .edit_availability {
   font-size: large;
 }
 
-/* time of the week (currently empty on website) */
+/* time of the week (currently empty on website) -> to background of times*/
 .f_time {
   margin-top: 20px;
   background-color: #8fbfda; /* Dark blue background for day labels */
+  justify-content: center;
   border-radius: 5px; /* Rounded corners for day labels */
   height: 350px;
+  width: 100%;
+  display: flex-box;
+}
+
+.calendar_times {
+  width: 100%;
+  font-size: 30px;
+  border-radius: 20px;
+  background-color: #22303f;
+  height: 25px;
+  
+  
 }
 
 /* Responsive Adjustments for Smaller Screens/Mobile devices */
