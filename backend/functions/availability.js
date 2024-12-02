@@ -1,107 +1,191 @@
-import firebaseApp from "../config.js";
-import { getFirestore, collection, doc, addDoc, getDocs, updateDoc, deleteDoc } from "firebase/firestore";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "./FacultyDashboard.css";
 
-const db = getFirestore(firebaseApp);
+const FacultyDashboard = () => {
+  const navigate = useNavigate();
 
-// Create Availability Slot
-export async function createAvailability(req, res) {
-  const { facultyId, status, startTime, endTime } = req.body;
+  const [appointments, setAppointments] = useState([]);
+  const [availability, setAvailability] = useState([]);
+  const [visibleSection, setVisibleSection] = useState("history");
+  const [newAvailability, setNewAvailability] = useState({
+    facultyId: "123", // Replace with dynamic faculty ID
+    status: "available",
+    startTime: "",
+    endTime: "",
+  });
 
-  // Validate input fields
-  if (!facultyId || !status || !startTime || !endTime) {
-    return res.status(400).json({ error: "All fields (facultyId, status, startTime, endTime) are required" });
-  }
-
-  // Validate status
-  const validStatuses = ["available", "unavailable"];
-  if (!validStatuses.includes(status)) {
-    return res.status(400).json({ error: "Invalid status value. Valid values are 'available' or 'unavailable'" });
-  }
-
-  try {
-    // Prepare the availability data
-    const availabilityData = {
-      facultyId,
-      status,
-      startTime: new Date(startTime).toISOString(), // Ensure valid date format
-      endTime: new Date(endTime).toISOString(),     // Ensure valid date format
+  // Fetch Appointments and Availability Slots
+  useEffect(() => {
+    const fetchAppointments = async () => {
+      try {
+        const response = await fetch("http://localhost:3001/appointments/");
+        const data = await response.json();
+        setAppointments(data);
+      } catch (error) {
+        console.error("Error fetching appointments:", error);
+      }
     };
 
-    // Add the availability to Firestore
-    const availabilityRef = await addDoc(collection(db, "availability"), availabilityData);
+    const fetchAvailability = async () => {
+      try {
+        const response = await fetch("http://localhost:3001/availability/");
+        const data = await response.json();
+        setAvailability(data);
+      } catch (error) {
+        console.error("Error fetching availability:", error);
+      }
+    };
 
-    res.status(201).json({ success: true, slotId: availabilityRef.id });
-  } catch (error) {
-    console.error("Error creating availability:", error);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
-}
+    fetchAppointments();
+    fetchAvailability();
+  }, []);
 
-// Get All Availability Slots
-export async function getAvailability(req, res) {
-  try {
-    const querySnapshot = await getDocs(collection(db, "availability"));
-    const slots = querySnapshot.docs.map((doc) => ({
-      slotId: doc.id,
-      ...doc.data(),
-    }));
+  // Handle Add Availability
+  const handleAddAvailability = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch("http://localhost:3001/availability", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newAvailability),
+      });
+      const data = await response.json();
 
-    res.status(200).json(slots);
-  } catch (error) {
-    console.error("Error fetching availability slots:", error);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
-}
+      if (response.ok) {
+        setAvailability((prev) => [...prev, { slotId: data.slotId, ...newAvailability }]);
+        alert("Availability added successfully!");
+      } else {
+        alert(`Error: ${data.error}`);
+      }
+    } catch (error) {
+      console.error("Error adding availability:", error);
+    }
+  };
 
-// Update Availability Slot
-export async function updateAvailability(req, res) {
-  const { slotId, facultyId, status, startTime, endTime } = req.body;
+  // Handle Delete Availability
+  const handleDeleteAvailability = async (slotId) => {
+    try {
+      const response = await fetch("http://localhost:3001/availability", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ slotId }),
+      });
 
-  // Validate input
-  if (!slotId || !facultyId || !status || !startTime || !endTime) {
-    return res.status(400).json({ error: "All fields (slotId, facultyId, status, startTime, endTime) are required" });
-  }
+      if (response.ok) {
+        setAvailability((prev) => prev.filter((slot) => slot.slotId !== slotId));
+        alert("Availability deleted successfully!");
+      } else {
+        const errorMessage = await response.text();
+        alert(`Failed to delete availability: ${errorMessage}`);
+      }
+    } catch (error) {
+      console.error("Error deleting availability:", error);
+    }
+  };
 
-  const validStatuses = ["available", "unavailable"];
-  if (!validStatuses.includes(status)) {
-    return res.status(400).json({ error: "Invalid status value. Valid values are 'available' or 'unavailable'" });
-  }
+  // Update New Availability Form
+  const handleNewAvailabilityChange = (e) => {
+    const { name, value } = e.target;
+    setNewAvailability((prev) => ({ ...prev, [name]: value }));
+  };
 
-  try {
-    const slotRef = doc(db, "availability", slotId);
+  return (
+    <div className="fd_background_color">
+      <div className="fd_header">
+        <h1>Faculty Home</h1>
+      </div>
 
-    // Update the Firestore document
-    await updateDoc(slotRef, {
-      facultyId,
-      status,
-      startTime: new Date(startTime).toISOString(),
-      endTime: new Date(endTime).toISOString(),
-    });
+      <div className="right_column">
+        <div>
+          <ul className="body_navbar">
+            <li>
+              <button
+                className={`button history-btn ${visibleSection === "history" ? "active" : ""}`}
+                onClick={() => setVisibleSection("history")}
+              >
+                History
+              </button>
+            </li>
+            <li>
+              <button
+                className={`button availability-btn ${visibleSection === "availability" ? "active" : ""}`}
+                onClick={() => setVisibleSection("availability")}
+              >
+                Availability
+              </button>
+            </li>
+          </ul>
+        </div>
 
-    res.status(200).json({ success: true, message: "Availability updated successfully" });
-  } catch (error) {
-    console.error("Error updating availability:", error);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
-}
+        <hr className="line" />
 
-// Delete Availability Slot
-export async function deleteAvailability(req, res) {
-  const { slotId } = req.body;
+        {visibleSection === "history" && (
+          <div className="history_section">
+            <h2>Appointment History</h2>
+            <ul>
+              {appointments.map((appointment, index) => (
+                <li key={index}>
+                  {appointment.slotId}: {appointment.status}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
 
-  if (!slotId) {
-    return res.status(400).json({ error: "Slot ID is required for deletion" });
-  }
+        {visibleSection === "availability" && (
+          <div className="availability_section">
+            <h2>Current Availability</h2>
+            <ul>
+              {availability.map((slot) => (
+                <li key={slot.slotId}>
+                  {slot.startTime} - {slot.endTime} ({slot.status})
+                  <button onClick={() => handleDeleteAvailability(slot.slotId)}>Delete</button>
+                </li>
+              ))}
+            </ul>
 
-  try {
-    const slotRef = doc(db, "availability", slotId);
+            <h3>Add Availability</h3>
+            <form onSubmit={handleAddAvailability}>
+              <label>
+                Start Time:
+                <input
+                  type="datetime-local"
+                  name="startTime"
+                  value={newAvailability.startTime}
+                  onChange={handleNewAvailabilityChange}
+                  required
+                />
+              </label>
+              <label>
+                End Time:
+                <input
+                  type="datetime-local"
+                  name="endTime"
+                  value={newAvailability.endTime}
+                  onChange={handleNewAvailabilityChange}
+                  required
+                />
+              </label>
+              <label>
+                Status:
+                <select
+                  name="status"
+                  value={newAvailability.status}
+                  onChange={handleNewAvailabilityChange}
+                  required
+                >
+                  <option value="available">Available</option>
+                  <option value="unavailable">Unavailable</option>
+                </select>
+              </label>
+              <button type="submit">Add Slot</button>
+            </form>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
 
-    // Delete the document from Firestore
-    await deleteDoc(slotRef);
-
-    res.status(200).json({ success: true, message: "Availability slot deleted successfully" });
-  } catch (error) {
-    console.error("Error deleting availability:", error);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
-}
+export default FacultyDashboard;
