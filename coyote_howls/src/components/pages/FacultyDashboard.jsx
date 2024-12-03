@@ -45,10 +45,13 @@ const FacultyDashboard = (userID) => {
   };
 
   const getFirstMondayOfMonth = (date) => {
-    const firstDayOfMonth = new Date(date.getFullYear(), date.getMonth(), 1);
+    const firstDayOfMonth = new Date(date.getFullYear(), date.getMonth(), 1); // First day of the month
     const dayOfWeek = firstDayOfMonth.getDay();
-    const offset = (7 - dayOfWeek + 1) % 7;
+
+    // Calculate the date of the first Monday
+    const offset = dayOfWeek === 0 ? 1 : 8 - dayOfWeek; // If Sunday (0), move to Monday (1); else calculate offset to Monday
     firstDayOfMonth.setDate(firstDayOfMonth.getDate() + offset);
+
     return firstDayOfMonth;
   };
   /*Calendar Navigation*/
@@ -58,6 +61,7 @@ const FacultyDashboard = (userID) => {
   const [currentWeek, setCurrentWeek] = useState(
     getFirstMondayOfMonth(new Date())
   );
+  const [currentDate, setCurrentDate] = useState(new Date());
 
   const [availabilityData, setAvailabilityData] = useState({
     Monday: ["9:00 AM - 11:00 AM", "2:00 PM - 4:00 PM"],
@@ -76,6 +80,8 @@ const FacultyDashboard = (userID) => {
     applyTo: "Only This Day",
   });
 
+  const [selectedDate, setSelectedDate] = useState(null);
+
   // Function to change weeks
   const handleWeekChange = (direction) => {
     const newDate = new Date(currentWeek);
@@ -90,18 +96,26 @@ const FacultyDashboard = (userID) => {
     } else {
       setCurrentWeek(newDate);
     }
+    setCurrentDate(newDate);
   };
 
   // Function to change months and reset week to the first Monday of the new month
   const handleMonthChange = (direction) => {
-    const newMonthIndex =
-      direction === "next" ? currentMonthIndex + 1 : currentMonthIndex - 1;
-    setCurrentMonthIndex(newMonthIndex);
+    const newDate = new Date(currentDate);
+
+    // prev & next
+    if (direction === "next") {
+      newDate.setMonth(newDate.getMonth() + 1);
+    } else {
+      newDate.setMonth(newDate.getMonth() - 1);
+    }
 
     // Get the first Monday of the new month
-    const newMonthFirstMonday = getFirstMondayOfMonth(
-      new Date(new Date().setMonth(newMonthIndex))
-    );
+    const newMonthFirstMonday = getFirstMondayOfMonth(newDate);
+
+    // Update the currentDate, currentMonthIndex, and currentWeek
+    setCurrentDate(newDate); // Update the currentDate
+    setCurrentMonthIndex(newDate.getMonth()); // Update to the new month index
     setCurrentWeek(newMonthFirstMonday);
   };
 
@@ -163,9 +177,11 @@ const FacultyDashboard = (userID) => {
     });
     setVisibleSection("editAvailability");
   };
-  const handleAddAvailability = (day) => {
+  const handleAddAvailability = (day, date) => {
+    setSelectedDate(date);
     setEditingAvailability({
-      day,
+      day: day,
+      date: date,
       startTime: "",
       startMin: "00",
       endTime: "",
@@ -185,6 +201,7 @@ const FacultyDashboard = (userID) => {
   const saveEditedAvailability = () => {
     // Logic to save the availability
     const {
+      date,
       day,
       startTime,
       startMin,
@@ -200,17 +217,22 @@ const FacultyDashboard = (userID) => {
       return;
     }
     const newAvailability = `${startTime}:${startMin} ${startTimePeriod.toUpperCase()} - ${endTime}:${endMin} ${endTimePeriod.toUpperCase()}`;
+    const dateString = date.toLocaleDateString();
 
     console.log("Adding new availability:", newAvailability);
-    setAvailabilityData((prevData) => {
-      const updatedDayAvailability = prevData[day]
-        ? [...prevData[day], newAvailability]
-        : [newAvailability];
 
-      return {
-        ...prevData,
-        [day]: updatedDayAvailability,
-      };
+    setAvailabilityData((prevData) => {
+      const updatedAvailability = { ...prevData };
+
+      // If no availability exists for the date, initialize it
+      if (!updatedAvailability[dateString]) {
+        updatedAvailability[dateString] = [];
+      }
+
+      // Add the new availability to the date
+      updatedAvailability[dateString].push(newAvailability);
+
+      return updatedAvailability;
     });
 
     // Reset the editing state
@@ -280,7 +302,7 @@ const FacultyDashboard = (userID) => {
     const startPeriod = startTime.split(" ")[1];
     const [endHour, endMin] = endTime.split(":");
     const endPeriod = endTime.split(" ")[1];
-  
+
     // Convert the hours and minutes to 24-hour format for proper sorting
     const get24HourTime = (hour, min, period) => {
       let hour24 = parseInt(hour);
@@ -291,13 +313,13 @@ const FacultyDashboard = (userID) => {
       }
       return hour24 * 60 + parseInt(min); // Return total minutes from midnight
     };
-  
+
     const startTimeInMinutes = get24HourTime(startHour, startMin, startPeriod);
     const endTimeInMinutes = get24HourTime(endHour, endMin, endPeriod);
-  
+
     return { startTimeInMinutes, endTimeInMinutes };
   };
-  
+
   // Sort the time slots based on start time (in minutes) for correct chronological order
   const sortByTime = (times) => {
     return times.sort((a, b) => {
@@ -832,7 +854,7 @@ const FacultyDashboard = (userID) => {
                         </ul>
                         <button
                           onClick={() => {
-                            handleAddAvailability(day);
+                            handleAddAvailability(day, currentDate);
                             setIsEditing(false); // Switch to add mode
                             setVisibleSection("editAvailability");
                           }} // Function to show form/modal
@@ -846,17 +868,6 @@ const FacultyDashboard = (userID) => {
                 )}
               </div>
             </div>
-          )}
-          {visibleSection === "availability" && (
-            <button
-              href="#EditAvailability"
-              className={`button editAvailability-btn ${
-                visibleSection === "editAvailability" ? "active" : ""
-              }`}
-              onClick={showEditAvailability}
-            >
-              Edit Availability
-            </button>
           )}
         </div>
       </div>
