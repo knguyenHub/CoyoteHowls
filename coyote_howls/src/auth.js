@@ -1,5 +1,8 @@
 import { initializeApp } from "firebase/app";
+
+import { getFirestore } from "firebase/firestore";  //database
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, sendPasswordResetEmail } from "firebase/auth";
+
 import dotenv from 'dotenv';
 
 // Your web app's Firebase configuration
@@ -58,6 +61,7 @@ export const resetPassword = async (email) => {
         throw error;
     }
 };
+
 //Initialize data base
 const db = getFirestore(app);
 export { db, auth };

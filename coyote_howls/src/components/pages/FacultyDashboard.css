@@ -119,6 +119,7 @@
   grid-row: 3;
   grid-column: 5;
   margin-top: 10px;
+
 }
 
 .etime{
@@ -207,6 +208,11 @@ input[type=radio], input[type = checkbox] {
 .item-10 {
   grid-row: 7/7;
   grid-column-start: 7;
+
+.item-11 {
+  grid-row: 7/7;
+  grid-column-start: 1;
+
 }
 
 .add_availability {
@@ -214,15 +220,34 @@ input[type=radio], input[type = checkbox] {
   height: 70px;
   border-radius: 15px;
   background-color: #22303f;
-  height: 70px;
   text-align: center;
   line-height: 70px; /* align text to center of box */
   vertical-align: center;
   font-size: 30px;
   color: #ffffff;
+  margin-right: 100px;
 }
 
 .add_availability:hover {
+  background-color: #8fbfda;
+  color: white;
+}
+
+.delete_availability {
+  width: 200px;
+  height: 50px;
+  border-radius: 15px;
+  background-color: rgba(255, 11, 11, 0.754);
+  text-align: center;
+  line-height: 50px; /* align text to center of box */
+  vertical-align: center;
+  font-size: 30px;
+  color: #ffffff;
+  margin-left: 40px;
+  margin-top: 10px;
+}
+
+.delete_availability:hover {
   background-color: #8fbfda;
   color: white;
 }
@@ -442,10 +467,12 @@ li.body_navbar {
 .fd_body {
   /* Main Body Rect Attributes (Foreground) */
 
-  align-items: start;
+  align-items: center;
   height: 670px;
   display: flex;
+  flex-direction: column;
   background-color: #2c6485;
+  width: 100%;
 }
 
 .fd_box {
@@ -467,6 +494,7 @@ li.body_navbar {
   color: white;
   border: none;
   border-radius: 0;
+  display: inline-flex;
 }
 
 .button {
@@ -562,10 +590,10 @@ h1 .edit_availability {
   vertical-align: center;
   font-size: x-large;
   color: #ffffff;
-  margin-top: 600px;
-  margin-left: 600px;
+  margin-left: 700px;
   display: flex;
 }
+
 
 .editAvailability-btn:hover {
   background-color: #8fbfda;
@@ -579,9 +607,9 @@ h1 .edit_availability {
   padding: 20px; /* padding inside the calendar container */
   border-radius: 8px; /* rounded corners for calendar */
   color: white; /* text color for calendar */
-  width: 250%; /* Width of the calendar section */
+  width: 100%; /* Width of the calendar section */
   margin-top: 20px;
-  margin-left: 10px;
+  
 }
 
 /* calendar header for month nav */
@@ -604,7 +632,7 @@ h1 .edit_availability {
   margin-top: 2px;
   padding: 8px 25px;
   border-radius: 5px;
-  font-size: larger;
+  font-size: 20px;
 }
 
 /* calendar buttons */
@@ -612,7 +640,7 @@ h1 .edit_availability {
   border: none; /* remove border */
   padding: 4px 2px; /* padding inside header buttons */
   width: 320px;
-  font-size: larger;
+  font-size: 20px;
   height: 30px;
   background-color: #2c6485; /* color of buttons */
   color: white; /* text color for header buttons */
@@ -686,13 +714,14 @@ h1 .edit_availability {
 .f_week-days {
   display: flex; /* flex layout */
   justify-content: space-between; /* space between weekdays */
+  
 }
 
 /* container that contains day and time styling */
 .day_header {
   flex: 1;
   padding: 2px;
-  margin: 5px;
+  margin: 10px;
 }
 
 /* days of the week */
@@ -703,16 +732,56 @@ h1 .edit_availability {
   border-radius: 5px; /* rounded corners for day labels */
   line-height: 1.5; /* line height for better spacing */
   color: #dde9f1; /* text color for day labels */
-  font-size: large;
+  font-size: 20px;
 }
 
-/* time of the week (currently empty on website) */
+/* time of the week (currently empty on website) -> to background of times*/
 .f_time {
   margin-top: 20px;
   background-color: #8fbfda; /* Dark blue background for day labels */
   border-radius: 5px; /* Rounded corners for day labels */
   height: 350px;
+  
 }
+
+.calendar_times {
+  width: 90%;
+  border-radius: 20px;
+  padding: 2px;
+  background-color: #22303f;
+  height: 35px;
+  font-size: 1rem;
+  text-align: center;
+  margin-top: 15px;
+  color: #ffffff;
+  margin-left: 10px;
+  margin-right: 10px;
+  
+}
+
+button .calendar_times{
+  width: 100%;
+}
+
+li .calendar_times {
+  
+  float: none;
+}
+
+.plus{
+  width: 20%;
+  border-radius: 25px;
+  padding: 2px;
+  background-color: #22303f;
+  height: 35px;
+  font-size: 1rem;
+  text-align: center;
+  margin-top: 15px;
+  color: #ffffff;
+  margin-left: 90px;
+  margin-right: 10px;
+}
+
 
 /* Responsive Adjustments for Smaller Screens/Mobile devices */
 @media screen and (max-width: 800px) {
