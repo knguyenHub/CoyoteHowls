@@ -1,46 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./FacultyDashboard.css";
 
 const FacultyDashboard = () => {
-  const navigate = useNavigate();
   const [appointments, setAppointments] = useState([]);
-  const [availability, setAvailability] = useState([
-    { slotId: "1", startTime: "2024-12-03T10:00:00", endTime: "2024-12-03T12:00:00", status: "available" },
-    { slotId: "2", startTime: "2024-12-04T14:00:00", endTime: "2024-12-04T16:00:00", status: "available" },
-    { slotId: "3", startTime: "2024-12-05T09:00:00", endTime: "2024-12-05T11:00:00", status: "unavailable" },
-  ]);
-  const [notifications, setNotifications] = useState([
-    {
-      id: "1",
-      action: "Meeting Created",
-      time: "Dec 01 2024",
-      studentId: "12345",
-      facultyId: "99999",
-      requestTime: "10:00 AM",
-    },
-    {
-      id: "2",
-      action: "Meeting Modified",
-      time: "Dec 02 2024",
-      studentId: "67890",
-      facultyId: "88888",
-      requestTime: "11:30 AM",
-    },
-    {
-      id: "3",
-      action: "Meeting Cancelled",
-      time: "Dec 03 2024",
-      studentId: "11223",
-      facultyId: "77777",
-      requestTime: "12:00 PM",
-    },
-  ]);
+  const [availabilitySlots, setAvailabilitySlots] = useState([]);
+  const [showOverlay, setShowOverlay] = useState(false);
+  const [newAvailability, setNewAvailability] = useState({
+    facultyId: "12345",
+    status: "available",
+    startTime: "",
+    endTime: "",
+  });
   const [visibleSection, setVisibleSection] = useState("history");
 
   useEffect(() => {
     fetchAppointments();
+    fetchAvailability();
   }, []);
 
   const fetchAppointments = async () => {
@@ -49,30 +25,116 @@ const FacultyDashboard = () => {
       setAppointments(response.data);
     } catch (error) {
       console.error("Error fetching appointments:", error);
-      alert("Failed to fetch appointments. Please try again.");
     }
   };
 
-  const formatTime = (dateTimeString) => {
+  const fetchAvailability = async () => {
+    try {
+      const response = await axios.get("http://localhost:3001/availability");
+      setAvailabilitySlots(response.data);
+    } catch (error) {
+      console.error("Error fetching availability slots:", error);
+    }
+  };
+
+  const deleteAppointment = async (appointmentId) => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:3001/appointments/${appointmentId}`
+      );
+
+      if (response.status === 200) {
+        alert("Appointment deleted successfully!");
+        // Remove the deleted appointment from the local state
+        setAppointments((prevAppointments) =>
+          prevAppointments.filter(
+            (appointment) => appointment.appointmentId !== appointmentId
+          )
+        );
+      }
+    } catch (error) {
+      console.error("Error deleting appointment:", error);
+      alert("Failed to delete appointment. Please try again.");
+    }
+  };
+
+  const updateAppointmentStatus = async (appointmentId, status) => {
+    try {
+      const response = await axios.put(
+        `http://localhost:3001/appointments/${appointmentId}`,
+        { status }
+      );
+
+      if (response.status === 200) {
+        alert(`Appointment updated to ${status} successfully!`);
+        // Update local state
+        setAppointments((prevAppointments) =>
+          prevAppointments.map((appointment) =>
+            appointment.appointmentId === appointmentId
+              ? { ...appointment, status }
+              : appointment
+          )
+        );
+      }
+    } catch (error) {
+      console.error(`Error updating appointment ${appointmentId} to ${status}:`, error);
+      alert(`Failed to update appointment to ${status}. Please try again.`);
+    }
+  };
+
+  const handleFormChange = (event) => {
+    const { name, value } = event.target;
+    setNewAvailability((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const saveAvailability = async () => {
+    const { facultyId, startTime, endTime } = newAvailability;
+    if (!facultyId || !startTime || !endTime) {
+      alert("Please fill in all required fields.");
+      return;
+    }
+
+    try {
+      await axios.post("http://localhost:3001/availability", newAvailability);
+      alert("Availability created successfully!");
+      setShowOverlay(false);
+      fetchAvailability();
+    } catch (error) {
+      console.error("Error creating availability:", error);
+    }
+  };
+
+  const formatDateTime = (dateTimeString) => {
+    if (!dateTimeString) return "Invalid Date";
     const date = new Date(dateTimeString);
-    return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", hour12: true });
+    return isNaN(date.getTime())
+      ? "Invalid Date"
+      : date.toLocaleString("en-US", {
+          dateStyle: "medium",
+          timeStyle: "short",
+        });
   };
 
   return (
     <div className="fd_background_color">
       <div className="fd_header">
-        <h1>Faculty Home</h1>
+        <h1>Faculty Dashboard</h1>
       </div>
 
       <div className="fd_notification_header">
         <ul className="notifications">
           <b>Important Messages About Your Upcoming Meetings:</b>
-          {notifications.map((notification) => (
-            <li key={notification.id}>
-              {notification.action}: {notification.time} <br />
-              Request Time: {notification.requestTime}, Student ID: {notification.studentId}, Faculty ID: {notification.facultyId}
-            </li>
-          ))}
+          {appointments.length > 0 ? (
+            appointments.map((appointment) => (
+              <li key={appointment.appointmentId}>
+                Request Time: {formatDateTime(appointment.requestTime)} <br />
+                Faculty ID: {appointment.facultyId}, Student ID:{" "}
+                {appointment.studentId}
+              </li>
+            ))
+          ) : (
+            <p>No upcoming meetings.</p>
+          )}
         </ul>
       </div>
 
@@ -84,8 +146,35 @@ const FacultyDashboard = () => {
               {appointments
                 .filter((appointment) => appointment.status === "pending")
                 .map((appointment) => (
-                  <li key={appointment.id}>
-                    {appointment.time} - {appointment.studentName} (ID: {appointment.studentId})
+                  <li key={appointment.appointmentId}>
+                    <div>
+                      {formatDateTime(appointment.startTime)} -{" "}
+                      {appointment.studentName} (ID: {appointment.studentId})
+                    </div>
+                    <div className="appointment_buttons">
+                      <button
+                        className="approve_button"
+                        onClick={() =>
+                          updateAppointmentStatus(
+                            appointment.appointmentId,
+                            "approved"
+                          )
+                        }
+                      >
+                        Approve
+                      </button>
+                      <button
+                        className="reject_button"
+                        onClick={() =>
+                          updateAppointmentStatus(
+                            appointment.appointmentId,
+                            "rejected"
+                          )
+                        }
+                      >
+                        Reject
+                      </button>
+                    </div>
                   </li>
                 ))}
             </ul>
@@ -99,7 +188,9 @@ const FacultyDashboard = () => {
         <ul className="body_navbar">
           <li>
             <button
-              className={`button history-btn ${visibleSection === "history" ? "active" : ""}`}
+              className={`button history-btn ${
+                visibleSection === "history" ? "active" : ""
+              }`}
               onClick={() => setVisibleSection("history")}
             >
               History
@@ -107,7 +198,9 @@ const FacultyDashboard = () => {
           </li>
           <li>
             <button
-              className={`button availability-btn ${visibleSection === "availability" ? "active" : ""}`}
+              className={`button availability-btn ${
+                visibleSection === "availability" ? "active" : ""
+              }`}
               onClick={() => setVisibleSection("availability")}
             >
               Availability
@@ -124,22 +217,35 @@ const FacultyDashboard = () => {
               <thead>
                 <tr>
                   <th>Slot ID</th>
-                  <th>Status</th>
                   <th>Student ID</th>
+                  <th>Status</th>
+                  <th>Faculty ID</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {appointments.length > 0 ? (
                   appointments.map((appointment) => (
-                    <tr key={appointment.id}>
+                    <tr key={appointment.appointmentId}>
                       <td>{appointment.slotId}</td>
-                      <td>{appointment.status}</td>
                       <td>{appointment.studentId}</td>
+                      <td>{appointment.status}</td>
+                      <td>{appointment.facultyId}</td>
+                      <td>
+                        <button
+                          className="delete_button"
+                          onClick={() =>
+                            deleteAppointment(appointment.appointmentId)
+                          }
+                        >
+                          Delete
+                        </button>
+                      </td>
                     </tr>
                   ))
                 ) : (
                   <tr>
-                    <td colSpan="3">No appointment history available.</td>
+                    <td colSpan="5">No appointment history available.</td>
                   </tr>
                 )}
               </tbody>
@@ -149,28 +255,83 @@ const FacultyDashboard = () => {
 
         {visibleSection === "availability" && (
           <div className="availability_section">
-            <h2>Current Availability</h2>
+            <h2>Manage Availability</h2>
+            <button className="add_button" onClick={() => setShowOverlay(true)}>
+              Add Availability
+            </button>
             <table className="availability_table">
               <thead>
                 <tr>
+                  <th>Status</th>
                   <th>Start Time</th>
                   <th>End Time</th>
-                  <th>Status</th>
                 </tr>
               </thead>
               <tbody>
-                {availability.map((slot) => (
-                  <tr key={slot.slotId}>
-                    <td>{formatTime(slot.startTime)}</td>
-                    <td>{formatTime(slot.endTime)}</td>
-                    <td>{slot.status}</td>
+                {availabilitySlots.length > 0 ? (
+                  availabilitySlots.map((slot) => (
+                    <tr key={slot.slotId}>
+                      <td>{slot.status}</td>
+                      <td>{formatDateTime(slot.startTime)}</td>
+                      <td>{formatDateTime(slot.endTime)}</td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="3">No availability slots found.</td>
                   </tr>
-                ))}
+                )}
               </tbody>
             </table>
           </div>
         )}
       </div>
+
+      {showOverlay && (
+        <div className="overlay">
+          <div className="overlay_content">
+            <h2>Create Availability</h2>
+            <label>
+              Status:
+              <select
+                name="status"
+                value={newAvailability.status}
+                onChange={handleFormChange}
+              >
+                <option value="available">Available</option>
+                <option value="unavailable">Unavailable</option>
+              </select>
+            </label>
+            <label>
+              Start Time:
+              <input
+                type="datetime-local"
+                name="startTime"
+                value={newAvailability.startTime}
+                onChange={handleFormChange}
+              />
+            </label>
+            <label>
+              End Time:
+              <input
+                type="datetime-local"
+                name="endTime"
+                value={newAvailability.endTime}
+                onChange={handleFormChange}
+              />
+            </label>
+            <button className="save_button" onClick={saveAvailability}>
+              Save
+            </button>
+            <button
+              className="cancel_button"
+              onClick={() => setShowOverlay(false)}
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

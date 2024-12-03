@@ -91,8 +91,12 @@ const Student_Meeting = () => {
                   required
                 >
                   <option value="">Select Professor</option>
-                  <option value="Arianne Schulz">Prof. Jin</option>
+                  <option value="Jennifer Jen">Prof. Jin</option>
+                  <option value="Arianne Schulz">Arianne Schulz</option>
                   <option value="Bilal Khan">Bilal Khan</option>
+                  <option value="Nazanin Ghasemian">Nazanin Ghasemian</option>
+                  <option value="Qiuxiao Chen">Qiuxiao Chen</option>
+                  
                 </select>
               </div>
 

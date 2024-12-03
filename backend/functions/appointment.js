@@ -52,14 +52,16 @@ export async function getAppointment(req, res) {
 
 // Update an appointment
 export async function updateAppointment(req, res) {
-  const { appointmentId, studentId, facultyId, slotId, status } = req.body;
+  const { status } = req.body;
+  const { appointmentId } = req.params; // Read from URL params
 
+  console.log("Request Params:", req.params); // Log the params
   console.log("Request Body:", req.body); // Log the request body
 
   // Validate input
-  if (!appointmentId || !studentId || !facultyId || !slotId || !status) {
-    console.error("Validation Failed. Missing Fields:", req.body);
-    return res.status(400).json({ error: "All fields are required" });
+  if (!appointmentId || !status) {
+    console.error("Validation Failed. Missing Fields:", { appointmentId, status });
+    return res.status(400).json({ error: "Appointment ID and status are required" });
   }
 
   const validStatuses = ["pending", "approved", "rejected"];
@@ -76,9 +78,6 @@ export async function updateAppointment(req, res) {
 
     // Update the Firestore document
     await updateDoc(appointmentRef, {
-      studentId,
-      facultyId,
-      slotId,
       status,
     });
 
@@ -91,7 +90,7 @@ export async function updateAppointment(req, res) {
 }
 
 export async function deleteAppointment(req, res) {
-  const { appointmentId } = req.body;
+  const { appointmentId } = req.params;
 
   if (!appointmentId) {
     return res.status(400).json({ error: "Appointment ID is required" });
@@ -105,4 +104,5 @@ export async function deleteAppointment(req, res) {
     console.error("Error deleting appointment:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
-};
+}
+

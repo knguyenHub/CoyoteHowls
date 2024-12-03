@@ -11,12 +11,15 @@ const StudentDashboard = () => {
 
   const handleDeleteClick = async (appointmentId) => {
     try {
-      const response = await fetch(`http://localhost:3001/appointments/${appointmentId}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        `http://localhost:3001/appointments/${appointmentId}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       if (response.ok) {
         alert("Appointment deleted successfully");
@@ -31,32 +34,7 @@ const StudentDashboard = () => {
 
   const [visibleSection, setVisibleSection] = useState("courses");
   const [historyData, setHistoryData] = useState([]);
-  const [notifications, setNotifications] = useState([
-    {
-      id: "1",
-      action: "Meeting Created",
-      time: "Oct 27 2024",
-      facultyId: "Jin",
-      studentId: "12345",
-      requestTime: "10:00 AM",
-    },
-    {
-      id: "2",
-      action: "Meeting Modified",
-      time: "Oct 29 2024",
-      facultyId: "Khan",
-      studentId: "67890",
-      requestTime: "11:00 AM",
-    },
-    {
-      id: "3",
-      action: "Meeting Cancelled",
-      time: "Oct 23 2024",
-      facultyId: "Schulz",
-      studentId: "11223",
-      requestTime: "12:00 PM",
-    },
-  ]);
+  const [notifications, setNotifications] = useState([]);
 
   const fetchHistoryData = async () => {
     try {
@@ -66,6 +44,7 @@ const StudentDashboard = () => {
       }
       const data = await response.json();
       setHistoryData(data); // Assuming the backend returns an array of appointments
+      setNotifications(data); // Use appointment data for notifications
     } catch (error) {
       console.error("Error fetching appointment data:", error);
     }
@@ -83,6 +62,17 @@ const StudentDashboard = () => {
     setVisibleSection("history");
   };
 
+  const formatDateTime = (dateTimeString) => {
+    if (!dateTimeString) return "Invalid Date";
+    const date = new Date(dateTimeString);
+    return isNaN(date.getTime())
+      ? "Invalid Date"
+      : date.toLocaleString("en-US", {
+          dateStyle: "medium",
+          timeStyle: "short",
+        });
+  };
+
   return (
     <div className="sd_background_color">
       <div className="sd_header">
@@ -92,13 +82,17 @@ const StudentDashboard = () => {
       <div className="fd_notification_header">
         <ul className="notifications">
           <b>Important Messages About Your Upcoming Meetings:</b>
-          {notifications.map((notification) => (
-            <li key={notification.id}>
-              {notification.action}: {notification.time} <br />
-              Request Time: {notification.requestTime}, Faculty ID: {notification.facultyId}, Student ID:{" "}
-              {notification.studentId}
-            </li>
-          ))}
+          {notifications.length > 0 ? (
+            notifications.map((appointment) => (
+              <li key={appointment.appointmentId}>
+                Request Time: {formatDateTime(appointment.requestTime)} <br />
+                Faculty: {appointment.facultyId}, Student ID:{" "}
+                {appointment.studentId}
+              </li>
+            ))
+          ) : (
+            <p>No upcoming meetings.</p>
+          )}
         </ul>
       </div>
 
@@ -111,9 +105,13 @@ const StudentDashboard = () => {
             <b>Upcoming Appointments</b>
             {historyData
               .filter((appointment) => appointment.status === "pending")
-              .map((appointment, index) => (
-                <li key={index} className="upcoming_appt_list li">
-                  {new Date(appointment.requestTime).toLocaleDateString()} - {appointment.facultyId}
+              .map((appointment) => (
+                <li
+                  key={appointment.appointmentId}
+                  className="upcoming_appt_list li"
+                >
+                  Appointment Time: {appointment.slotId} <br />
+                  Faculty: {appointment.facultyId}
                 </li>
               ))}
           </ul>
@@ -126,7 +124,9 @@ const StudentDashboard = () => {
             <li>
               <button
                 href="#Courses"
-                className={`button courses-btn ${visibleSection === "courses" ? "active" : ""}`}
+                className={`button courses-btn ${
+                  visibleSection === "courses" ? "active" : ""
+                }`}
                 onClick={showCourses}
               >
                 Courses
@@ -135,7 +135,9 @@ const StudentDashboard = () => {
             <li>
               <button
                 href="#History"
-                className={`button history-btn ${visibleSection === "history" ? "active" : ""}`}
+                className={`button history-btn ${
+                  visibleSection === "history" ? "active" : ""
+                }`}
                 onClick={showHistory}
               >
                 History
@@ -198,19 +200,25 @@ const StudentDashboard = () => {
                 <tr>
                   <th>Date</th>
                   <th>Professor</th>
-                  <th>Notes</th>
+                  <th>Status</th>
                   <th>Action</th>
                 </tr>
               </thead>
               <tbody>
                 {historyData.length > 0 ? (
-                  historyData.map((appointment, index) => (
-                    <tr key={index}>
-                      <td>{new Date(appointment.requestTime).toLocaleDateString()}</td>
+                  historyData.map((appointment) => (
+                    <tr key={appointment.appointmentId}>
+                      <td>{formatDateTime(appointment.requestTime)}</td>
                       <td>{appointment.facultyId}</td>
                       <td>{appointment.status}</td>
                       <td>
-                        <button onClick={() => handleDeleteClick(appointment.appointmentId)}>Delete</button>
+                        <button
+                          onClick={() =>
+                            handleDeleteClick(appointment.appointmentId)
+                          }
+                        >
+                          Delete
+                        </button>
                       </td>
                     </tr>
                   ))
