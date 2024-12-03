@@ -206,7 +206,11 @@ input[type=radio], input[type = checkbox] {
 /* Add Button */
 .item-10 {
   grid-row: 7/7;
-  grid-column-start: 6;
+  grid-column-start: 7;
+}
+.item-11 {
+  grid-row: 7/7;
+  grid-column-start: 1;
 }
 
 .add_availability {
@@ -219,9 +223,29 @@ input[type=radio], input[type = checkbox] {
   vertical-align: center;
   font-size: 30px;
   color: #ffffff;
+  margin-right: 100px;
 }
 
 .add_availability:hover {
+  background-color: #8fbfda;
+  color: white;
+}
+
+.delete_availability {
+  width: 200px;
+  height: 50px;
+  border-radius: 15px;
+  background-color: rgba(255, 11, 11, 0.754);
+  text-align: center;
+  line-height: 50px; /* align text to center of box */
+  vertical-align: center;
+  font-size: 30px;
+  color: #ffffff;
+  margin-left: 40px;
+  margin-top: 10px;
+}
+
+.delete_availability:hover {
   background-color: #8fbfda;
   color: white;
 }
@@ -729,7 +753,7 @@ h1 .edit_availability {
   margin-top: 15px;
   color: #ffffff;
   margin-left: 10px;
-  margin-right: 10px;;
+  margin-right: 10px;
   
 }
 
@@ -740,6 +764,20 @@ button .calendar_times{
 li .calendar_times {
   
   float: none;
+}
+
+.plus{
+  width: 20%;
+  border-radius: 25px;
+  padding: 2px;
+  background-color: #22303f;
+  height: 35px;
+  font-size: 1rem;
+  text-align: center;
+  margin-top: 15px;
+  color: #ffffff;
+  margin-left: 90px;
+  margin-right: 10px;
 }
 
 

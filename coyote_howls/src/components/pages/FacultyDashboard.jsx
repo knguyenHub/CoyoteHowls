@@ -43,6 +43,7 @@ const FacultyDashboard = (userID) => {
   const showEditAvailability = () => {
     setVisibleSection("editAvailability");
   };
+
   const getFirstMondayOfMonth = (date) => {
     const firstDayOfMonth = new Date(date.getFullYear(), date.getMonth(), 1);
     const dayOfWeek = firstDayOfMonth.getDay();
@@ -67,6 +68,7 @@ const FacultyDashboard = (userID) => {
   });
 
   const [editingAvailability, setEditingAvailability] = useState({
+    day: "",
     startTime: "",
     endTime: "",
     startTimePeriod: "am",
@@ -138,100 +140,177 @@ const FacultyDashboard = (userID) => {
   };
 
   // Function to handle availability edit
+
+  const [isEditing, setIsEditing] = useState(false);
+
   const handleEditAvailability = (day, timeSlot) => {
-    const slot = timeSlot; // 
+    const [start, end] = timeSlot.split(" - ");
+    const [startTime, startPeriod] = start.trim().split(" ");
+    const [endTime, endPeriod] = end.trim().split(" ");
+    const [startHour, startMin] = startTime.split(":");
+    const [endHour, endMin] = endTime.split(":");
 
     setEditingAvailability({
-      startTime: slot.startTime, 
-      endTime: slot.endTime,
-      startTimePeriod: slot.startTimePeriod || "am", 
-      endTimePeriod: slot.endTimePeriod || "am", 
-      applyTo: slot.applyTo || "Only This Day", 
+      day,
+      startTime: startHour,
+      startMin: startMin || "00", // Default to "00" if minutes are missing
+      startTimePeriod: startPeriod.toUpperCase(),
+      endTime: endHour,
+      endMin: endMin || "00", // Default to "00" if minutes are missing
+      endTimePeriod: endPeriod.toUpperCase(),
+      applyTo: `Every ${day}`, // Pre-fill the "apply to" field based on the day
+      timeSlot,
     });
+    setVisibleSection("editAvailability");
   };
-  const handleFormChange = (e) => {
+  const handleAddAvailability = (day) => {
     setEditingAvailability({
-      ...editingAvailability,
-      [e.target.name]: e.target.value,
+      day,
+      startTime: "",
+      startMin: "00",
+      endTime: "",
+      endMin: "00",
+      startTimePeriod: "AM",
+      endTimePeriod: "PM",
+      applyTo: "Only This Day",
     });
+    setVisibleSection("editAvailability");
   };
 
-  // Function to save edited availability 
+  const handleFormChange = (event) => {
+    const { name, value } = event.target;
+    setEditingAvailability((prev) => ({ ...prev, [name]: value }));
+  };
+
   const saveEditedAvailability = () => {
-    if (
-      !editingAvailability ||
-      !editingAvailability.day ||
-      !editingAvailability.timeSlot
-    ) {
-      console.error("Editing availability data is incomplete");
+    // Logic to save the availability
+    const {
+      day,
+      startTime,
+      startMin,
+      startTimePeriod,
+      endTime,
+      endMin,
+      endTimePeriod,
+    } = editingAvailability;
+
+    // Validate required fields
+    if (!day || !startTime || !startMin || !endTime || !endMin) {
+      alert("Please complete all fields before saving.");
       return;
     }
+    const newAvailability = `${startTime}:${startMin} ${startTimePeriod.toUpperCase()} - ${endTime}:${endMin} ${endTimePeriod.toUpperCase()}`;
 
-    if (!availabilityData[editingAvailability.day]) {
-      console.error(
-        `No availability data found for ${editingAvailability.day}`
-      );
-      return;
-    }
+    console.log("Adding new availability:", newAvailability);
+    setAvailabilityData((prevData) => {
+      const updatedDayAvailability = prevData[day]
+        ? [...prevData[day], newAvailability]
+        : [newAvailability];
 
-    const updatedAvailability = { ...availabilityData };
-
-    // Update the time slot
-    updatedAvailability[editingAvailability.day] = updatedAvailability[
-      editingAvailability.day
-    ].map((timeSlot) => {
-      if (timeSlot === editingAvailability.timeSlot) {
-        return `${editingAvailability.startTime} - ${editingAvailability.endTime}`;
-      }
-      return timeSlot;
+      return {
+        ...prevData,
+        [day]: updatedDayAvailability,
+      };
     });
 
-    // Set the updated availability data 
-    setAvailabilityData(updatedAvailability);
-    setEditingAvailability(null);
+    // Reset the editing state
+    setEditingAvailability({
+      day: "",
+      startTime: "",
+      startMin: "00",
+      startTimePeriod: "AM",
+      endTime: "",
+      endMin: "00",
+      endTimePeriod: "AM",
+      applyTo: "",
+    });
+
+    alert("Availability added successfully!");
+    setVisibleSection("availability");
   };
 
-  //Edit Availability test bttn
-  const confirm_availability = () => {
-    /* select drop down */
-    var s_hrs = document.getElementById("s_hr");
-    var s_mins = document.getElementById("s_min");
-    var e_hrs = document.getElementById("e_hr");
-    var e_mins = document.getElementById("e_min");
+  const handleDelete = () => {
+    const {
+      day,
+      startTime,
+      startMin,
+      startTimePeriod,
+      endTime,
+      endMin,
+      endTimePeriod,
+    } = editingAvailability;
 
-    /*Apply to */
-    var rad1 = document.getElementById("rad1");
-    var rad2 = document.getElementById("rad2");
-    var rad3 = document.getElementById("rad3");
+    if (!day) {
+      alert("No availability selected for deletion.");
+      return;
+    }
 
-    /*am & pm*/
-    var start_am = document.getElementById("s_am");
-    var start_pm = document.getElementById("s_pm");
-    var end_am = document.getElementById("e_am");
-    var end_pm = document.getElementById("e_pm");
+    // Format the availability string to match the one in availabilityData
+    const availabilityToDelete = `${startTime}:${startMin} ${startTimePeriod} - ${endTime}:${endMin} ${endTimePeriod}`;
 
-    /* test am/pm buttons */
-    /* From */
-    if (start_am.checked == true)
-      alert("The selected element is " + start_am.value);
-    else if (start_pm.checked == true)
-      alert("The selected element is " + start_pm.value);
-    /*Toggle*/
+    setAvailabilityData((prevData) => {
+      const updatedDayAvailability = prevData[day].filter(
+        (time) => time !== availabilityToDelete
+      );
 
-    /* Until */
-    if (end_am.checked == true)
-      alert("The selected element is " + end_am.value);
-    else if (end_pm.checked == true)
-      alert("The selected element is " + end_pm.value);
+      return {
+        ...prevData,
+        [day]: updatedDayAvailability,
+      };
+    });
 
-    /* testing apply to button(s): replace with submit to form */
-    if (rad1.checked == true) alert("The selected element is " + rad1.value);
-    else if (rad2.checked == true)
-      alert("The selected element is " + rad2.value);
-    else if (rad3.checked == true)
-      alert("The selected element is " + rad3.value);
+    // Reset the editing state
+    setEditingAvailability({
+      day: "",
+      startTime: "",
+      startMin: "",
+      startTimePeriod: "AM",
+      endTime: "",
+      endMin: "",
+      endTimePeriod: "AM",
+      applyTo: "",
+    });
+
+    setVisibleSection("availability"); // Return to availability view
+    alert("Availability deleted successfully!");
+  };
+  const parseTimeSlot = (timeSlot) => {
+    const [startTime, endTime] = timeSlot.split(" - ");
+    const [startHour, startMin] = startTime.split(":");
+    const startPeriod = startTime.split(" ")[1];
+    const [endHour, endMin] = endTime.split(":");
+    const endPeriod = endTime.split(" ")[1];
+  
+    // Convert the hours and minutes to 24-hour format for proper sorting
+    const get24HourTime = (hour, min, period) => {
+      let hour24 = parseInt(hour);
+      if (period.toUpperCase() === "PM" && hour24 !== 12) {
+        hour24 += 12;
+      } else if (period.toUpperCase() === "AM" && hour24 === 12) {
+        hour24 = 0;
+      }
+      return hour24 * 60 + parseInt(min); // Return total minutes from midnight
+    };
+  
+    const startTimeInMinutes = get24HourTime(startHour, startMin, startPeriod);
+    const endTimeInMinutes = get24HourTime(endHour, endMin, endPeriod);
+  
+    return { startTimeInMinutes, endTimeInMinutes };
+  };
+  
+  // Sort the time slots based on start time (in minutes) for correct chronological order
+  const sortByTime = (times) => {
+    return times.sort((a, b) => {
+      const timeA = parseTimeSlot(a);
+      const timeB = parseTimeSlot(b);
+      return timeA.startTimeInMinutes - timeB.startTimeInMinutes; // Sort based on start time
+    });
   };
 
+  const sortedAvailabilityData = {};
+  Object.keys(availabilityData).forEach((day) => {
+    sortedAvailabilityData[day] = sortByTime([...availabilityData[day]]);
+  });
   /* Notification Header Functions */
   const [notifications, setNotifications] = useState([]);
 
@@ -468,15 +547,18 @@ const FacultyDashboard = (userID) => {
             </table>
           )}
 
-          {visibleSection === "editAvailability" && (
+          {visibleSection === "editAvailability" && editingAvailability && (
             <div className="grid_container">
-              <div className="item item-1">Edit Availability</div>
+              <div className="item item-1">
+                {isEditing ? "Edit Availability" : "Add Availability"}
+              </div>
               <div className="item item-2">
                 <u>From</u>
               </div>
               <div className="item item-3">
                 <u>Until</u>
               </div>
+              {/* Start Time */}
               <div className="item start_hours time_slot dropdown">
                 <select
                   name="startTime"
@@ -626,12 +708,15 @@ const FacultyDashboard = (userID) => {
                 <span className="checkmark"></span>
               </label>
               <label className="container item item-8">
-                Every Monday
+                {`Every ${editingAvailability.day}`}
                 <input
                   type="radio"
                   name="applyTo"
-                  value="Every Monday"
-                  checked={editingAvailability.applyTo === "Every Monday"}
+                  value={`Every ${editingAvailability.day}`}
+                  checked={
+                    editingAvailability.applyTo ===
+                    `Every ${editingAvailability.day}`
+                  }
                   onChange={handleFormChange}
                 />
                 <span className="checkmark"></span>
@@ -647,6 +732,16 @@ const FacultyDashboard = (userID) => {
                 />
                 <span className="checkmark"></span>
               </label>
+              <div className="item item-11">
+                <button
+                  onClick={handleDelete}
+                  className="delete_availability"
+                  id="delete_availability"
+                  type="submit"
+                >
+                  Delete
+                </button>
+              </div>
               <div className="item item-10">
                 <button
                   onClick={saveEditedAvailability}
@@ -654,7 +749,7 @@ const FacultyDashboard = (userID) => {
                   id="add_availability"
                   type="submit"
                 >
-                  Add Availability
+                  {isEditing ? "Save Availability" : "Add Availability"}
                 </button>
               </div>
             </div>
@@ -711,18 +806,22 @@ const FacultyDashboard = (userID) => {
                         <ul>
                           {availabilityData[day] &&
                           availabilityData[day].length > 0 ? (
-                            availabilityData[day].map((timeSlot, index) => (
-                              <li key={index}>
-                                <button
-                                  onClick={() =>
-                                    handleEditAvailability(day, timeSlot)
-                                  }
-                                  className="calendar_times"
-                                >
-                                  {timeSlot}
-                                </button>
-                              </li>
-                            ))
+                            sortByTime([...availabilityData[day]]).map(
+                              (timeSlot, index) => (
+                                <li key={index}>
+                                  <button
+                                    onClick={() => {
+                                      handleEditAvailability(day, timeSlot); // Populate editingAvailability
+                                      setIsEditing(true); // Switch to edit mode
+                                      setVisibleSection("editAvailability");
+                                    }}
+                                    className="calendar_times"
+                                  >
+                                    {timeSlot}
+                                  </button>
+                                </li>
+                              )
+                            )
                           ) : (
                             <li>
                               <button className="calendar_times">
@@ -731,6 +830,16 @@ const FacultyDashboard = (userID) => {
                             </li>
                           )}
                         </ul>
+                        <button
+                          onClick={() => {
+                            handleAddAvailability(day);
+                            setIsEditing(false); // Switch to add mode
+                            setVisibleSection("editAvailability");
+                          }} // Function to show form/modal
+                          className="plus"
+                        >
+                          +
+                        </button>
                       </div>
                     </div>
                   )
