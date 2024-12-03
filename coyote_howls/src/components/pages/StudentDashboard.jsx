@@ -1,142 +1,101 @@
 import "./StudentDashboard.css";
 import { useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
-//import firebase attributes
-import { collection, query, where, getDocs, orderBy, limit, doc, getDoc } from "firebase/firestore";
-import {db} from "../../auth.js"
-import { async } from "@firebase/util";
-/* importing each component from their appropriate locations */
 
-const StudentDashboard = ({userID}) => {
+const StudentDashboard = () => {
   const navigate = useNavigate();
 
   const handleScheduleClick = () => {
-    // redirects to student meeting page
-    navigate("/student_meeting");
-  };
-  const handleEditClick = () => {
-    // redirects to faculty modify
     navigate("/student_meeting");
   };
 
-  const [visibleSection, setVisibleSection] = useState("courses"); // default visible is "courses" when page is loaded
+  const handleDeleteClick = async (appointmentId) => {
+    try {
+      const response = await fetch(
+        `http://localhost:3001/appointments/${appointmentId}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
-  // Handle the click to show the "Courses" section
+      if (response.ok) {
+        alert("Appointment deleted successfully");
+        fetchHistoryData(); // Refresh the history data
+      } else {
+        alert("Failed to delete appointment");
+      }
+    } catch (error) {
+      console.error("Error deleting appointment:", error);
+    }
+  };
+
+  const [visibleSection, setVisibleSection] = useState("courses");
+  const [historyData, setHistoryData] = useState([]);
+  const [notifications, setNotifications] = useState([]);
+
+  const fetchHistoryData = async () => {
+    try {
+      const response = await fetch("http://localhost:3001/appointments");
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      setHistoryData(data); // Assuming the backend returns an array of appointments
+      setNotifications(data); // Use appointment data for notifications
+    } catch (error) {
+      console.error("Error fetching appointment data:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchHistoryData();
+  }, []);
+
   const showCourses = () => {
     setVisibleSection("courses");
   };
 
-  // Handle the click to show the "History" section
   const showHistory = () => {
     setVisibleSection("history");
   };
-  /* Notification Header Functions */
-  const[notifications, setNotifications] = useState([]);
-  useEffect(() => { 
-    const fetchNotifications = async () => {
-      try {
-        const meetingsRef = collection(db, "meetings");
-        const meetingsQuery = query(
-          meetingsRef,
-          where("participants", "array-contains", userID),
-          orderBy("date", "desc"),
-          limit(4)
-        );
-        const meetingsSnapshot = await getDocs(meetingsQuery);
-        const meetings = meetingsSnapshot.docs.map((doc) => ({id: doc.id, ...doc.data() }));
-        
-        const formattedNotifications = await Promise.all(
-          meetings.map(async (meeting) => {
-            const professorId = meeting.participants.find((id) => id !== userID);
-            const professorDoc = await getDoc(doc (db, "users", professorId));
-            const professorName = professorDoc.exists() ? professorDoc.data().name : "Unknown";
-            const dateFormat = new Date(meeting.date).toLocaleDataString("en-US", {
-              year: "numeric",
-              month: "short",
-              day: "numeric",
-            });
-            return 'Meeting ${meeting.action}: ${dateFormat} with Professor ${professorName}';
-          })
-        );
-        setNotifications(formattedNotifications);
-      } catch (error) {
-        console.error("Error fetching notifications: ", error);
-      }
-    }; fetchNotifications();
-  }, [userID]);
 
-  /* Function to display courses table w/ queries*/
-  const [courses, setCourses] = useState([]);
-
-  useEffect(() => {
-      const fetchCourses = async () => {
-        const querySnapshot = await getDocs(collection(db, "courses"));
-        const courseList = querySnapshot.docs.map((doc) => doc.data());
-        setCourses(courseList);
-      };
-
-      fetchCourses();
-  }, []); 
-
-  /* Fxn for history of appointments (4 most recent)*/ 
-  const [history, setHistory] = useState([]);
-  
-  useEffect(() => {
-    const fetchHistory = async () => {
-      try {
-        const meetingsRef = collection(db, "meetings");
-        const meetingQuery = query(
-          meetingsRef,
-          where("participants" , "array-contains", userId),
-          orderBy("date", "desc"),
-          limit(4)
-        );
-
-        const meetingSnapshot = await getDocs(meetingQuery);
-        const meetings = meetingSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-
-        const enrichedMeetings = await Promise.all(
-          meetings.map(async (meeting) => {
-            const professorID = meeting.participants.find((id) => id !== userId);
-            const professorDoc = await getDoc(doc(db, "users", professorID));
-            return {
-              date: meeting.date,
-              professorName: professorDoc.exists() ? professorDoc.data().name: "Unknown",
-              notes: meeting.notes,
-              action: meeting.action,
-            };
-          })
-        );
-        
-        setHistory(enrichedMeetings);
-      } catch (error) {
-        console.error("Error fetching meeting history: ", error);
-      }
-    };
-
-    fetchHistory();
-  }, [userID]);
-        
+  const formatDateTime = (dateTimeString) => {
+    if (!dateTimeString) return "Invalid Date";
+    const date = new Date(dateTimeString);
+    return isNaN(date.getTime())
+      ? "Invalid Date"
+      : date.toLocaleString("en-US", {
+          dateStyle: "medium",
+          timeStyle: "short",
+        });
+  };
 
   return (
     <div className="sd_background_color">
       <div className="sd_header">
         <h1>Student Home</h1>
       </div>
+
       <div className="fd_notification_header">
         <ul className="notifications">
-          
           <b>Important Messages About Your Upcoming Meetings:</b>
-          {/* new notif bar
-           {notifications.map((message, index) => (
-            <li key={index}>{message}</li>
-           ))}
-           */}
-          <li>Meeting Created: Oct 27 2024 with Professor Jin</li>
-          <li>Meeting Modified: Oct 29 2024 with Professor Jin</li>
-          <li>Meeting Cancelled: October 23 2024 by Professor Khan</li>
+          {notifications.length > 0 ? (
+            notifications.map((appointment) => (
+              <li key={appointment.appointmentId}>
+                Request Time: {formatDateTime(appointment.requestTime)} <br />
+                Faculty: {appointment.facultyId}, Student ID:{" "}
+                {appointment.studentId}
+              </li>
+            ))
+          ) : (
+            <p>No upcoming meetings.</p>
+          )}
         </ul>
       </div>
+
       <div className="left_column">
         <button className="sd_schedule_appt" onClick={handleScheduleClick}>
           Schedule Appointment
@@ -144,20 +103,17 @@ const StudentDashboard = ({userID}) => {
         <div className="sd_upcoming_appt">
           <ul className="up_comming_appt_list">
             <b>Upcoming Appointments</b>
-            <li className="upcoming_appt_list li">
-              {" "}
-              10/27 12:00 pm - Jin
-              <button className="edit_button" onClick={handleEditClick}>
-                Edit
-              </button>
-            </li>
-            <li className="upcoming_appt_list li">
-              {" "}
-              10/29 12:30 pm - Jin
-              <button className="edit_button" onClick={handleEditClick}>
-                Edit
-              </button>
-            </li>
+            {historyData
+              .filter((appointment) => appointment.status === "pending")
+              .map((appointment) => (
+                <li
+                  key={appointment.appointmentId}
+                  className="upcoming_appt_list li"
+                >
+                  Appointment Time: {appointment.slotId} <br />
+                  Faculty: {appointment.facultyId}
+                </li>
+              ))}
           </ul>
         </div>
       </div>
@@ -200,19 +156,10 @@ const StudentDashboard = ({userID}) => {
                   <th>Course</th>
                   <th>Professor</th>
                   <th>Professor Email</th>
-                  <th>Availablity</th>
+                  <th>Availability</th>
                 </tr>
               </thead>
               <tbody>
-                {/*                 
-                {courses.map((course, index) => (
-                  <tr key = {index}>
-                    <td> {course.courseID} </td>
-                    <td> {course.courseProfessor}</td>
-                    <td> {course.ProfEmail}</td>
-                    <td> {course.ProfAvailability}</td>
-                  </tr>
-                ))}  */}
                 <tr>
                   <td>CSE 4600</td>
                   <td>Bilal Khan</td>
@@ -253,44 +200,34 @@ const StudentDashboard = ({userID}) => {
                 <tr>
                   <th>Date</th>
                   <th>Professor</th>
-                  <th>Notes</th>
+                  <th>Status</th>
                   <th>Action</th>
                 </tr>
               </thead>
               <tbody>
-                {history.map((entry, index) => {
-                  <tr key={index}>
-                    <td>{entry.date}</td>
-                    <td>{entry.professorName}</td>
-                    <td>{entry.notes}</td>
-                    <td>{entry.action}</td>
+                {historyData.length > 0 ? (
+                  historyData.map((appointment) => (
+                    <tr key={appointment.appointmentId}>
+                      <td>{formatDateTime(appointment.requestTime)}</td>
+                      <td>{appointment.facultyId}</td>
+                      <td>{appointment.status}</td>
+                      <td>
+                        <button
+                          onClick={() =>
+                            handleDeleteClick(appointment.appointmentId)
+                          }
+                        >
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="4">No appointments available</td>
                   </tr>
-                })}
+                )}
               </tbody>
-              <tr>
-                <td>10/02/24</td>
-                <td>Jennifer Jin</td>
-                <td>Help with Homework</td>
-                <td>Canceled</td>
-              </tr>
-              <tr>
-                <td>10/02/24</td>
-                <td>Bhilal Khan</td>
-                <td>Discuss Current Grade</td>
-                <td>Completed</td>
-              </tr>
-              <tr>
-                <td>09/10/24</td>
-                <td>Qiuxiao Chen</td>
-                <td>Missing Lecture</td>
-                <td>Rescheduled</td>
-              </tr>
-              <tr>
-                <td>08/28/24</td>
-                <td>Qiuxiao Chen</td>
-                <td>Syllabus Questions</td>
-                <td>Completed</td>
-              </tr>
             </table>
           )}
         </div>
@@ -298,4 +235,5 @@ const StudentDashboard = ({userID}) => {
     </div>
   );
 };
+
 export default StudentDashboard;

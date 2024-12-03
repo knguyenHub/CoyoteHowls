@@ -1,125 +1,149 @@
-import React, { useState } from "react"; // Importing React and useState hook
-import "./Student_Meeting.css"; // Importing CSS file for styling 
-
+import React, { useState } from "react";
+import "./Student_Meeting.css";
 
 const Student_Meeting = () => {
-  // State variables to hold input values for the 
-  const [professor, setProfessor] = useState(""); // State for professor selection
-  const [course, setCourse] = useState(""); // State for course selection
-  const [location, setLocation] = useState(""); // State for location selection
-  const [comments, setComments] = useState(""); // State for comments input
+  const [professor, setProfessor] = useState("");
+  const [course, setCourse] = useState("");
+  const [location, setLocation] = useState("");
+  const [comments, setComments] = useState("");
+  const [studentId, setStudentId] = useState("");
+  const [slotId, setSlotId] = useState("");
 
-  // Function to handle form submission
-  const handleSubmit = (e) => {
-    e.preventDefault(); // Prevent the default form submission
-    console.log("Meeting Scheduled:", { professor, course, location, comments }); // Log meeting details to console
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const appointmentData = {
+      studentId,
+      facultyId: professor, // Send professor as facultyId
+      slotId,
+      status: "pending",
+      comments,
+      requestTime: new Date().toISOString(),
+    };
+
+    try {
+      const response = await fetch("http://localhost:3001/appointments", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(appointmentData),
+      });
+
+      if (response.ok) {
+        alert("Appointment created successfully!");
+
+        // Reset form inputs
+        setProfessor("");
+        setCourse("");
+        setLocation("");
+        setComments("");
+        setStudentId("");
+        setSlotId("");
+      } else {
+        alert("Failed to create appointment. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error creating appointment:", error);
+      alert("An error occurred. Please try again later.");
+    }
   };
 
   return (
+    <div className="sh_header">
+      <h1>Student Home</h1>
 
-    <div className="sh_header"> {/* main header of website */}
-      <h1> Student Home </h1>
-      
-    <div className="sd_container"> {/* Main container for the student home page */}
-      <div className="sm">  {/* heading for the main container */}
-        <h2>Schedule Meeting</h2> 
-      </div>
-
-      {/* Main container for the schedule form and calendar */}
-      <div className="schedule-container">   
-        <div className="schedule-meeting">   {/* Schedule Meeting section */}
-          <form onSubmit={handleSubmit} className="meeting-form"> {/* Form for scheduling a meeting */}
-            <div className="form-group">  {/* Form group for Professor selection */}
-              <label>Professor:</label> {/* Label for the professor dropdown */}
-              <select value={professor} onChange={(e) => setProfessor(e.target.value)}>
-                <option value="">Select Professor</option> {/* Default option */}
-                <option value="Prof. Jin">Prof. Jin</option> {/* input for professor */}
-                <option value="Prof. Jen">Prof. Jen</option> {/* input for professor */}
-              </select>
-            </div>
-
-            <div className="form-group">  {/* Form group for Course selection */}
-              <label>Course:</label> {/* label for the course dropdown */}
-              <select value={course} onChange={(e) => setCourse(e.target.value)}>
-                <option value="">Select Course</option> {/* default option */}
-                <option value="CSE 5001">CSE 5001</option> {/* input for course */}
-                <option value="CSE 5002">CSE 5002</option> {/* input for course */}
-              </select>
-            </div>
-
-            <div className="form-group">  {/* Form group for Location selection */}
-              <label>Location:</label> {/* label for the location dropdown */}
-              <select value={location} onChange={(e) => setLocation(e.target.value)}>
-                <option value="">Select Location</option> {/* display for location button */}
-                <option value="Room 301">Room 301</option> {/* input for location option */}
-                <option value="ZOOM">ZOOM</option> {/* input for location option */}
-              </select>
-            </div>
-
-            <div className="form-group">  {/* Form group for Comments input */}
-              <label>Comments:</label> {/* label for comments textarea */}
-              <textarea
-                value={comments}   /* bind textarea to comments state */ 
-                onChange={(e) => setComments(e.target.value)}   /* update comments state on change */ 
-                placeholder="Add comments here"  /* Placeholder text for textarea */ 
-              />
-            </div>
-
-            <button className="submit"type="submit">Confirm</button> {/* Button to submit the form */}
-          </form>
+      <div className="sd_container">
+        <div className="sm">
+          <h2>Schedule Meeting</h2>
         </div>
 
-        {/* Calendar Section */}
-        <div className="calendar">
-          <div className="calendar-header">  {/* Header for the month navigation */}
-            <button className="prev">{"<"}-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Previous&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button> {/* Button to navigate to previous month with &nbsp; for non-breaking spaces */}
-            <span className="month">September</span> {/* display current month */}
-            <button className="next">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Next&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-{">"}</button> {/* Button to navigate to next month with &nbsp; for non-breaking spaces  */}
-          </div>
-          {/* Header for week navigation */}
-          <div className="week-header">
-            <button className="prev-week">{"<"}-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Previous&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button> {/* Button to navigate to previous week with &nbsp; for non-breaking spaces */}
-            <span> Sep 23 - Sep 27 </span> {/* Display current week range */}
-            <button className="next-week">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Next&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-{">"}</button> {/* Button to navigate to next week with &nbsp; for non-breaking spaces */}
-          </div>
-          {/* Days of the week */}
-          <div className="week-days">
-          { /* displays Monday header with "time" for the container that follows under */}
-            <div className="day_header">
-              <div className="day">Monday</div>  
-              <div className="time">
+        <div className="schedule-container">
+          <div className="schedule-meeting">
+            <form onSubmit={handleSubmit} className="meeting-form">
+              <div className="form-group">
+                <label>Student ID:</label>
+                <input
+                  type="text"
+                  value={studentId}
+                  onChange={(e) => setStudentId(e.target.value)}
+                  placeholder="Enter your Student ID"
+                  required
+                />
               </div>
-            </div> 
-            { /* displays Tuesday header with "time" for the container that follows under */}
-            <div className="day_header">
-              <div className="day">Tuesday</div>
-              <div className="time">
+
+              <div className="form-group">
+                <label>Appointment Time:</label>
+                <input
+                  type="text"
+                  value={slotId}
+                  onChange={(e) => setSlotId(e.target.value)}
+                  placeholder="Enter Slot ID"
+                  required
+                />
               </div>
-            </div> 
-            { /* displays Wednesday header with "time" for the container that follows under */}
-            <div className="day_header">
-              <div className="day"> Wednesday</div>
-              <div className="time">
+
+              <div className="form-group">
+                <label>Professor:</label>
+                <select
+                  value={professor}
+                  onChange={(e) => setProfessor(e.target.value)}
+                  required
+                >
+                  <option value="">Select Professor</option>
+                  <option value="Jennifer Jen">Prof. Jin</option>
+                  <option value="Arianne Schulz">Arianne Schulz</option>
+                  <option value="Bilal Khan">Bilal Khan</option>
+                  <option value="Nazanin Ghasemian">Nazanin Ghasemian</option>
+                  <option value="Qiuxiao Chen">Qiuxiao Chen</option>
+                  
+                </select>
               </div>
-            </div> 
-            { /* displays Thursday header with "time" for the container that follows under */}
-            <div className="day_header">
-              <div className="day"> Thursday</div>
-              <div className="time">
+
+              <div className="form-group">
+                <label>Course:</label>
+                <select
+                  value={course}
+                  onChange={(e) => setCourse(e.target.value)}
+                  required
+                >
+                  <option value="">Select Course</option>
+                  <option value="CSE 5001">CSE 5001</option>
+                  <option value="CSE 5002">CSE 5002</option>
+                </select>
               </div>
-            </div> 
-            { /* displays Friday header with "time" for the container that follows under */}
-            <div className="day_header">
-              <div className="day">Friday</div>
-              <div className="time">
+
+              <div className="form-group">
+                <label>Location:</label>
+                <select
+                  value={location}
+                  onChange={(e) => setLocation(e.target.value)}
+                  required
+                >
+                  <option value="">Select Location</option>
+                  <option value="Room 301">Room 301</option>
+                  <option value="ZOOM">ZOOM</option>
+                </select>
               </div>
-              </div> 
+
+              <div className="form-group">
+                <label>Comments:</label>
+                <textarea
+                  value={comments}
+                  onChange={(e) => setComments(e.target.value)}
+                  placeholder="Add comments here"
+                />
+              </div>
+
+              <button className="submit" type="submit">
+                Confirm
+              </button>
+            </form>
           </div>
         </div>
       </div>
-    </div>
     </div>
   );
 };
 
-export default Student_Meeting; // exports the component
+export default Student_Meeting;

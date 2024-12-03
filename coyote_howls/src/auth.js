@@ -1,9 +1,9 @@
 import { initializeApp } from "firebase/app";
 
-import { getFirestore } from "firebase/firestore";  //database
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, sendPasswordResetEmail } from "firebase/auth";
 
-import dotenv from 'dotenv';
+import { getFirestore } from "firebase/firestore";
+
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -62,6 +62,5 @@ export const resetPassword = async (email) => {
     }
 };
 
-//Initialize data base
 const db = getFirestore(app);
-export { db, auth };
+export { db }; // Only export db here since auth is already exported above
