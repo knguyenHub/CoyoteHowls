@@ -119,6 +119,7 @@
   grid-row: 3;
   grid-column: 5;
   margin-top: 10px;
+
 }
 
 .etime{
@@ -207,10 +208,11 @@ input[type=radio], input[type = checkbox] {
 .item-10 {
   grid-row: 7/7;
   grid-column-start: 7;
-}
+
 .item-11 {
   grid-row: 7/7;
   grid-column-start: 1;
+
 }
 
 .add_availability {

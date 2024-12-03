@@ -1,5 +1,5 @@
-.successful_logout {
-    /* Notification Header */
+/*.successful_logout {
+    /*Notification Header 
   
     margin: 35px auto;
     margin-top: 0px;
@@ -11,56 +11,52 @@
     padding: 10px;
     padding-block: 40px;
     padding-bottom: 60px;
-    width: 87%; /* Let the width adjust based on content */
+    width: 87%; /* Let the width adjust based on content 
     opacity: 0.85;
   }
+*/
 
-
-/* Remove padding and margin from the slider container */
-.slider_container {
-  padding: 0 !important;
-  margin: 0 auto !important; /* Center the slider horizontally */
-  width: 60vw; /* Full viewport width */
-  max-width: 100% !important; /* No overflow beyond viewport */
-  box-sizing: border-box;
+.background {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 64px;
+  background: url('../../assets/landing.jpeg') no-repeat center center; /* Fix for image */
+  background-size: cover; 
+  }
   
+
+
+
+.pretty{
+  width: 100%; /* Adjust the width */
+  height: 100%; /* Adjust the height */
+  background: rgba(217, 217, 217, 1); 
+  background-size: cover; /* Ensure the image covers the triangle area */
+  opacity: 0.5;
+  clip-path: polygon(0% 100%, 100% 0%, 100% 100%);
+  z-index: 1;
 }
+    
+.header-home{
+position: absolute;
+width: 520px;
+height: 265px;
+left: 907px;
+right: 50%;
+top: 357px;
 
+font-family: 'Inter';
+font-style: normal;
+font-weight: 700;
+font-size: 70px;
+line-height: 109px;
+text-align: center;
 
-
-.each-slide img {
-  width: 100% !important; /* Full width of the container */
-  height: 300px; /* Fixed height */
-  object-fit: fill; /* Ensures image covers the space without distortion */
-  display: block; /* Removes extra space around images */
-  margin: 0 !important; /* Ensures no extra margin is applied */
- 
+color: #132F40;
+z-index: 2;
 }
-
-
-.homeheader h1{
-  margin: 25px auto;
-  margin-bottom: 20px;
-  text-align: center;
-  font-size: 50px;
-  color: #2C6485;
-  background-color: #8FBFDA;
-  padding: 10px;
-  padding-block: 20px;
-  padding-bottom: 20px;
-  width: 80%; 
-
-}
-
-.homebottom h1{
-  margin: 25px auto;
-  margin-bottom: 20px;
-  text-align: center;
-  font-size: 50px;
-  color: #2C6485;
-  background-color: #8FBFDA;
-  padding: 20px;
-  padding-block: 20px;
-  padding-bottom: 20px;
-  width: 80%; 
+.header-home h1 {
+  z-index: 3;
 }

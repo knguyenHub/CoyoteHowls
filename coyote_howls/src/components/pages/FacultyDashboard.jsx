@@ -44,6 +44,7 @@ const FacultyDashboard = (userID) => {
     setVisibleSection("editAvailability");
   };
 
+
   const getFirstMondayOfMonth = (date) => {
     const firstDayOfMonth = new Date(date.getFullYear(), date.getMonth(), 1); // First day of the month
     const dayOfWeek = firstDayOfMonth.getDay();
@@ -402,7 +403,9 @@ const FacultyDashboard = (userID) => {
         const enrichedMeetings = await Promise.all(
           meetings.map(async (meeting) => {
             const professorID = meeting.participants.find(
+
               (id) => id !== userID
+
             );
             const professorDoc = await getDoc(doc(db, "users", professorID));
             return {
@@ -446,7 +449,9 @@ const FacultyDashboard = (userID) => {
       }
     };
     fetchAvailability;
+
   }, [userID]);
+
 
   /* !!!!!!! HTML !!!!!! */
   return (
@@ -569,6 +574,7 @@ const FacultyDashboard = (userID) => {
             </table>
           )}
 
+
           {visibleSection === "editAvailability" && editingAvailability && (
             <div className="grid_container">
               <div className="item item-1">
@@ -588,6 +594,7 @@ const FacultyDashboard = (userID) => {
                   value={editingAvailability.startTime || ""}
                   onChange={handleFormChange}
                 >
+
                   {Array.from({ length: 12 }, (_, i) => (
                     <option key={i + 1} value={i + 1}>
                       {i + 1}
@@ -597,12 +604,14 @@ const FacultyDashboard = (userID) => {
               </div>
               <div className="colon1"> : </div>
               <div className="dropdown start_mins">
+
                 <select
                   name="startMin"
                   id="s_min"
                   value={editingAvailability.startMin || ""}
                   onChange={handleFormChange}
                 >
+
                   {[
                     "00",
                     "05",
@@ -624,6 +633,7 @@ const FacultyDashboard = (userID) => {
                 </select>
               </div>
               <div className="times stime">
+
                 <label className="container item">
                   am
                   <input
@@ -645,6 +655,7 @@ const FacultyDashboard = (userID) => {
                     onChange={handleFormChange}
                   />
                   <span className="checkmark"></span>
+
                 </label>
               </div>
 
@@ -655,6 +666,7 @@ const FacultyDashboard = (userID) => {
                   value={editingAvailability.endTime || ""}
                   onChange={handleFormChange}
                 >
+
                   {Array.from({ length: 12 }, (_, i) => (
                     <option key={i + 1} value={i + 1}>
                       {i + 1}
@@ -664,12 +676,14 @@ const FacultyDashboard = (userID) => {
               </div>
               <div className="colon2"> : </div>
               <div className="dropdown end_mins">
+
                 <select
                   name="endMin"
                   id="e_min"
                   value={editingAvailability.endMin || ""}
                   onChange={handleFormChange}
                 >
+
                   {[
                     "00",
                     "05",
@@ -691,6 +705,7 @@ const FacultyDashboard = (userID) => {
                 </select>
               </div>
               <div className="times etime">
+
                 <label className="container item">
                   am
                   <input
@@ -718,6 +733,7 @@ const FacultyDashboard = (userID) => {
               <div className="item item-6">
                 <u>Apply To</u>
               </div>
+
               <label className="container item item-7">
                 Only This Day
                 <input
@@ -869,9 +885,12 @@ const FacultyDashboard = (userID) => {
               </div>
             </div>
           )}
+
+         
         </div>
       </div>
     </div>
   );
 };
+      
 export default FacultyDashboard;

@@ -1,51 +1,101 @@
 /* General styles */
+/* General styles */
 body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-  }
-  
-  /* Login Header */
-  .login-header {
-    background-color: #AEDFF7;
-    text-align: center;
+  margin: 0;
+  font-family: 'Inter';
+}
+
+/* Login Header */
+.login-header {
+  background-color: #AEDFF7;
+  text-align: center;
+  padding: 20px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  font-size: 36pt;
+  width: 100%;
+}
+
+.login-header h1 {
+  font-size: 40px;
+  margin: 0;
+}
+
+.back {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.left-half {
+  width: 50%;
+  height: 100vh;
+  background: url('../../assets/logIn.png') no-repeat center center;
+  background-size: cover;
+}
+
+.right-half {
+  flex: 1;
+  /* Takes up the other 50% of the width */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #DDE9F1;
+  /* Background color for the text side */
+  text-align: center;
+  margin-top: -13%;
+
+
+}
+
+.right-background {
+  background-color: #1F4D63;
     padding: 40px;
-    margin-top: 20px;
-  }
-  
-  .login-header h1 {
-    font-size: 50px;
-    margin: 0;
-  }
-  
-  /* Main Content */
-  .login-content {
-    text-align: center;
-    padding: 80px;
-  }
-  
-  .login-content h2 {
-    font-size: 40px;
-    margin-bottom: 80px;
-  }
-  
-  /* Role buttons */
-  .button-container {
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     display: flex;
-    justify-content: center;
-    gap: 100px;
+    flex-direction: column;
+    align-items: center;
+    width: 600px;
+    margin-top: 13%;
+}
 
-  }
 
-  .role-button {
-    background-color: #2D768F;
-    color: white;
-    border: none;
-    padding: 30px 60px;
-    font-size: 36px;
-    cursor: pointer;
-    border-radius: 6px;
-  }
+/* Main Content */
+.login-content {
+  color: #DDE9F1;
+  position: relative;
+  text-align: center;
+  padding: 40px;
+  z-index: 2;
+}
+
+.login-content h2 {
+  font-size: 36px;
+  margin-bottom: 80px;
+}
+
+/* Role buttons */
+.button-container {
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+
+}
+
+.role-button {
+  background-color: #2D768F;
+  color: white;
+  border: none;
+  padding: 30px 60px;
+  font-size: 24px;
+  cursor: pointer;
+  border-radius: 6px;
   
-  .role-button:hover {
-    background-color: #1A4C5C;
-  }
+}
+
+.role-button:hover {
+  background-color: #1A4C5C;
+}

@@ -1,59 +1,94 @@
 .about_background_color {               /* background of the body */
-    background-color: #2C6485;
-    padding-bottom: 100px;
+    background-color: #DEEBF3;
 }
 
 
 
 
 .about_header {                         /* about header*/
-    margin: 35px auto;
-    margin-bottom: -70px;
+    margin: auto;
+    margin-top: 0; 
     text-align: center;
-    font-size: 40px;
-    color: #2C6485;
-    background-color: #DDE9F1;
-    padding-bottom: 50px;
-   
-    
+    font-size: 35px;
+    background-image: url("../../assets/campus_clock2.png"); /* image */
+    background-size: cover; /* Ensures the image covers the header fully */
+    background-position: 30% 70%; /* Centers the image in the header */
+    background-repeat: no-repeat; /* Prevents the image from repeating */
+    height: 210px; /* Adjust height as needed */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); /* Shadow effect */
+    position: relative;
+    border: 1px solid black; /* Black outline */
 }
+
+.about_header h1 { 
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    position: relative; /* Ensures the text is above the background */
+    z-index: 1; /* Keeps the text above the ::before element */
+}
+
+.about_header::before {                                   /* transparent background for text About Us */
+    content: ""; /* Necessary to make ::before render */
+    position: absolute; /* Position relative to .about_header */
+    width: 25%; /* Adjust size as needed */
+    height: 100px; /* Adjust height */
+    background-color: rgba(143, 191, 218, .3); /* Semi-transparent black */
+    border-radius: 20px; /* Optional rounded corners */
+    top: 50%; /* Center vertically */
+    left: 50%; /* Center horizontally */
+    transform: translate(-50%, -50%); /* Offset to center it */
+    z-index: 0; /* Places it behind the text */
+}
+
 
 
 .about_body {                            /* main body */
     margin: 20px auto;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
     width: 90%;
-    display: flex; 
-    background-color: #8FBFDA;
+    display: flex;  
     padding: 20px;
     padding-block: 40px;
-    padding-bottom: 80px;
+    
 
     
     
 }
 
 
-.about_left {                           /* left side of body with image */
+.about_right {                           /* left side of body with image */
     flex-basis: 40%; 
-    
-   
-    
+    margin-top: -50px; 
+    display: flex;
 }
 
-.about_right {                          /* right side of body with text */
+.about_left {                          /* right side of body with text */
     color: #394A56;
-    font-size: 20px;
-    flex-basis: 55%;  
-    
+    margin-top: -40px;
+    font-size: 25px;
+    flex-basis: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Align content to the top */
+}
+
+.about_left h3 {
+    font-size: 35px;
+    margin-bottom: 15px;
+    border-bottom: 3px solid #656e74; /* Solid line */
+    padding-top: 10px; /* Adjust space between text and line */
 }
 
 
-.about_img {                            /* image */
-    width: 100%; 
-    border-radius: 15px;
-    
+.logo_final {
+    width: 35vw; /* Logo size adjusts based on 20% of the viewport width */
+    max-width: 500px; /* Optional: max size limit */
+    height: auto; /* Keeps the aspect ratio intact */
+    border-radius: 10px; /* Optional */
 }
 
 
@@ -74,3 +109,4 @@
         text-align: center;
     }
 }
+
