@@ -1,22 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import "./FacultyDashboard.css";
 
 const FacultyDashboard = () => {
   const navigate = useNavigate();
-
-  const [appointments, setAppointments] = useState([
-    { id: "101", slotId: "1", studentName: "John Doe", studentId: "12345", time: "10:00 AM", status: "pending" },
-    { id: "102", slotId: "2", studentName: "Jane Smith", studentId: "67890", time: "11:00 AM", status: "approved" },
-    { id: "103", slotId: "3", studentName: "Alice Johnson", studentId: "11223", time: "1:00 PM", status: "rejected" },
-  ]);
-
+  const [appointments, setAppointments] = useState([]);
   const [availability, setAvailability] = useState([
     { slotId: "1", startTime: "2024-12-03T10:00:00", endTime: "2024-12-03T12:00:00", status: "available" },
     { slotId: "2", startTime: "2024-12-04T14:00:00", endTime: "2024-12-04T16:00:00", status: "available" },
     { slotId: "3", startTime: "2024-12-05T09:00:00", endTime: "2024-12-05T11:00:00", status: "unavailable" },
   ]);
-
   const [notifications, setNotifications] = useState([
     {
       id: "1",
@@ -43,39 +37,25 @@ const FacultyDashboard = () => {
       requestTime: "12:00 PM",
     },
   ]);
-
   const [visibleSection, setVisibleSection] = useState("history");
+
+  useEffect(() => {
+    fetchAppointments();
+  }, []);
+
+  const fetchAppointments = async () => {
+    try {
+      const response = await axios.get("http://localhost:3001/appointments");
+      setAppointments(response.data);
+    } catch (error) {
+      console.error("Error fetching appointments:", error);
+      alert("Failed to fetch appointments. Please try again.");
+    }
+  };
 
   const formatTime = (dateTimeString) => {
     const date = new Date(dateTimeString);
     return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", hour12: true });
-  };
-
-  const handleModifyClick = () => {
-    navigate("/Faculty_Modify");
-  };
-
-  const handleDeleteClick = (appointmentId) => {
-    setAppointments((prevAppointments) =>
-      prevAppointments.filter((appointment) => appointment.id !== appointmentId)
-    );
-    alert(`Appointment ${appointmentId} deleted successfully!`);
-  };
-
-  const approveAllPending = () => {
-    const updatedAppointments = appointments.map((appointment) =>
-      appointment.status === "pending" ? { ...appointment, status: "approved" } : appointment
-    );
-    setAppointments(updatedAppointments);
-    alert("All pending appointments have been approved.");
-  };
-
-  const rejectAllPending = () => {
-    const updatedAppointments = appointments.map((appointment) =>
-      appointment.status === "pending" ? { ...appointment, status: "rejected" } : appointment
-    );
-    setAppointments(updatedAppointments);
-    alert("All pending appointments have been rejected.");
   };
 
   return (
@@ -98,23 +78,20 @@ const FacultyDashboard = () => {
 
       <div className="fd_left_column">
         <div className="fd_upcoming_appt">
-          <ul className="up_comming_appt_list">
-            <button onClick={approveAllPending}>Approve All Pending</button>
-            <button onClick={rejectAllPending}>Reject All Pending</button>
-            <b>Upcoming Appointments</b>
-            {appointments.length > 0 ? (
-              appointments
+          <b>Upcoming Appointments</b>
+          {appointments.length > 0 ? (
+            <ul className="up_comming_appt_list">
+              {appointments
                 .filter((appointment) => appointment.status === "pending")
                 .map((appointment) => (
                   <li key={appointment.id}>
                     {appointment.time} - {appointment.studentName} (ID: {appointment.studentId})
-                    <button onClick={() => handleDeleteClick(appointment.id)}>Delete</button>
                   </li>
-                ))
-            ) : (
-              <li>No upcoming appointments.</li>
-            )}
-          </ul>
+                ))}
+            </ul>
+          ) : (
+            <p>No pending appointments.</p>
+          )}
         </div>
       </div>
 
