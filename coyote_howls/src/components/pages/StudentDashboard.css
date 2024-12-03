@@ -139,7 +139,7 @@ ul {
   overflow: hidden;
 }
 
-li {
+li .upcoming_appt_list{
   float: left;      /* orientation of list */
 }
 
